@@ -48,9 +48,10 @@
 ### 這次 2.12.0 維護留下的檢查清單
 
 - 檔案預覽標頭：`Preview`、`Raw`。
-- 執行摘要：`Skills Used`、`Worked for 1m`、`Thinking time 2s`、`Analyzed`、`Searched`。
+- 執行摘要：`Skills Used`、`Worked for 1m`、`Thinking time 2s`、`Analyzed`、`Searched`，以及由 `const Sib` 對照表產生的 `folders` 等項目數量。
 - 模型選擇器：`Fast` 徽章，以及 `Limited time` 徽章和資訊圖示 Tooltip；兩者都要確認。
 - 檔案與終端機入口：`Open File`、`New Terminal`、`Show in File Explorer`。
+- 權限確認：一般選項的 `text`，以及自訂回覆的 `writeInLabel`、`writeInPlaceholder`；要確認組合後的完整文案，不只確認其中一個欄位。
 - 回饋頁與 Remote Control 相關說明；這些是長描述，不能只翻譯標題。
 - 右側技能清單、模型用量、設定頁與原生選單；原生內容不是只靠 web bundle 字典完成。
 
@@ -152,7 +153,7 @@ skills/.../references/...    -> 基線、陷阱與驗證結果
 rg -n -F "Preview" <clean-web-bundle>\\main.js
 rg -n -F "Limited time" <clean-web-bundle>\\main.js
 rg -n -F "Skills Used" <clean-web-bundle>\\main.js
-rg -n "tagTitle|tagDescription|Worked for|Thinking time" <clean-web-bundle>\\main.js
+rg -n "tagTitle|tagDescription|Worked for|Thinking time|const Sib|writeInLabel|writeInPlaceholder" <clean-web-bundle>\\main.js
 ```
 
 大型 minified 檔案不要整份貼進上下文；只取命中位置前後的短片段，並記錄它屬於固定字串、expression、模板、Tooltip 還是原生程式。
@@ -183,6 +184,8 @@ descriptions: [{ from, to, optional description }]
 ### Phase 4：處理動態文字與原生程式
 
 對每個未翻譯畫面，先判斷它是否由前端 bundle、原生 Electron、系統匣、回饋表單或外部設定頁產生。不能因為畫面在同一頁就假設來源相同。
+
+動態摘要要追到資料來源：`const Sib` 會把工具類別映射成單數／複數英文，再由摘要函式組成像 `3 folders` 的輸出；應翻譯對照表本身，而不是只翻譯外層的摘要模板。權限確認的自訂回覆則會把 `writeInLabel` 與 `writeInPlaceholder` 組合成一個選項，必須和一般選項的 `text` 分開檢查。
 
 前端 `buildWebBundle()` 的順序不可破壞：
 
@@ -251,6 +254,8 @@ node scripts/patcher.js --apply --lang zh-TW
 | `spawnSync npx.cmd EINVAL` | Windows 將 `.cmd` 當成直接可執行檔失敗 | 使用專案內 `node_modules/asar/bin/asar.js` 搭配 Node 執行，不要把錯誤改成忽略 |
 | 前端替換數為 0 或大幅下降 | bundle 結構、來源版本或字串編碼已變 | 重新搜尋乾淨來源，檢查 protected 區段與動態 expression |
 | Tooltip 仍是英文 | 只處理了 badge 或標題，沒有處理 description | 尋找 `tagTitle` 與 `tagDescription` 兩個來源並分別驗證 |
+| 摘要仍顯示 `3 folders` 等英文單位 | 類別單複數由 `const Sib` 對照表即時產生，沒有命中外層摘要模板 | 以完整 `const Sib` 片段加入 `exact_properties`，並檢查檔案、資料夾、搜尋與指令等類別 |
+| 權限選項仍顯示 `No (tell the agent what to do instead)` | 自訂回覆的 label／placeholder 不經一般選項文字翻譯函式 | 同時定位並翻譯 `writeInLabel` 與 `writeInPlaceholder`，再驗證組合後的畫面文案 |
 | 切換語言後原生選單未變 | 使用了上一個已修改 archive，或跳過既有 `i18nMenuDict` | 從乾淨 backup 重建，或更新既有注入字典；不要累加替換 |
 | app.asar 被鎖定 | Antigravity 或 language server 尚未退出 | 只關閉目標程序後重試；不要停止無關程序，不要刪除備份 |
 | 應用程式無法啟動 | 原生語法、archive 或 bundle 部署不完整 | 先關閉目標程序，執行 `--restore`，確認備份版本，再檢查語法與來源 |

@@ -611,6 +611,16 @@
     {
       "key": "placeholder:\"Enter URL pattern...\"",
       "val": "placeholder:\"輸入 URL 網址樣式...\""
+    },
+    {
+      "key": "const Sib={files:[\"file\",\"files\"],folders:[\"folder\",\"folders\"],edits:[\"file\",\"files\"],searches:[\"search\",\"searches\"],terminal:[\"command\",\"commands\"],tasks:[\"task\",\"tasks\"],web:[\"page\",\"pages\"],browser:[\"browser\",\"browsers\"],images:[\"image\",\"images\"],actions:[\"action\",\"actions\"],artifacts:[\"artifact\",\"artifacts\"]}",
+      "val": "const Sib={files:[\"文件\",\"文件\"],folders:[\"文件夹\",\"文件夹\"],edits:[\"文件\",\"文件\"],searches:[\"搜索\",\"搜索\"],terminal:[\"命令\",\"命令\"],tasks:[\"任务\",\"任务\"],web:[\"页面\",\"页面\"],browser:[\"浏览器\",\"浏览器\"],images:[\"图片\",\"图片\"],actions:[\"操作\",\"操作\"],artifacts:[\"产物\",\"产物\"]}",
+      "description": "2.12执行摘要项目单位翻译"
+    },
+    {
+      "key": "writeInLabel:\"No\",writeInPlaceholder:\"(tell the agent what to do instead)\"",
+      "val": "writeInLabel:\"否\",writeInPlaceholder:\"（告诉代理要改做什么）\"",
+      "description": "2.12权限写入选项翻译"
     }
   ],
   "descriptions": [
