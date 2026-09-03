@@ -641,6 +641,11 @@
       "key": "\"Working...\"",
       "val": "\"执行中...\"",
       "description": "2.12工作状态提示"
+    },
+    {
+      "key": "\"Thinking...\"",
+      "val": "\"思考中...\"",
+      "description": "2.12思考加载提示翻译"
     }
   ],
   "descriptions": [

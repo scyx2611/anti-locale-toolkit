@@ -48,7 +48,7 @@
 ### 這次 2.12.0 維護留下的檢查清單
 
 - 檔案預覽標頭：`Preview`、`Raw`。
-- 執行摘要：`Skills Used`、`Worked for 1m`、`Thinking time 2s`、`Analyzed`、`Searched`、`Working..`，以及由 `const Sib` 對照表產生的 `folders` 等項目數量。
+- 執行摘要：`Skills Used`、`Worked for 1m`、`Thinking...`、`Thinking time 2s`、`Analyzed`、`Searched`、`Working..`，以及由 `const Sib` 對照表產生的 `folders` 等項目數量。
 - 模型選擇器：`Fast` 徽章，以及 `Limited time` 徽章和資訊圖示 Tooltip；兩者都要確認。
 - 檔案與終端機入口：`Open File`、`New Terminal`、`Show in File Explorer`。
 - 權限確認：一般選項的 `text`，以及自訂回覆的 `writeInLabel`、`writeInPlaceholder`；要確認組合後的完整文案，不只確認其中一個欄位。
