@@ -3,9 +3,19 @@ name: antilocale-maintainer
 description: Maintain and extend AntiLocale Toolkit localization for Antigravity Desktop, especially after an application version update or when a translated UI string is missing.
 ---
 
-# AntiLocale Toolkit 維護 Skill
+# AntiLocale Toolkit AI 版本維護 Skill
 
 這個 Skill 用於維護本專案的 Antigravity Desktop 多語言部署工具。它適用於新增語言、補翻譯、修補版本更新後的介面、檢查部署失敗，以及確認語言切換仍可安全還原。
+
+## 目標與執行契約
+
+目標不是只找出英文，而是讓 AI 能完成「盤點來源 → 判斷版本 → 更新字典與 patcher → 建構驗證 →（獲得授權後）部署 → 回報證據」的完整閉環。
+
+- 先讀取本 Skill 與 [版本更新維護流程](references/version-update-runbook.md)，再開始修改；不要只依賴歷史對話或截圖記憶。
+- 先檢查 Git 分支、HEAD、工作樹與實際安裝檔；保留既有使用者修改，不執行 `reset --hard`、`clean` 或無關檔案刪除。
+- 「建構成功」、「部署成功」、「應用程式成功啟動」與「畫面人工驗收」是四種不同證據，回報時必須分開。
+- 使用者只要求維護或建構時，不要自行套用到正在使用的應用程式；只有明確要求部署時才關閉程序、替換檔案與自動重啟。
+- 版本、來源或備份狀態不明時停止在可恢復狀態，指出缺少的證據與下一個安全動作；不要用舊的 scratch 目錄猜測新版本。
 
 ## 重要不變條件
 
@@ -35,3 +45,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - 靜態檔案檢查只能證明字典與語法正確，不能證明 Electron 啟動、程序關閉、檔案鎖定解除或畫面實際顯示正確。報告結果時分開描述這些證據層級。
 
 進行版本更新或較大的維護時，請讀取 [版本更新維護流程](references/version-update-runbook.md)，其中記錄來源選擇、字典定位、驗證矩陣與這次 2.12.0 維護的具體陷阱。
+
+## AI 交付格式
+
+完成維護後，至少回報：實際偵測到的應用程式版本、修改的語言包／程式檔、執行過的檢查、是否實際部署、是否啟動應用程式，以及仍標記為 `NOT VERIFIED` 的項目。若公開 Repository 有變更，再列出 commit 與遠端分支；沒有得到發布授權時不要自行 push。
