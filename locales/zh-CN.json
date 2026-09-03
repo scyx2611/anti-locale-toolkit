@@ -1,0 +1,677 @@
+{
+  "exact_properties": [
+    {
+      "key": "title:\"File\"",
+      "val": "title:\"文件\""
+    },
+    {
+      "key": "title:\"View\"",
+      "val": "title:\"查看\""
+    },
+    {
+      "key": "title:\"Window\"",
+      "val": "title:\"窗口\""
+    },
+    {
+      "key": "label:\"New Conversation\"",
+      "val": "label:\"新对话\""
+    },
+    {
+      "key": "title:\"New Conversation\"",
+      "val": "title:\"新对话\""
+    },
+    {
+      "key": "label:\"Create Project\"",
+      "val": "label:\"创建项目\""
+    },
+    {
+      "key": "label:\"Command Palette\"",
+      "val": "label:\"命令面板\""
+    },
+    {
+      "key": "label:\"Toggle Fullscreen\"",
+      "val": "label:\"切換全螢幕\""
+    },
+    {
+      "key": "label:\"Zoom In\"",
+      "val": "label:\"放大\""
+    },
+    {
+      "key": "label:\"Zoom Out\"",
+      "val": "label:\"縮小\""
+    },
+    {
+      "key": "label:\"Reset Zoom\"",
+      "val": "label:\"重設縮放\""
+    },
+    {
+      "key": "label:\"Minimize\"",
+      "val": "label:\"最小化\""
+    },
+    {
+      "key": "label:\"Maximize\"",
+      "val": "label:\"最大化\""
+    },
+    {
+      "key": "label:\"Close\"",
+      "val": "label:\"關閉\""
+    },
+    {
+      "key": "label:\"About\"",
+      "val": "label:\"關於\""
+    },
+    {
+      "key": "label:\"Check for Updates\"",
+      "val": "label:\"檢查更新\""
+    },
+    {
+      "key": "text:\"New Conversation\"",
+      "val": "text:\"新对话\""
+    },
+    {
+      "key": "tooltipText:\"New Conversation\"",
+      "val": "tooltipText:\"新对话\""
+    },
+    {
+      "key": "\"New Conversation in Project\"",
+      "val": "\"在项目中创建新对话\""
+    },
+    {
+      "key": "\"New Conversation in Workspace\"",
+      "val": "\"在工作区中创建新对话\""
+    },
+    {
+      "key": "text:\"Conversation History\"",
+      "val": "text:\"歷史对话\""
+    },
+    {
+      "key": "tooltipText:\"Conversation History\"",
+      "val": "tooltipText:\"歷史对话\""
+    },
+    {
+      "key": "label:\"Scheduled Tasks\"",
+      "val": "label:\"定时任務\""
+    },
+    {
+      "key": "title:\"Scheduled Tasks\"",
+      "val": "title:\"定时任務\""
+    },
+    {
+      "key": "sidebarLabel:\"Scheduled Tasks\"",
+      "val": "sidebarLabel:\"定时任務\""
+    },
+    {
+      "key": "label:\"Skills & Customizations\"",
+      "val": "label:\"技能與自定义\""
+    },
+    {
+      "key": "title:\"Skills & Customizations\"",
+      "val": "title:\"技能與自定义\""
+    },
+    {
+      "key": "text:\"Settings\"",
+      "val": "text:\"设置\""
+    },
+    {
+      "key": "tooltipText:\"Settings\"",
+      "val": "tooltipText:\"设置\""
+    },
+    {
+      "key": "label:\"Settings\"",
+      "val": "label:\"设置\""
+    },
+    {
+      "key": "title:\"Settings\"",
+      "val": "title:\"设置\""
+    },
+    {
+      "key": "text:\"Provide Feedback\"",
+      "val": "text:\"提供意見反映\""
+    },
+    {
+      "key": "text:\"UI Plugins\"",
+      "val": "text:\"UI 外掛\""
+    },
+    {
+      "key": "text:\"Customizations\"",
+      "val": "text:\"自定义項目\""
+    },
+    {
+      "key": "z?\"Workspaces\":\"Projects\"",
+      "val": "z?\"工作区\":\"项目\""
+    },
+    {
+      "key": "e===\"none\"?\"Conversations\"",
+      "val": "e===\"none\"?\"对话\""
+    },
+    {
+      "key": "title:\"Pinned Conversations\"",
+      "val": "title:\"已置顶对话\""
+    },
+    {
+      "key": "title:\"Conversations\"",
+      "val": "title:\"对话列表\""
+    },
+    {
+      "key": "title:\"Projects\"",
+      "val": "title:\"项目列表\""
+    },
+    {
+      "key": "title:\"Workspaces\"",
+      "val": "title:\"工作区\""
+    },
+    {
+      "key": "header:\"Workspaces\"",
+      "val": "header:\"工作区\""
+    },
+    {
+      "key": "\"Add Workspace\"",
+      "val": "\"新增工作区\""
+    },
+    {
+      "key": "\"Create New Project\"",
+      "val": "\"创建新项目\""
+    },
+    {
+      "key": "\"Display Options\"",
+      "val": "\"顯示選項\""
+    },
+    {
+      "key": "placeholder:\"Search conversations...\"",
+      "val": "placeholder:\"搜索对话...\""
+    },
+    {
+      "key": "placeholder:\"Search projects...\"",
+      "val": "placeholder:\"搜索项目...\""
+    },
+    {
+      "key": "placeholder:\"Search tasks...\"",
+      "val": "placeholder:\"搜索任務...\""
+    },
+    {
+      "key": "placeholder:\"Search settings...\"",
+      "val": "placeholder:\"搜索设置...\""
+    },
+    {
+      "key": "\"Ask anything, @ to mention\"",
+      "val": "\"輸入任何問題，使用 @ 引用\""
+    },
+    {
+      "key": "\", / for actions\"",
+      "val": "\"，/ 使用指令\""
+    },
+    {
+      "key": "\"Install IDE\"",
+      "val": "\"安裝 IDE\""
+    },
+    {
+      "key": "\"Install Antigravity IDE to run and edit your workspace scripts.\"",
+      "val": "\"安裝 Antigravity IDE 以執行並編輯工作区腳本。\""
+    },
+    {
+      "key": "\"Dismiss announcement\"",
+      "val": "\"關閉公告\""
+    },
+    {
+      "key": "label:\"Media\"",
+      "val": "label:\"媒體文件\""
+    },
+    {
+      "key": "label:\"Mentions\"",
+      "val": "label:\"標記提及\""
+    },
+    {
+      "key": "label:\"Actions\"",
+      "val": "label:\"動作指令\""
+    },
+    {
+      "key": "label:\"Browser\"",
+      "val": "label:\"瀏覽器\""
+    },
+    {
+      "key": "`Today ${c}`",
+      "val": "`今天 ${c}`"
+    },
+    {
+      "key": "`Yesterday ${c}`",
+      "val": "`昨天 ${c}`"
+    },
+    {
+      "key": "title:\"Subagents\"",
+      "val": "title:\"子代理\""
+    },
+    {
+      "key": "label:\"Subagents\"",
+      "val": "label:\"子代理\""
+    },
+    {
+      "key": "\"No subagents\"",
+      "val": "\"无运行中的子代理\""
+    },
+    {
+      "key": "emptyText:\"No subagents\"",
+      "val": "emptyText:\"无运行中的子代理\""
+    },
+    {
+      "key": "title:\"Terminals\"",
+      "val": "title:\"终端\""
+    },
+    {
+      "key": "label:\"Terminals\"",
+      "val": "label:\"终端\""
+    },
+    {
+      "key": "\"No active terminals\"",
+      "val": "\"无活跃的终端\""
+    },
+    {
+      "key": "title:\"Uploads\"",
+      "val": "title:\"已上传文件\""
+    },
+    {
+      "key": "emptyText:\"No uploads\"",
+      "val": "emptyText:\"無已上传文件\""
+    },
+    {
+      "key": "title:\"Artifacts\"",
+      "val": "title:\"工件產出\""
+    },
+    {
+      "key": "label:\"Artifacts\"",
+      "val": "label:\"工件產出\""
+    },
+    {
+      "key": "title:\"Files Changed\"",
+      "val": "title:\"修改文件\""
+    },
+    {
+      "key": "label:\"Files Changed\"",
+      "val": "label:\"修改文件\""
+    },
+    {
+      "key": "title:\"Background Tasks\"",
+      "val": "title:\"背景任務\""
+    },
+    {
+      "key": "label:\"Background Tasks\"",
+      "val": "label:\"背景任務\""
+    },
+    {
+      "key": "\"No background tasks\"",
+      "val": "\"無背景任務\""
+    },
+    {
+      "key": "label:\"Uncommitted\"",
+      "val": "label:\"未提交修改\""
+    },
+    {
+      "key": "subtitle:\"Staged index changes and working tree changes\"",
+      "val": "subtitle:\"暂存区與工作目录修改\""
+    },
+    {
+      "key": "label:\"Branch\"",
+      "val": "label:\"分支修改\""
+    },
+    {
+      "key": "\"Open Terminal\"",
+      "val": "\"開啟终端\""
+    },
+    {
+      "key": "\"Stop All Subagents\"",
+      "val": "\"停止所有子代理\""
+    },
+    {
+      "key": "\"Stop Subagent\"",
+      "val": "\"停止子代理\""
+    },
+    {
+      "key": "\"Collapse subagents\"",
+      "val": "\"收合子代理\""
+    },
+    {
+      "key": "\"Expand subagents\"",
+      "val": "\"展開子代理\""
+    },
+    {
+      "key": "\"Approve\"",
+      "val": "\"批准\""
+    },
+    {
+      "key": "\"Deny\"",
+      "val": "\"拒絕\""
+    },
+    {
+      "key": "tooltip:\"Copy Content\"",
+      "val": "tooltip:\"複製內容\""
+    },
+    {
+      "key": "tooltip:\"Copy Path\"",
+      "val": "tooltip:\"複製路徑\""
+    },
+    {
+      "key": "tooltip:\"Search\"",
+      "val": "tooltip:\"搜索\""
+    },
+    {
+      "key": "tooltip:\"View Diff\"",
+      "val": "tooltip:\"查看差異\""
+    },
+    {
+      "key": "\"See less\"",
+      "val": "\"显示较少\""
+    },
+    {
+      "key": "`See all ($",
+      "val": "`查看全部 ($"
+    },
+    {
+      "key": "\"See all (\",",
+      "val": "\"查看全部 (\","
+    },
+    {
+      "key": "title:\"Account\"",
+      "val": "title:\"帳戶\""
+    },
+    {
+      "key": "title:\"General\"",
+      "val": "title:\"一般设置\""
+    },
+    {
+      "key": "label:\"General\"",
+      "val": "label:\"一般设置\""
+    },
+    {
+      "key": "label:\"Enable Telemetry\"",
+      "val": "label:\"啟用遥测資料收集\""
+    },
+    {
+      "key": "label:\"Marketing Emails\"",
+      "val": "label:\"行銷電子郵件\""
+    },
+    {
+      "key": "label:\"Terminal Commands\"",
+      "val": "label:\"终端指令\""
+    },
+    {
+      "key": "title:\"Terminal Commands\"",
+      "val": "title:\"终端指令\""
+    },
+    {
+      "key": "label:\"Commands Outside Sandbox\"",
+      "val": "label:\"沙盒外指令\""
+    },
+    {
+      "key": "label:\"MCP Tools\"",
+      "val": "label:\"MCP 工具\""
+    },
+    {
+      "key": "label:\"MCP Servers\"",
+      "val": "label:\"MCP 伺服器\""
+    },
+    {
+      "key": "label:\"Custom Agents\"",
+      "val": "label:\"自定义代理\""
+    },
+    {
+      "key": "label:\"Code Search\"",
+      "val": "label:\"程式碼搜索\""
+    },
+    {
+      "key": "label:\"Model Quota\"",
+      "val": "label:\"模型配額\""
+    },
+    {
+      "key": "label:\"Tool Execution Policy\"",
+      "val": "label:\"工具執行策略\""
+    },
+    {
+      "key": "label:\"Terminal Sandbox\"",
+      "val": "label:\"终端沙盒\""
+    },
+    {
+      "key": "label:\"Internet Access Policy\"",
+      "val": "label:\"网络存取策略\""
+    },
+    {
+      "key": "label:\"Artifact Review Mode\"",
+      "val": "label:\"工件審查模式\""
+    },
+    {
+      "key": "label:\"Appearance\"",
+      "val": "label:\"外觀\""
+    },
+    {
+      "key": "label:\"Toggle Sidebar\"",
+      "val": "label:\"切換側邊欄\""
+    },
+    {
+      "key": "label:\"Open Conversation Picker\"",
+      "val": "label:\"開啟对话選取器\""
+    },
+    {
+      "key": "label:\"Select Next Conversation\"",
+      "val": "label:\"選擇下一個对话\""
+    },
+    {
+      "key": "label:\"Select Previous Conversation\"",
+      "val": "label:\"選擇上一個对话\""
+    },
+    {
+      "key": "label:\"Add to Chat\"",
+      "val": "label:\"加入对话\""
+    },
+    {
+      "key": "label:\"Agent Non-Workspace File Access\"",
+      "val": "label:\"代理存取工作区外文件\""
+    },
+    {
+      "key": "label:\"Execute URLs\"",
+      "val": "label:\"執行 URL 網址\""
+    },
+    {
+      "key": "label:\"Read URLs\"",
+      "val": "label:\"讀取 URL 內容\""
+    },
+    {
+      "key": "label:\"Auto (detected)\"",
+      "val": "label:\"自動偵測\""
+    },
+    {
+      "key": "label:\"Local\"",
+      "val": "label:\"本地端\""
+    },
+    {
+      "key": "label:\"Conversations\"",
+      "val": "label:\"对话列表\""
+    },
+    {
+      "key": "label:\"Rules\"",
+      "val": "label:\"規則\""
+    },
+    {
+      "key": "label:\"Skills\"",
+      "val": "label:\"技能\""
+    },
+    {
+      "key": "label:\"Knowledge\"",
+      "val": "label:\"知識庫\""
+    },
+    {
+      "key": "label:\"Hooks\"",
+      "val": "label:\"鉤子 (Hooks)\""
+    },
+    {
+      "key": "label:\"Plugins\"",
+      "val": "label:\"外掛 (Plugins)\""
+    },
+    {
+      "key": "label:\"Customizations\"",
+      "val": "label:\"自定义選項\""
+    },
+    {
+      "key": "label:\"Delete\"",
+      "val": "label:\"刪除\""
+    },
+    {
+      "key": "label:\"Edit\"",
+      "val": "label:\"編輯\""
+    },
+    {
+      "key": "label:\"Rename\"",
+      "val": "label:\"重命名\""
+    },
+    {
+      "key": "label:\"Archive\"",
+      "val": "label:\"封存\""
+    },
+    {
+      "key": "label:\"Dismiss\"",
+      "val": "label:\"關閉\""
+    },
+    {
+      "key": "label:\"Copy\"",
+      "val": "label:\"複製\""
+    },
+    {
+      "key": "title:\"Copy\"",
+      "val": "title:\"複製\""
+    },
+    {
+      "key": "title:\"Copied\"",
+      "val": "title:\"已複製\""
+    },
+    {
+      "key": "label:\"New Project\"",
+      "val": "label:\"新项目\""
+    },
+    {
+      "key": "label:\"Project Name\"",
+      "val": "label:\"项目名稱\""
+    },
+    {
+      "key": "label:\"Open Workspace\"",
+      "val": "label:\"開啟工作区\""
+    },
+    {
+      "key": "label:\"Recent\"",
+      "val": "label:\"最近使用\""
+    },
+    {
+      "key": "title:\"Filter\"",
+      "val": "title:\"篩選\""
+    },
+    {
+      "key": "label:\"Status\"",
+      "val": "label:\"狀態\""
+    },
+    {
+      "key": "label:\"All\"",
+      "val": "label:\"全部\""
+    },
+    {
+      "key": "title:\"Next\"",
+      "val": "title:\"下一步\""
+    },
+    {
+      "key": "title:\"Previous\"",
+      "val": "title:\"上一步\""
+    },
+    {
+      "key": "label:\"Run\"",
+      "val": "label:\"執行\""
+    },
+    {
+      "key": "label:\"Running\"",
+      "val": "label:\"執行中\""
+    },
+    {
+      "key": "label:\"Completed\"",
+      "val": "label:\"已完成\""
+    },
+    {
+      "key": "label:\"Error\"",
+      "val": "label:\"錯誤\""
+    },
+    {
+      "key": "title:\"Model\"",
+      "val": "title:\"模型\""
+    },
+    {
+      "key": "title:\"Permissions\"",
+      "val": "title:\"權限\""
+    },
+    {
+      "key": "title:\"Notifications\"",
+      "val": "title:\"通知\""
+    },
+    {
+      "key": "placeholder:\"Enter file or directory path...\"",
+      "val": "placeholder:\"輸入文件或目錄路徑...\""
+    },
+    {
+      "key": "placeholder:\"Enter URL pattern...\"",
+      "val": "placeholder:\"輸入 URL 網址樣式...\""
+    }
+  ],
+  "descriptions": [
+    {
+      "from": "Allow the agent to automatically view and edit files outside the current workspace. Use with caution: this gives the agent broad access to your filesystem.",
+      "to": "允許代理自動查看與編輯當前工作區之外的文件。請謹慎使用：這將賦予代理廣泛的文件系統存取權限。"
+    },
+    {
+      "from": "Allows the agent to access files outside of your current workspace.",
+      "to": "允許代理存取您當前工作區之外的文件。"
+    },
+    {
+      "from": "Run terminal commands inside a restricted sandbox environment for added security.",
+      "to": "在受限的沙盒環境中執行终端命令以增強安全性。"
+    },
+    {
+      "from": "Control whether terminal commands require user review before execution.",
+      "to": "控制终端命令在執行前是否需要使用者審查確認。"
+    },
+    {
+      "from": "Manage your plan, credentials, and general preferences.",
+      "to": "管理您的方案、認證凭证與一般偏好设置。"
+    }
+  ],
+  "native_menu": {
+    "File": "文件",
+    "New Window": "新建窗口",
+    "Edit": "编辑",
+    "Undo": "撤销",
+    "Redo": "重做",
+    "Cut": "剪切",
+    "Copy": "复制",
+    "Paste": "粘贴",
+    "Select All": "全选",
+    "View": "查看",
+    "Reload": "重新加载",
+    "Force Reload": "强制重新加载",
+    "Toggle Developer Tools": "开发者工具",
+    "Actual Size": "实际大小",
+    "Zoom In": "放大",
+    "Zoom Out": "缩小",
+    "Toggle Full Screen": "切换全屏",
+    "Window": "窗口",
+    "Minimize": "最小化",
+    "Close": "关闭",
+    "Help": "帮助",
+    "Docs": "官方文档",
+    "Check for Updates": "检查更新",
+    "Checking for Updates...": "正在检查更新...",
+    "Update Available": "有可用更新",
+    "Downloading Update...": "正在下载更新...",
+    "Restart to Update": "重启以应用更新"
+  },
+  "tray": {
+    "No agents running": "无运行中的智能体",
+    "agent running": "个智能体运行中",
+    "agents running": "个智能体运行中",
+    "Open Antigravity": "打开 Antigravity",
+    "Quit": "退出"
+  },
+  "overlay": {
+    "Loading Antigravity": "正在加载 Antigravity..."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "anti-locale-toolkit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "One-click multilingual localization toolkit for Antigravity Desktop",
+  "main": "scripts/patcher.js",
+  "scripts": {
+    "start": "node scripts/patcher.js --interactive",
+    "apply:zh-tw": "node scripts/patcher.js --apply --lang zh-TW",
+    "apply:zh-cn": "node scripts/patcher.js --apply --lang zh-CN",
+    "restore": "node scripts/patcher.js --restore",
+    "status": "node scripts/patcher.js --status",
+    "check": "node --check scripts/patcher.js && node -e \"for (const f of ['locales/zh-TW.json','locales/zh-CN.json']) JSON.parse(require('fs').readFileSync(f, 'utf8')); console.log('AntiLocale Toolkit 檔案檢查通過')\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "asar": "^3.2.0"
+  }
+}

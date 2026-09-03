@@ -1,0 +1,11 @@
+{
+  "name": "AntiLocale Toolkit",
+  "repository": "anti-locale-toolkit",
+  "supportedApplication": "Antigravity Desktop",
+  "supportedApplicationVersion": "2.12.0",
+  "defaultLanguage": "zh-TW",
+  "availableLanguages": [
+    "zh-TW",
+    "zh-CN"
+  ]
+}
