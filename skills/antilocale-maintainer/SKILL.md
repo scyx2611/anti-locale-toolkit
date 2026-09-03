@@ -42,6 +42,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - `Limited time` 至少有模型徽章的 `tagTitle` 與資訊圖示 Tooltip 的 `tagDescription` 兩個來源；只翻譯徽章會留下 Tooltip 英文。`Fast` 也有相同的徽章與 Tooltip 關係。
 - `Skills Used` 是動態區塊標題；更新字典時要定位實際產生標題的 expression，而不是只加入一般固定字串。
 - `Worked for 1m`、`Thinking time 2s`、`Analyzed ...` 等執行紀錄由回應元件即時產生，必須以動態來源或模板處理；`2s` 等時間單位不能只依賴固定畫面搜尋。
+- `Working..` 的載入提示是 `Working` 基本文字加上獨立的動畫點元件，不是完整的固定字串；另有狀態選擇器與子代理摘要使用 `Working...`。要定位完整 expression 後翻譯，不能對 `Working` 做全域替換，否則會誤傷 `Working directory` 等內容。
 - 執行摘要中的 `folders` 等項目不是直接輸出的固定字串，而是由 `const Sib` 的單複數對照表產生；若只翻譯摘要外層模板，仍會留下 `3 folders`。更新時要檢查整張對照表，並確認檔案、資料夾、搜尋、指令等類別都能輸出目標語言。
 - 權限確認的自訂回覆選項由 `writeInLabel` 與 `writeInPlaceholder` 組合，和一般 `AskQuestionOption` 的 `text` 不是同一個來源；補翻 `No (tell the agent what to do instead)` 時要同時檢查這兩個欄位。
 - 靜態檔案檢查只能證明字典與語法正確，不能證明 Electron 啟動、程序關閉、檔案鎖定解除或畫面實際顯示正確。報告結果時分開描述這些證據層級。

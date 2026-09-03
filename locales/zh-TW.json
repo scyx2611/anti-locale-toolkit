@@ -4850,5 +4850,9 @@
     ,{"key":"z.createElement(\"div\",{className:\"max-w-[200px]\"},a.tagDescription)","val":"z.createElement(\"div\",{className:\"max-w-[200px]\"},a.tagDescription===\"Limited time\"?\"限時提供\":a.tagDescription)","description":"2.12模型徽章提示翻譯"}
     ,{"key":"const Sib={files:[\"file\",\"files\"],folders:[\"folder\",\"folders\"],edits:[\"file\",\"files\"],searches:[\"search\",\"searches\"],terminal:[\"command\",\"commands\"],tasks:[\"task\",\"tasks\"],web:[\"page\",\"pages\"],browser:[\"browser\",\"browsers\"],images:[\"image\",\"images\"],actions:[\"action\",\"actions\"],artifacts:[\"artifact\",\"artifacts\"]}","val":"const Sib={files:[\"檔案\",\"檔案\"],folders:[\"資料夾\",\"資料夾\"],edits:[\"檔案\",\"檔案\"],searches:[\"搜尋\",\"搜尋\"],terminal:[\"指令\",\"指令\"],tasks:[\"任務\",\"任務\"],web:[\"頁面\",\"頁面\"],browser:[\"瀏覽器\",\"瀏覽器\"],images:[\"圖片\",\"圖片\"],actions:[\"動作\",\"動作\"],artifacts:[\"成品\",\"成品\"]}","description":"2.12執行摘要項目單位翻譯"}
     ,{"key":"writeInLabel:\"No\",writeInPlaceholder:\"(tell the agent what to do instead)\"","val":"writeInLabel:\"否\",writeInPlaceholder:\"（告訴代理要改做什麼）\"","description":"2.12權限寫入選項翻譯"}
+    ,{"key":"g??(b?\"Compacting\":\"Working\"),z.createElement(aV,null)","val":"g??(b?\"壓縮中\":\"執行中\"),z.createElement(aV,null)","description":"2.12代理載入狀態翻譯"}
+    ,{"key":"case 4:return\"Running\";case 3:return\"Waiting\";case 5:return\"Agent is analyzing videos\";case 2:return\"Thinking\";","val":"case 4:return\"執行中\";case 3:return\"等待中\";case 5:return\"代理正在分析影片\";case 2:return\"思考中\";","description":"2.12代理狀態選擇器翻譯"}
+    ,{"key":"return a?`Executing task: ${a}`:\"Working\"","val":"return a?`執行任務：${a}`:\"執行中\"","description":"2.12任務狀態翻譯"}
+    ,{"key":"\"Working...\"","val":"\"執行中...\"","description":"2.12工作狀態提示"}
   ]
 }

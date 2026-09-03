@@ -48,7 +48,7 @@
 ### 這次 2.12.0 維護留下的檢查清單
 
 - 檔案預覽標頭：`Preview`、`Raw`。
-- 執行摘要：`Skills Used`、`Worked for 1m`、`Thinking time 2s`、`Analyzed`、`Searched`，以及由 `const Sib` 對照表產生的 `folders` 等項目數量。
+- 執行摘要：`Skills Used`、`Worked for 1m`、`Thinking time 2s`、`Analyzed`、`Searched`、`Working..`，以及由 `const Sib` 對照表產生的 `folders` 等項目數量。
 - 模型選擇器：`Fast` 徽章，以及 `Limited time` 徽章和資訊圖示 Tooltip；兩者都要確認。
 - 檔案與終端機入口：`Open File`、`New Terminal`、`Show in File Explorer`。
 - 權限確認：一般選項的 `text`，以及自訂回覆的 `writeInLabel`、`writeInPlaceholder`；要確認組合後的完整文案，不只確認其中一個欄位。
@@ -153,7 +153,7 @@ skills/.../references/...    -> 基線、陷阱與驗證結果
 rg -n -F "Preview" <clean-web-bundle>\\main.js
 rg -n -F "Limited time" <clean-web-bundle>\\main.js
 rg -n -F "Skills Used" <clean-web-bundle>\\main.js
-rg -n "tagTitle|tagDescription|Worked for|Thinking time|const Sib|writeInLabel|writeInPlaceholder" <clean-web-bundle>\\main.js
+rg -n "tagTitle|tagDescription|Worked for|Thinking time|Working|Compacting|Executing task|const Sib|writeInLabel|writeInPlaceholder" <clean-web-bundle>\\main.js
 ```
 
 大型 minified 檔案不要整份貼進上下文；只取命中位置前後的短片段，並記錄它屬於固定字串、expression、模板、Tooltip 還是原生程式。
@@ -256,6 +256,7 @@ node scripts/patcher.js --apply --lang zh-TW
 | Tooltip 仍是英文 | 只處理了 badge 或標題，沒有處理 description | 尋找 `tagTitle` 與 `tagDescription` 兩個來源並分別驗證 |
 | 摘要仍顯示 `3 folders` 等英文單位 | 類別單複數由 `const Sib` 對照表即時產生，沒有命中外層摘要模板 | 以完整 `const Sib` 片段加入 `exact_properties`，並檢查檔案、資料夾、搜尋與指令等類別 |
 | 權限選項仍顯示 `No (tell the agent what to do instead)` | 自訂回覆的 label／placeholder 不經一般選項文字翻譯函式 | 同時定位並翻譯 `writeInLabel` 與 `writeInPlaceholder`，再驗證組合後的畫面文案 |
+| 載入狀態仍顯示 `Working..` 或 `Working...` | `Working` 可能是動畫載入 expression 的 fallback，也可能來自狀態選擇器／子代理摘要；全域短詞替換容易誤傷 `Working directory` | 分別定位 `Compacting`／`Working` 載入 expression、`Executing task` 狀態 expression 與完整 `Working...` 字串，再逐一建構驗證 |
 | 切換語言後原生選單未變 | 使用了上一個已修改 archive，或跳過既有 `i18nMenuDict` | 從乾淨 backup 重建，或更新既有注入字典；不要累加替換 |
 | app.asar 被鎖定 | Antigravity 或 language server 尚未退出 | 只關閉目標程序後重試；不要停止無關程序，不要刪除備份 |
 | 應用程式無法啟動 | 原生語法、archive 或 bundle 部署不完整 | 先關閉目標程序，執行 `--restore`，確認備份版本，再檢查語法與來源 |

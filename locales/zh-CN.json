@@ -621,6 +621,26 @@
       "key": "writeInLabel:\"No\",writeInPlaceholder:\"(tell the agent what to do instead)\"",
       "val": "writeInLabel:\"否\",writeInPlaceholder:\"（告诉代理要改做什么）\"",
       "description": "2.12权限写入选项翻译"
+    },
+    {
+      "key": "g??(b?\"Compacting\":\"Working\"),z.createElement(aV,null)",
+      "val": "g??(b?\"压缩中\":\"执行中\"),z.createElement(aV,null)",
+      "description": "2.12代理加载状态翻译"
+    },
+    {
+      "key": "case 4:return\"Running\";case 3:return\"Waiting\";case 5:return\"Agent is analyzing videos\";case 2:return\"Thinking\";",
+      "val": "case 4:return\"执行中\";case 3:return\"等待中\";case 5:return\"代理正在分析视频\";case 2:return\"思考中\";",
+      "description": "2.12代理状态选择器翻译"
+    },
+    {
+      "key": "return a?`Executing task: ${a}`:\"Working\"",
+      "val": "return a?`执行任务：${a}`:\"执行中\"",
+      "description": "2.12任务状态翻译"
+    },
+    {
+      "key": "\"Working...\"",
+      "val": "\"执行中...\"",
+      "description": "2.12工作状态提示"
     }
   ],
   "descriptions": [
