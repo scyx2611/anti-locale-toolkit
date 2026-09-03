@@ -14,6 +14,8 @@ Antigravity Desktop 的多語言漢化部署工具。以語言包為核心，讓
 2. 雙擊 `AntiLocaleToolkit.bat`。
 3. 選擇繁體中文、簡體中文、還原或狀態檢查。
 
+如果套用或還原前 Antigravity 正在開啟，完成後工具會自動重新啟動它；如果原本沒有開啟，工具會維持關閉狀態。
+
 第一次執行會自動安裝必要元件。工具會在第一次套用前建立 `app.asar.backup` 與 `web_bundle.backup`，之後可從選單還原官方版本。
 
 ## 來源檔案

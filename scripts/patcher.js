@@ -6,7 +6,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { execFileSync } = require('child_process');
+const { execFileSync, spawn } = require('child_process');
 const readline = require('readline');
 
 const CLI_ARGS = process.argv.slice(2);
@@ -195,6 +195,45 @@ function killAntigravityProcesses() {
   console.log('Antigravity 進程已關閉。');
 }
 
+function isAntigravityRunning() {
+  try {
+    const output = execFileSync(
+      'tasklist',
+      ['/FI', 'IMAGENAME eq Antigravity.exe', '/FO', 'CSV', '/NH'],
+      { encoding: 'utf8', windowsHide: true }
+    );
+    return output.split(/\r?\n/).some((line) => line.trim().toLowerCase().startsWith('"antigravity.exe"'));
+  } catch (_) {
+    return false;
+  }
+}
+
+function startAntigravity() {
+  const executablePath = path.join(APP_DIR, 'Antigravity.exe');
+  if (!fs.existsSync(executablePath)) {
+    throw new Error(`找不到 Antigravity 執行檔：${executablePath}`);
+  }
+  const child = spawn(executablePath, [], {
+    detached: true,
+    stdio: 'ignore',
+    windowsHide: false,
+  });
+  child.unref();
+  console.log('已自動重新開啟 Antigravity。');
+}
+
+function reopenIfPreviouslyRunning(wasRunning) {
+  if (!wasRunning) return false;
+  try {
+    startAntigravity();
+    return true;
+  } catch (err) {
+    console.warn(`補丁已完成，但自動重新開啟失敗：${err.message}`);
+    console.warn('請手動開啟 Antigravity。');
+    return false;
+  }
+}
+
 // 狀態檢查
 function checkStatus() {
   console.log('\n====================================================');
@@ -219,6 +258,7 @@ function restore(autoKill = true) {
     console.error('錯誤：找不到備份檔案 app.asar.backup，無法自動還原！');
     return false;
   }
+  const wasRunning = autoKill && isAntigravityRunning();
   if (autoKill) {
     killAntigravityProcesses();
   }
@@ -235,6 +275,7 @@ function restore(autoKill = true) {
     console.log('\n====================================================');
     console.log(' 🎉 已完整還原至官方原版英文狀態！');
     console.log('====================================================\n');
+    reopenIfPreviouslyRunning(wasRunning);
     return true;
   } catch (err) {
     console.error('還原失敗：', err.message);
@@ -646,6 +687,7 @@ function applyPatch(lang = 'zh-tw', autoKill = true) {
   ensureAsarBackup();
   const sourceWebBundle = resolveSourceWebBundle();
   ensureWebBundleBackup(sourceWebBundle);
+  const wasRunning = autoKill && isAntigravityRunning();
 
   const builtWebBundle = buildWebBundle(normalizedLang, sourceWebBundle);
   const builtAsar = buildAsar(lang);
@@ -671,9 +713,10 @@ function applyPatch(lang = 'zh-tw', autoKill = true) {
   fs.cpSync(builtWebBundle, WEB_BUNDLE_DIR, { recursive: true });
   console.log('前端漢化包部署完成！');
 
+  const reopened = reopenIfPreviouslyRunning(wasRunning);
   console.log('\n====================================================');
   console.log(' 🎉 Antigravity 客戶端漢化成功套用！');
-  console.log(' 現在您可以重新開啟 Antigravity 客戶端體驗中文介面！');
+  console.log(wasRunning && reopened ? ' 原本已開啟，已自動重新啟動 Antigravity。' : wasRunning ? ' 原本已開啟，請手動重新開啟 Antigravity。' : ' 原本未開啟，維持關閉狀態。');
   console.log('====================================================\n');
   return true;
 }
