@@ -50,10 +50,38 @@
 - 檔案預覽標頭：`Preview`、`Raw`。
 - 執行摘要：`Skills Used`、`Worked for 1m`、`Thinking...`、`Thinking time 2s`、`Analyzed`、`Searched`、`Working..`，以及由 `const Sib` 對照表產生的 `folders` 等項目數量。
 - 模型選擇器：`Fast` 徽章，以及 `Limited time` 徽章和資訊圖示 Tooltip；兩者都要確認。
-- 檔案與終端機入口：`Open File`、`New Terminal`、`Show in File Explorer`。
+- 檔案與終端機入口：`Open File`、`New Terminal`、`New Preview`、`Show in File Explorer`；`New Preview` 要檢查目前 bundle 的 `y`／`z` 元件變體。
 - 權限確認：一般選項的 `text`，以及自訂回覆的 `writeInLabel`、`writeInPlaceholder`；要確認組合後的完整文案，不只確認其中一個欄位。
 - 回饋頁與 Remote Control 相關說明；這些是長描述，不能只翻譯標題。
 - 右側技能清單、模型用量、設定頁與原生選單；原生內容不是只靠 web bundle 字典完成。
+
+### 完整性盤點與雙語對等檢查
+
+這次 2.12.0 的後續審查顯示，已補上的少數字串不能代表整個介面完成。每次都要對兩個語言包各自從乾淨來源建構，再逐類檢查：
+
+| 類別 | 必查來源或畫面文字 |
+|---|---|
+| 登入／帳戶 | `Continue with Google`、`Continue with Google Cloud`、`Success, Continuing...`、`Awaiting Authentication...` |
+| 執行摘要／狀態 | `Skills Used`、`Worked for ...`、`Analyzed`、`Searched`、`Working..`、`Working...`、`Thinking...`、`Thought Process`、`Thought for ...s`、`const Sib` 單複數表 |
+| 模型選擇器 | `Fast`、`Limited time`、`tagTitle`、`tagDescription`；徽章與 Tooltip 分開驗證 |
+| 檔案／面板 | `Preview`、`Raw`、`Open File`、`New Terminal`、`Show in File Explorer`、`Open in new tab` |
+| 搜尋／載入／空狀態 | 搜尋 placeholder、`Loading ...`、`Waiting for your input`、`No Results`、`No results found` |
+| 設定／權限／回饋 | 設定頁標題與說明、`Access rules`、檔案／終端機／MCP 權限、Remote Control 長說明與錯誤訊息 |
+| 工作區／群組／操作 | `Select workspace...`、`New Group`、`Rename Group`、`Group name`、複製／刪除／儲存／取消的文字與 Tooltip |
+
+每個項目都要檢查固定字串、動態 expression 的所有分支、`title`、`aria-label`、placeholder、Tooltip、錯誤及空狀態。簡中要另外做繁中用字檢查；品牌、模型、API、命令與路徑可列入白名單，不要誤改。`tagTitle === "Limited time"` 等比較值、enum、物件 key、CSS／程式識別字、註解與原生字典 key 的英文命中不算畫面遺漏，但任何可到達畫面的英文動態回傳值都算遺漏。
+
+本次審查已確認 `3 folders`、`No (tell the agent what to do instead)`、`Working..`／`Working...` 與 `Thinking...` 有雙語規則；未來不可只驗證這幾項就宣稱完成。`zh-CN.json` 必須獨立補齊與驗收，不能以單張畫面或建構成功推論簡中完整；先執行 `npm run check`，讓 `scripts/validate_locales.js` 比對繁中與簡中 exact key coverage。
+
+### 本輪 2.12.0 補翻紀錄
+
+- `zh-CN` 補齊設定、帳戶、模型用量與混入繁中用字；`Inherit General` 統一為「继承一般设置」。
+- `zh-TW` 與 `zh-CN` 都補上搜尋結果計數的動態 renderer，涵蓋搜尋、檔案搜尋與 Moma 結果；分別輸出「項結果」與「个结果」，不能只依賴 `const Sib` 的摘要單位表。
+- 保留 `qUb("...");` 受保護第三方區段的原始程式碼。若靜態掃描仍在該區段看到 `result/results`，先確認是否為可見 UI，再找安全的外層處理點，不要解除保護區段。
+- 本輪採不部署方式完成 `npm run check`、`node scripts/patcher.js --lang zh-TW` 與 `node scripts/patcher.js --lang zh-CN`；前端及 Electron 語法檢查與 `app.asar.patched` 打包均通過。未重啟或替換正在執行的應用程式，畫面人工驗收仍須標記為 `NOT VERIFIED`。
+- 原先 coverage audit 顯示 `zh-TW` 有 3,022 個 unique `exact_properties`，而 `zh-CN` 只有部分既有詞條；這是簡中仍露出大量英文的直接原因。使用 `scripts/sync_zh_cn_coverage.ps1` 合併後，`zh-CN` 為 3,177 個 unique exact key，已覆蓋全部繁中 key，並保留 155 個簡中專用 2.12.0 規則。
+- 同步工具的兩個必要安全條件：key set 使用 `StringComparer.Ordinal`，避免 PowerShell 不分大小寫而漏掉大小寫不同的詞條；`LCMapStringEx` 取值使用 `StringBuilder.ToString(0, $length)`，不可使用完整 buffer，否則短字串後會殘留前一次轉換內容並破壞 JavaScript。
+- `npm run check` 現在包含 `scripts/validate_locales.js`；它會解析兩個 JSON、檢查簡中覆蓋全部繁中 unique key、拒絕簡中重複 key，並攔截疑似 `StringBuilder`／轉換器殘留。之後繁中新增任何詞條，都必須先同步簡中再建構。
 
 ## 原生 Electron 修改位置
 
@@ -180,6 +208,14 @@ descriptions: [{ from, to, optional description }]
 - 新增或修改繁中後，檢查簡中是否也需要對應更新；不要因某語言暫時沒有翻譯而刪除結構。
 - 不翻譯檔案路徑、命令列、模型名稱、API 名稱、程式識別字或品牌名稱，除非它確實是可見 UI 文案。
 - 新增語言只需新增 `locales/<language>.json`；互動選單會掃描 JSON 語言包，只有需要特殊顯示名稱時才更新 `LANGUAGE_LABELS`。
+
+若繁中詞條已先完成，而簡中出現大量缺口，可在確認來源與版本一致後先執行一次機械化同步：
+
+```text
+pwsh -NoProfile -File scripts/sync_zh_cn_coverage.ps1
+```
+
+此腳本只合併缺少的 `exact_properties` key 並將值轉為簡中；它不會替 AI 判斷上下文、動態文字或專有名詞，因此執行後仍必須檢查簡中用語、執行 `npm run check`，再建構兩種語言。不要用已被污染的 bundle 當同步來源，也不要把同步數量當成人工驗收結果。
 
 ### Phase 4：處理動態文字與原生程式
 

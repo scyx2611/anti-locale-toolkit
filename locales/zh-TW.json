@@ -4854,5 +4854,12 @@
     ,{"key":"case 4:return\"Running\";case 3:return\"Waiting\";case 5:return\"Agent is analyzing videos\";case 2:return\"Thinking\";","val":"case 4:return\"執行中\";case 3:return\"等待中\";case 5:return\"代理正在分析影片\";case 2:return\"思考中\";","description":"2.12代理狀態選擇器翻譯"}
     ,{"key":"return a?`Executing task: ${a}`:\"Working\"","val":"return a?`執行任務：${a}`:\"執行中\"","description":"2.12任務狀態翻譯"}
     ,{"key":"\"Working...\"","val":"\"執行中...\"","description":"2.12工作狀態提示"}
+    ,{"key":"z.createElement(\"span\",null,\"New Preview\")","val":"z.createElement(\"span\",null,\"開新預覽\")","description":"2.12新增預覽選單項"}
+    ,{"key":"f>0&&z.createElement(\"span\",{className:\"shrink-0 rounded-full bg-muted px-1.5 py-0.5 text-xs leading-none text-muted-foreground\"},f,\" \",f===1?\"result\":\"results\")","val":"f>0&&z.createElement(\"span\",{className:\"shrink-0 rounded-full bg-muted px-1.5 py-0.5 text-xs leading-none text-muted-foreground\"},f,\"項結果\")","description":"2.12搜尋結果計數動態單位"}
+    ,{"key":"z.createElement(\"div\",{className:\"flex items-center gap-1 pl-1 text-sm\"},`${v}`,\" result\",v===1?\"\":\"s\")","val":"z.createElement(\"div\",{className:\"flex items-center gap-1 pl-1 text-sm\"},`${v}`,\"項結果\")","description":"2.12檔案搜尋結果計數動態單位"}
+    ,{"key":"\" result\",a.resources.length===1?\"\":\"s\"","val":"\"項結果\"","description":"2.12資源結果計數動態單位"}
+    ,{"key":"e.length,\" result\",e.length===1?\"\":\"s\",\" \"","val":"e.length,\"項結果 \"","description":"2.12瀏覽器點擊結果計數動態單位"}
+    ,{"key":"`${p}`,\" result\",p===1?\"\":\"s\"","val":"`${p}`,\"項結果\"","description":"2.12Moma結果計數動態單位"}
+    ,{"key":"`${m}`,\" result\",m===1?\"\":\"s\"","val":"`${m}`,\"項結果\"","description":"2.12資源結果計數動態單位"}
   ]
 }
