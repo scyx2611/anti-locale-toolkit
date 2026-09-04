@@ -53,6 +53,15 @@
 - 檔案與終端機入口：`Open File`、`New Terminal`、`New Preview`、`Show in File Explorer`；`New Preview` 要檢查目前 bundle 的 `y`／`z` 元件變體。
 - 權限確認：一般選項的 `text`，以及自訂回覆的 `writeInLabel`、`writeInPlaceholder`；要確認組合後的完整文案，不只確認其中一個欄位。
 - 回饋頁與 Remote Control 相關說明；這些是長描述，不能只翻譯標題。
+- MCP 工具權限的完整問句不應逐句硬編；2.12.0 的標題由 wGb action 對照表或 actionDescription 與固定 Allow 模板組成。應分開翻譯固定模板／對照表，並保留動態工具描述、指令、路徑與名稱。
+- MCP 伺服器卡片的 `Click to disable tool`／`Click to enable tool` 是固定 Tooltip；工具數量則由 `B?`${E} tool${E!==1?"s":""} enabled`:`${v.tools.length} tool${v.tools.length!==1?"s":""} disabled`` 動態產生。要翻譯兩個 Tooltip 與 enabled／disabled 兩個分支，保留 `${E}`、`${v.tools.length}`，不要把畫面範例中的 `6` 寫成固定文字。
+- MCP 執行步驟的標題使用 `prefix:"MCP Tool:"` 加上動態 `serverName`／`toolCall?.name`；只替換固定前綴為 `prefix:"MCP 工具："`，不要翻譯或改動伺服器與工具識別名稱。
+- 回覆評價按鈕的 `"Good response"`／`"Bad response"` 是固定 Tooltip 與 `aria-label`，可直接加入 `exact_properties`；若英文出現在模型實際回覆內容（例如 `Skills / Rules`、`Progressive Disclosure`），那是動態內容，不要以全域字串替換處理。
+- 回覆列的複製按鈕以 `J?"Copied":"Copy"` 同時提供 `aria-label` 與 Tooltip，必須保留條件判斷並翻譯兩個分支；其他 `title:"Copy"` 詞條不一定會命中這個按鈕。
+- 回覆評價送出後的成功提示使用 `u` 條件 expression；一般回饋與重要回饋的兩個英文分支都要翻譯，並以截圖中的短訊息與重要回饋長訊息分別驗證。
+- 選取文字的 Quote 浮動按鈕有保留 g／f 快捷鍵參數的兩個 JSX 變體；只替換 Quote 為「引用」，保留快捷鍵內容（如 Ctrl+L）。
+- npm run check 會驗證 wGb 對照表與固定 Allow 標題模板仍包含原始識別文字與目標語言片段；若來源 expression 改版，先更新規則與驗證器，再建構兩種語言。
+- Listed 0 tasks 應以活動 formatter 的數量模式翻譯，並一併處理 No active tasks. 與 Found subagents；權限標題的 Allow 翻譯值要保留後置空格，動態 actionDescription、指令、路徑與工具名稱則不改動。
 - 右側技能清單、模型用量、設定頁與原生選單；原生內容不是只靠 web bundle 字典完成。
 
 ### 完整性盤點與雙語對等檢查
@@ -66,7 +75,7 @@
 | 模型選擇器 | `Fast`、`Limited time`、`tagTitle`、`tagDescription`；徽章與 Tooltip 分開驗證 |
 | 檔案／面板 | `Preview`、`Raw`、`Open File`、`New Terminal`、`Show in File Explorer`、`Open in new tab` |
 | 搜尋／載入／空狀態 | 搜尋 placeholder、`Loading ...`、`Waiting for your input`、`No Results`、`No results found` |
-| 設定／權限／回饋 | 設定頁標題與說明、`Access rules`、檔案／終端機／MCP 權限、Remote Control 長說明與錯誤訊息 |
+| 設定／權限／回饋 | 設定頁標題與說明、`Access rules`、檔案／終端機／MCP 權限、MCP 工具卡片啟用數量與 Tooltip、Remote Control 長說明與錯誤訊息 |
 | 工作區／群組／操作 | `Select workspace...`、`New Group`、`Rename Group`、`Group name`、複製／刪除／儲存／取消的文字與 Tooltip |
 
 每個項目都要檢查固定字串、動態 expression 的所有分支、`title`、`aria-label`、placeholder、Tooltip、錯誤及空狀態。簡中要另外做繁中用字檢查；品牌、模型、API、命令與路徑可列入白名單，不要誤改。`tagTitle === "Limited time"` 等比較值、enum、物件 key、CSS／程式識別字、註解與原生字典 key 的英文命中不算畫面遺漏，但任何可到達畫面的英文動態回傳值都算遺漏。
@@ -79,7 +88,7 @@
 - `zh-TW` 與 `zh-CN` 都補上搜尋結果計數的動態 renderer，涵蓋搜尋、檔案搜尋與 Moma 結果；分別輸出「項結果」與「个结果」，不能只依賴 `const Sib` 的摘要單位表。
 - 保留 `qUb("...");` 受保護第三方區段的原始程式碼。若靜態掃描仍在該區段看到 `result/results`，先確認是否為可見 UI，再找安全的外層處理點，不要解除保護區段。
 - 本輪採不部署方式完成 `npm run check`、`node scripts/patcher.js --lang zh-TW` 與 `node scripts/patcher.js --lang zh-CN`；前端及 Electron 語法檢查與 `app.asar.patched` 打包均通過。未重啟或替換正在執行的應用程式，畫面人工驗收仍須標記為 `NOT VERIFIED`。
-- 原先 coverage audit 顯示 `zh-TW` 有 3,022 個 unique `exact_properties`，而 `zh-CN` 只有部分既有詞條；這是簡中仍露出大量英文的直接原因。使用 `scripts/sync_zh_cn_coverage.ps1` 合併後，`zh-CN` 為 3,177 個 unique exact key，已覆蓋全部繁中 key，並保留 155 個簡中專用 2.12.0 規則。
+- 原先 coverage audit 顯示 `zh-TW` 有 3,022 個 unique `exact_properties`，而 `zh-CN` 只有部分既有詞條；這是簡中仍露出大量英文的直接原因。經後續補翻與動態規則增加後，`npm run check` 目前顯示 `zh-TW` 3,037 個、`zh-CN` 3,192 個 unique exact key，簡中已覆蓋全部繁中 key，並保留簡中專用的 155 個 2.12.0 規則。
 - 同步工具的兩個必要安全條件：key set 使用 `StringComparer.Ordinal`，避免 PowerShell 不分大小寫而漏掉大小寫不同的詞條；`LCMapStringEx` 取值使用 `StringBuilder.ToString(0, $length)`，不可使用完整 buffer，否則短字串後會殘留前一次轉換內容並破壞 JavaScript。
 - `npm run check` 現在包含 `scripts/validate_locales.js`；它會解析兩個 JSON、檢查簡中覆蓋全部繁中 unique key、拒絕簡中重複 key，並攔截疑似 `StringBuilder`／轉換器殘留。之後繁中新增任何詞條，都必須先同步簡中再建構。
 
@@ -292,6 +301,12 @@ node scripts/patcher.js --apply --lang zh-TW
 | Tooltip 仍是英文 | 只處理了 badge 或標題，沒有處理 description | 尋找 `tagTitle` 與 `tagDescription` 兩個來源並分別驗證 |
 | 摘要仍顯示 `3 folders` 等英文單位 | 類別單複數由 `const Sib` 對照表即時產生，沒有命中外層摘要模板 | 以完整 `const Sib` 片段加入 `exact_properties`，並檢查檔案、資料夾、搜尋與指令等類別 |
 | 權限選項仍顯示 `No (tell the agent what to do instead)` | 自訂回覆的 label／placeholder 不經一般選項文字翻譯函式 | 同時定位並翻譯 `writeInLabel` 與 `writeInPlaceholder`，再驗證組合後的畫面文案 |
+| MCP 卡片仍顯示 `6 tools enabled` 或 `Click to disable tool` | 工具數量是 `E`／`v.tools.length` 動態 expression，Tooltip 則是獨立固定字串；只翻固定數字或伺服器標題不會命中 | 重新定位 `B?`${E} tool...enabled`:`${v.tools.length} tool...disabled`` 與兩個 Click Tooltip，保留動態數字並用兩種語言建構驗證 |
+| MCP 執行步驟仍顯示 `MCP Tool:` | 標題由固定 prefix 與動態伺服器／工具名稱組合 | 只翻 `prefix:"MCP Tool:"`，保留 `serverName`／`toolCall?.name`，再建構兩種語言 |
+| 回覆評價 Tooltip 仍顯示 `Good response`／`Bad response` | 同一固定英文同時作為按鈕 `aria-label` 與 Tooltip 內容 | 翻譯完整 quoted key，並確認兩個出現位置都替換 |
+| 回覆列複製按鈕仍顯示 `Copy`／`Copied` | 複製按鈕把兩個狀態放在 `J?"Copied":"Copy"` 條件 expression，與其他複製選單來源不同 | 翻譯條件 expression 的兩個分支，並確認未點擊與已點擊狀態 |
+| 點擊回覆評價後仍顯示 `Thanks for your feedback!` | 成功提示由 `u` 條件 expression 在一般／重要回饋兩個分支間切換 | 翻譯完整 expression 並分別驗證短訊息與重要回饋長訊息 |
+| 選取文字浮動按鈕仍顯示 `Quote` | Quote 文字位於帶 g 或 f 快捷鍵內容的 JSX 變體，既有 `title:"Quote"` 詞條不會命中 | 翻譯兩個 Quote JSX 變體，保留 g／f 與快捷鍵值 |
 | 載入狀態仍顯示 `Working..` 或 `Working...` | `Working` 可能是動畫載入 expression 的 fallback，也可能來自狀態選擇器／子代理摘要；全域短詞替換容易誤傷 `Working directory` | 分別定位 `Compacting`／`Working` 載入 expression、`Executing task` 狀態 expression 與完整 `Working...` 字串，再逐一建構驗證 |
 | 切換語言後原生選單未變 | 使用了上一個已修改 archive，或跳過既有 `i18nMenuDict` | 從乾淨 backup 重建，或更新既有注入字典；不要累加替換 |
 | app.asar 被鎖定 | Antigravity 或 language server 尚未退出 | 只關閉目標程序後重試；不要停止無關程序，不要刪除備份 |

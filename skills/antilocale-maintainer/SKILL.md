@@ -48,6 +48,15 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - 執行摘要中的 `folders` 等項目不是直接輸出的固定字串，而是由 `const Sib` 的單複數對照表產生；若只翻譯摘要外層模板，仍會留下 `3 folders`。更新時要檢查整張對照表，並確認檔案、資料夾、搜尋、指令等類別都能輸出目標語言。
 - 搜尋結果數量另有多個動態 JSX renderer，會直接組合 `result/results`（例如搜尋結果、檔案結果與 Moma 結果）；不能只翻 `const Sib` 或單一 `f===1` 分支。要以完整 expression 處理 `f`、`v`、`p`、`m` 等計數，並在 `zh-TW` 使用「項結果」、`zh-CN` 使用「个结果」。位於 `qUb("...");` 受保護第三方區段的 `result/results` 命中不可為了翻譯而解除保護，應先確認它是否真的可見，再尋找安全的外層處理點。
 - 權限確認的自訂回覆選項由 `writeInLabel` 與 `writeInPlaceholder` 組合，和一般 `AskQuestionOption` 的 `text` 不是同一個來源；補翻 `No (tell the agent what to do instead)` 時要同時檢查這兩個欄位。
+- MCP 工具權限視窗標題不是固定完整句子，也不是 question:E,options:Z 的可見文案；2.12.0 由 wGb action 對照表或每次請求的 actionDescription 與固定 Allow 模板組成。應翻譯固定模板與 wGb 固定 action 值，保留動態工具描述、指令、路徑與名稱。
+- MCP 伺服器卡片的 `Click to disable tool`／`Click to enable tool` 是固定 Tooltip；`N tools enabled`／`N tools disabled` 則來自 `B?`${E} tool${E!==1?"s":""} enabled`:`${v.tools.length} tool${v.tools.length!==1?"s":""} disabled``。要翻譯兩個 Tooltip 與兩個數量分支，保留 `${E}`／`${v.tools.length}` 動態數字，不可只把截圖中的 `6` 寫死。
+- MCP 執行步驟標題的 `prefix:"MCP Tool:"` 是固定前綴；只翻譯成 `prefix:"MCP 工具："`，保留同一 expression 中動態的 `serverName` 與 `toolCall?.name`。
+- 回覆下方的 `"Good response"`／`"Bad response"` 同時用於固定 `aria-label` 與 Tooltip，可以加入 `exact_properties`；模型實際回覆內容中的 `Skills / Rules`、`Progressive Disclosure` 等英文則屬於動態生成內容，不要用全域替換改寫。
+- 回覆下方的複製按鈕使用 `J?"Copied":"Copy"` 同時產生 `aria-label` 與 Tooltip；要翻譯這個條件 expression 的兩個分支（已複製／複製），不能只依賴其他畫面的 `title:"Copy"` 詞條。
+- 回覆評價送出後的成功提示使用 `u` 條件 expression；一般回饋與重要回饋的兩個英文訊息都要翻譯，不能只處理畫面目前顯示的 `Thanks for your feedback!`。
+- 選取文字浮動按鈕的 Quote 可能出現在不帶快捷鍵的 g 變體或帶 f（例如 Ctrl+L）的變體；要翻譯按鈕文字為「引用」，保留快捷鍵變數，不要只翻 title:Quote。
+- scripts/validate_locales.js 也要驗證 wGb 對照表與固定 Allow 標題模板的翻譯片段，讓 npm run check 能在後續版本更新時及早攔截回歸。
+- 執行活動中的 Listed 0 tasks 是固定動詞加動態數量與單複數，不能只加入 0 的完整詞條；No active tasks. 與 Found subagents 也可能由活動資料帶入，應在 activity formatter 中處理。權限標題翻譯成允許後要保留一個空格，避免接在動態 actionDescription 前面。
 - 靜態檔案檢查只能證明字典與語法正確，不能證明 Electron 啟動、程序關閉、檔案鎖定解除或畫面實際顯示正確。報告結果時分開描述這些證據層級。
 
 ## 完整性盤點與雙語對等門檻
@@ -59,7 +68,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - 模型選擇器：`Fast`、`Limited time` 及其 `tagDescription` Tooltip；徽章和 Tooltip 必須分開驗證。
 - 檔案與面板：`Preview`、`Raw`、`Open File`、`New Terminal`、`Show in File Explorer`、`Open in new tab`。
 - 搜尋、載入與空狀態：搜尋框 placeholder、`Loading ...`、`Waiting for your input`、`No Results`、`No results found`。
-- 設定、權限與回饋：設定頁標題／說明、`Access rules`、檔案／終端機／MCP 權限、Remote Control 回饋長說明與錯誤訊息。
+- 設定、權限與回饋：設定頁標題／說明、`Access rules`、檔案／終端機／MCP 權限、MCP 工具卡片的啟用數量與 Tooltip、Remote Control 回饋長說明與錯誤訊息。
 - 工作區、群組與操作：`Select workspace...`、`New Group`、`Rename Group`、`Group name`、複製／刪除／儲存／取消等按鈕及 Tooltip。
 
 每個候選都要確認固定字串、動態 expression 的所有分支，以及 `title`、`aria-label`、placeholder、Tooltip、錯誤／空狀態；只翻畫面上第一次看到的文字不算完成。簡中還要檢查輸出不可混入繁中用字（例如「執行、權限、錯誤、目錄」），但保留品牌、模型、API、命令與路徑等專有名詞。
@@ -70,7 +79,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 
 本輪 2.12.0 補翻已同步處理兩種語言的搜尋結果計數（包含畫面中的 `14 results`／`1 result` 類型）、檔案搜尋與 Moma 結果 renderer；簡中另外清理設定、帳戶、模型用量與混入的繁中用字，並統一將 `Inherit General` 顯示為「继承一般设置」。同一輪也重新確認 `Preview`／`Raw`／`New Preview`、`Open File`／`New Terminal`、模型徽章 Tooltip、執行時間秒數與動態資料夾數量。這些變更完成後，兩個語言包都必須重新做不部署建構；原生 Electron 與受保護第三方程式碼的靜態命中仍要依可見性判斷，不能把靜態掃描結果直接當成畫面驗收。
 
-本輪另完成繁中到簡中的覆蓋率修復：原先 `zh-TW` 有 3,022 個 unique `exact_properties`，簡中只有部分詞條；現在 `zh-CN` 有 3,177 個 unique 詞條，已覆蓋全部 3,022 個繁中 key，並保留簡中專用的 2.12.0 動態規則。`npm run check` 會執行 `scripts/validate_locales.js`，只要繁中新增 key 而簡中未同步，檢查就會失敗。
+本輪另完成繁中到簡中的覆蓋率修復：原先 `zh-TW` 有 3,022 個 unique `exact_properties`，簡中只有部分詞條；經後續補翻後，目前 `npm run check` 顯示 `zh-TW` 有 3,037 個、`zh-CN` 有 3,192 個 unique 詞條，簡中已覆蓋全部繁中 key，並保留簡中專用的 2.12.0 動態規則。`npm run check` 會執行 `scripts/validate_locales.js`，只要繁中新增 key 而簡中未同步，檢查就會失敗。
 
 `scripts/sync_zh_cn_coverage.ps1` 只作為繁中詞條同步的機械化起點，執行後仍要人工檢查簡中用語與動態 expression。它必須使用大小寫敏感的 key set；PowerShell 預設 hashtable 不分大小寫，會漏掉 `New Conversation`／`New conversation` 這類不同 key。Windows `LCMapStringEx` 轉換也必須使用回傳長度 `ToString(0, $length)`，否則 `StringBuilder` 舊內容會黏到翻譯後的 JavaScript，並由 `node --check` 攔截。
 

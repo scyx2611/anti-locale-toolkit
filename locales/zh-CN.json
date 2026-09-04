@@ -13357,6 +13357,81 @@
     {
       "key": "label:\"all\"",
       "val": "label:\"全部\""
+    },
+    {
+      "key": "wGb={read_file:\"read access to this path\",write_file:\"write access to this path\",read_url:\"reading this URL\",execute_url:\"executing actions on this URL\",command:\"running this command\",unsandboxed:\"running this command outside the sandbox\",mcp:\"using this MCP tool\"}",
+      "val": "wGb={read_file:\"读取此路径\",write_file:\"写入此路径\",read_url:\"读取此网址\",execute_url:\"在此网址上执行操作\",command:\"执行此命令\",unsandboxed:\"在沙盒外执行此命令\",mcp:\"使用此 MCP 工具\"}",
+      "description": "2.12权限标题固定 action 对照表"
+    },
+    {
+      "key": "Allow \u0024{Z}?",
+      "val": "允许 \u0024{Z}？",
+      "description": "2.12权限标题固定模板"
+    },
+    {
+      "key": "Save rule to always allow \u0024{Z}?",
+      "val": "保存规则以始终允许 \u0024{Z}？",
+      "description": "2.12权限保存规则标题模板"
+    },
+    {
+      "key": "\"Yes, and always allow\"",
+      "val": "\"是，并始终允许\"",
+      "description": "2.12 MCP 工具全局权限选项"
+    },
+    {
+      "key": "a;return ({",
+      "val": "a;if(/^Listed [0-9]+ tasks?$/.test(a))return a.replace(/^Listed ([0-9]+) tasks?$/,\"列出 $1 个任务\");if(a===\"No active tasks.\")return \"没有活动任务。\";if(a===\"Found subagents\")return \"找到子代理\";return ({",
+      "description": "2.12执行活动动态摘要翻译"
+    },
+    {
+      "key": "Click to disable tool",
+      "val": "点击以停用工具",
+      "description": "2.12 MCP 工具停用 Tooltip"
+    },
+    {
+      "key": "Click to enable tool",
+      "val": "点击以启用工具",
+      "description": "2.12 MCP 工具启用 Tooltip"
+    },
+    {
+      "key": "B?`${E} tool${E!==1?\"s\":\"\"} enabled`:`${v.tools.length} tool${v.tools.length!==1?\"s\":\"\"} disabled`",
+      "val": "B?`已启用 ${E} 个工具`:`已停用 ${v.tools.length} 个工具`",
+      "description": "2.12 MCP 工具启用数量动态文字"
+    },
+    {
+      "key": "prefix:\"MCP Tool:\"",
+      "val": "prefix:\"MCP 工具：\"",
+      "description": "2.12 MCP 工具步骤固定前缀"
+    },
+    {
+      "key": "\"Good response\"",
+      "val": "\"回复良好\"",
+      "description": "2.12回复评价良好按钮与 Tooltip"
+    },
+    {
+      "key": "\"Bad response\"",
+      "val": "\"回复不佳\"",
+      "description": "2.12回复评价不佳按钮与 Tooltip"
+    },
+    {
+      "key": "J?\"Copied\":\"Copy\"",
+      "val": "J?\"已复制\":\"复制\"",
+      "description": "2.12回复复制按钮与 Tooltip 动态状态"
+    },
+    {
+      "key": "z.createElement(\"span\",null,\"Quote\"),z.createElement(\"span\",{className:\"text-xs opacity-50\"},g)",
+      "val": "z.createElement(\"span\",null,\"引用\"),z.createElement(\"span\",{className:\"text-xs opacity-50\"},g)",
+      "description": "2.12选取引用按钮"
+    },
+    {
+      "key": "z.createElement(\"span\",{className:\"text-xs\"},\"Quote\"),f&&z.createElement(\"span\",{className:\"text-xs opacity-50\"},f)",
+      "val": "z.createElement(\"span\",{className:\"text-xs\"},\"引用\"),f&&z.createElement(\"span\",{className:\"text-xs opacity-50\"},f)",
+      "description": "2.12选取引用按钮与快捷键"
+    },
+    {
+      "key": "u?\"Thanks for helping make Gemini better! This is a critical part of evaluating and improving our models.\":\"Thanks for your feedback!\"",
+      "val": "u?\"感谢您帮助 Gemini 变得更好！这是评估和改进我们的模型的重要部分。\":\"感谢您的意见反馈！\"",
+      "description": "2.12回复评价提交成功消息"
     }
   ],
   "descriptions": [

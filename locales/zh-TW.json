@@ -4861,5 +4861,20 @@
     ,{"key":"e.length,\" result\",e.length===1?\"\":\"s\",\" \"","val":"e.length,\"項結果 \"","description":"2.12瀏覽器點擊結果計數動態單位"}
     ,{"key":"`${p}`,\" result\",p===1?\"\":\"s\"","val":"`${p}`,\"項結果\"","description":"2.12Moma結果計數動態單位"}
     ,{"key":"`${m}`,\" result\",m===1?\"\":\"s\"","val":"`${m}`,\"項結果\"","description":"2.12資源結果計數動態單位"}
+    ,{"key":"wGb={read_file:\"read access to this path\",write_file:\"write access to this path\",read_url:\"reading this URL\",execute_url:\"executing actions on this URL\",command:\"running this command\",unsandboxed:\"running this command outside the sandbox\",mcp:\"using this MCP tool\"}","val":"wGb={read_file:\"讀取此路徑\",write_file:\"寫入此路徑\",read_url:\"讀取此網址\",execute_url:\"在此網址上執行動作\",command:\"執行此指令\",unsandboxed:\"在沙盒外執行此指令\",mcp:\"使用此 MCP 工具\"}","description":"2.12權限標題固定 action 對照表"}
+    ,{"key":"Allow \u0024{Z}?","val":"允許 \u0024{Z}？","description":"2.12權限標題固定模板"}
+    ,{"key":"Save rule to always allow \u0024{Z}?","val":"儲存規則以一律允許 \u0024{Z}？","description":"2.12權限儲存規則標題模板"}
+    ,{"key":"\"Yes, and always allow\"","val":"\"是，並一律允許\"","description":"2.12 MCP 工具全域權限選項"}
+    ,{"key":"a;return ({","val":"a;if(/^Listed [0-9]+ tasks?$/.test(a))return a.replace(/^Listed ([0-9]+) tasks?$/,\"列出 $1 個任務\");if(a===\"No active tasks.\")return \"沒有作用中的任務。\";if(a===\"Found subagents\")return \"找到子代理\";return ({","description":"2.12執行活動動態摘要翻譯"}
+    ,{"key":"Click to disable tool","val":"按一下以停用工具","description":"2.12 MCP 工具停用 Tooltip"}
+    ,{"key":"Click to enable tool","val":"按一下以啟用工具","description":"2.12 MCP 工具啟用 Tooltip"}
+    ,{"key":"B?`${E} tool${E!==1?\"s\":\"\"} enabled`:`${v.tools.length} tool${v.tools.length!==1?\"s\":\"\"} disabled`","val":"B?`已啟用 ${E} 個工具`:`已停用 ${v.tools.length} 個工具`","description":"2.12 MCP 工具啟用數量動態文字"}
+    ,{"key":"prefix:\"MCP Tool:\"","val":"prefix:\"MCP 工具：\"","description":"2.12 MCP 工具步驟固定前綴"}
+    ,{"key":"\"Good response\"","val":"\"回覆良好\"","description":"2.12回覆評價良好按鈕與 Tooltip"}
+    ,{"key":"\"Bad response\"","val":"\"回覆不佳\"","description":"2.12回覆評價不佳按鈕與 Tooltip"}
+   ,{"key":"J?\"Copied\":\"Copy\"","val":"J?\"已複製\":\"複製\"","description":"2.12回覆複製按鈕與 Tooltip 動態狀態"}
+    ,{"key":"z.createElement(\"span\",null,\"Quote\"),z.createElement(\"span\",{className:\"text-xs opacity-50\"},g)","val":"z.createElement(\"span\",null,\"引用\"),z.createElement(\"span\",{className:\"text-xs opacity-50\"},g)","description":"2.12選取引用按鈕"}
+    ,{"key":"z.createElement(\"span\",{className:\"text-xs\"},\"Quote\"),f&&z.createElement(\"span\",{className:\"text-xs opacity-50\"},f)","val":"z.createElement(\"span\",{className:\"text-xs\"},\"引用\"),f&&z.createElement(\"span\",{className:\"text-xs opacity-50\"},f)","description":"2.12選取引用按鈕與快捷鍵"}
+    ,{"key":"u?\"Thanks for helping make Gemini better! This is a critical part of evaluating and improving our models.\":\"Thanks for your feedback!\"","val":"u?\"感謝您協助讓 Gemini 變得更好！這是評估及改進我們的模型的重要部分。\":\"感謝您的意見反映！\"","description":"2.12回覆評價提交成功訊息"}
   ]
 }
