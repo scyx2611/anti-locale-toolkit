@@ -40,8 +40,8 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 
 - `Preview`、`Raw`、`Skills Used`、`Fast`、`Limited time`、`Open File`、`New Terminal` 等文字分散在固定字串、動態標題與 Tooltip，不能只搜尋一次畫面文字。
 - `New Preview` 在 2.12.0 的目前來源使用 `z.createElement("span",null,"New Preview")`，舊版／另一個 bundle 變體可能使用 `y`；若只加入其中一個精確 expression，另一個語言包或目前畫面仍可能遺漏。遇到 minifier 變數變化時，應從乾淨來源重新定位，不要改成無上下文的全域短詞替換。
-- `Limited time` 至少有模型徽章的 `tagTitle` 與資訊圖示 Tooltip 的 `tagDescription` 兩個來源；只翻譯徽章會留下 Tooltip 英文。`Fast` 也有相同的徽章與 Tooltip 關係。
-- `Skills Used` 是動態區塊標題；更新字典時要定位實際產生標題的 expression，而不是只加入一般固定字串。
+- `Limited time` 至少有模型徽章的 `tagTitle` 與資訊圖示 Tooltip 的 `tagDescription` 兩個來源；只翻譯徽章會留下 Tooltip 英文。`Fast` 也有相同的徽章與 Tooltip 關係。2.12.0 的 `var zW` renderer 會同時產生徽章與 Tooltip 描述，`Fast`／`Limited time` 兩個分支都要處理。
+- `Skills Used` 是動態區塊標題；更新字典時要定位實際產生標題的 `J1` expression，而不是只加入一般固定字串。簡中若有 generic exact key，不能讓後續替換把英文比較值改成「使用的技能」；要用 JavaScript Unicode escape 保留執行時的英文 lookup key。
 - `Worked for 1m`、`Thinking time 2s`、`Analyzed ...` 等執行紀錄由回應元件即時產生，必須以動態來源或模板處理；`2s` 等時間單位不能只依賴固定畫面搜尋。
 - `Working..` 的載入提示是 `Working` 基本文字加上獨立的動畫點元件，不是完整的固定字串；另有狀態選擇器與子代理摘要使用 `Working...`。要定位完整 expression 後翻譯，不能對 `Working` 做全域替換，否則會誤傷 `Working directory` 等內容。
 - `Thinking...` 是另一個獨立的脈動載入提示；它和 `Thinking` 狀態、`Thinking time 2s` 時間文字來源不同，三者都要分別檢查。
@@ -55,6 +55,11 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - 回覆下方的複製按鈕使用 `J?"Copied":"Copy"` 同時產生 `aria-label` 與 Tooltip；要翻譯這個條件 expression 的兩個分支（已複製／複製），不能只依賴其他畫面的 `title:"Copy"` 詞條。
 - 回覆評價送出後的成功提示使用 `u` 條件 expression；一般回饋與重要回饋的兩個英文訊息都要翻譯，不能只處理畫面目前顯示的 `Thanks for your feedback!`。
 - 選取文字浮動按鈕的 Quote 可能出現在不帶快捷鍵的 g 變體或帶 f（例如 Ctrl+L）的變體；要翻譯按鈕文字為「引用」，保留快捷鍵變數，不要只翻 title:Quote。
+- 對話側欄釘選按鈕的可見 Tooltip 使用 `content:Na?"Unpin":"Pin"`，圖示另有 `aria-label:Na?"Unpin conversation":"Pin conversation"`；兩者都要翻譯，分別保留「取消置頂／置頂」與對話語意，不要只處理選單 label。
+- 模型用量中的 `Weekly Limit Remaining`／`Five Hour Limit Remaining` 是後端動態 `displayName`，而且至少有兩個 renderer（quota label 與 quota bucket）；兩個來源都要處理。簡中若已有 generic exact key 會改寫相同文字，注入 map 的英文 lookup key 必須用 JavaScript Unicode escape 保留執行時的英文 key，避免 lookup 失效後回退顯示英文。
+- 成品區空白狀態使用 `emptyText:"No artifacts generated"`；要翻譯這個 default prop，不能只翻右側的「工作產出」標題。程序名稱、PID、工具名稱與路徑是動態技術內容，不要改寫。
+- 版本控制分支模式有兩個獨立來源：`subtitle:l?`All changes since ${l}`` 與 `"All changes since the branch point"`；兩者都要翻譯並保留 `${l}`／分支資訊。
+- Git 操作 Tooltip 要保留條件 expression 的全部分支：Commit 的 `Commit staged changes`／`Stage and commit all changes`、Push 的動態提交數與 `Publish ${a.currentRef} to origin`，以及停用原因 `No commits to push`；不能只翻按鈕 label `Push`。
 - scripts/validate_locales.js 也要驗證 wGb 對照表與固定 Allow 標題模板的翻譯片段，讓 npm run check 能在後續版本更新時及早攔截回歸。
 - 執行活動中的 Listed 0 tasks 是固定動詞加動態數量與單複數，不能只加入 0 的完整詞條；No active tasks. 與 Found subagents 也可能由活動資料帶入，應在 activity formatter 中處理。權限標題翻譯成允許後要保留一個空格，避免接在動態 actionDescription 前面。
 - 靜態檔案檢查只能證明字典與語法正確，不能證明 Electron 啟動、程序關閉、檔案鎖定解除或畫面實際顯示正確。報告結果時分開描述這些證據層級。
@@ -79,7 +84,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 
 本輪 2.12.0 補翻已同步處理兩種語言的搜尋結果計數（包含畫面中的 `14 results`／`1 result` 類型）、檔案搜尋與 Moma 結果 renderer；簡中另外清理設定、帳戶、模型用量與混入的繁中用字，並統一將 `Inherit General` 顯示為「继承一般设置」。同一輪也重新確認 `Preview`／`Raw`／`New Preview`、`Open File`／`New Terminal`、模型徽章 Tooltip、執行時間秒數與動態資料夾數量。這些變更完成後，兩個語言包都必須重新做不部署建構；原生 Electron 與受保護第三方程式碼的靜態命中仍要依可見性判斷，不能把靜態掃描結果直接當成畫面驗收。
 
-本輪另完成繁中到簡中的覆蓋率修復：原先 `zh-TW` 有 3,022 個 unique `exact_properties`，簡中只有部分詞條；經後續補翻後，目前 `npm run check` 顯示 `zh-TW` 有 3,037 個、`zh-CN` 有 3,192 個 unique 詞條，簡中已覆蓋全部繁中 key，並保留簡中專用的 2.12.0 動態規則。`npm run check` 會執行 `scripts/validate_locales.js`，只要繁中新增 key 而簡中未同步，檢查就會失敗。
+本輪另完成繁中到簡中的覆蓋率修復：原先 `zh-TW` 有 3,022 個 unique `exact_properties`，簡中只有部分詞條；經後續補翻後，目前 `npm run check` 顯示 `zh-TW` 有 3,047 個、`zh-CN` 有 3,202 個 unique 詞條，簡中已覆蓋全部繁中 key，並保留簡中專用的 2.12.0 動態規則。`npm run check` 會執行 `scripts/validate_locales.js`，只要繁中新增 key 而簡中未同步，檢查就會失敗。
 
 `scripts/sync_zh_cn_coverage.ps1` 只作為繁中詞條同步的機械化起點，執行後仍要人工檢查簡中用語與動態 expression。它必須使用大小寫敏感的 key set；PowerShell 預設 hashtable 不分大小寫，會漏掉 `New Conversation`／`New conversation` 這類不同 key。Windows `LCMapStringEx` 轉換也必須使用回傳長度 `ToString(0, $length)`，否則 `StringBuilder` 舊內容會黏到翻譯後的 JavaScript，並由 `node --check` 攔截。
 

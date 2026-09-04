@@ -49,7 +49,8 @@
 
 - 檔案預覽標頭：`Preview`、`Raw`。
 - 執行摘要：`Skills Used`、`Worked for 1m`、`Thinking...`、`Thinking time 2s`、`Analyzed`、`Searched`、`Working..`，以及由 `const Sib` 對照表產生的 `folders` 等項目數量。
-- 模型選擇器：`Fast` 徽章，以及 `Limited time` 徽章和資訊圖示 Tooltip；兩者都要確認。
+- 模型選擇器：`Fast` 徽章，以及 `Limited time` 徽章和資訊圖示 Tooltip；2.12.0 的 `var zW` renderer 會同時處理 `tagTitle` 與 `tagDescription`，`Fast`／`Limited time` 兩個分支都要確認。
+- `Skills Used` 的區塊標題由動態 `J1` expression 產生；簡中 lookup 要保留英文比較值，避免 generic exact replacement 將 `Skills Used` 改成目標語言後無法命中。
 - 檔案與終端機入口：`Open File`、`New Terminal`、`New Preview`、`Show in File Explorer`；`New Preview` 要檢查目前 bundle 的 `y`／`z` 元件變體。
 - 權限確認：一般選項的 `text`，以及自訂回覆的 `writeInLabel`、`writeInPlaceholder`；要確認組合後的完整文案，不只確認其中一個欄位。
 - 回饋頁與 Remote Control 相關說明；這些是長描述，不能只翻譯標題。
@@ -60,6 +61,11 @@
 - 回覆列的複製按鈕以 `J?"Copied":"Copy"` 同時提供 `aria-label` 與 Tooltip，必須保留條件判斷並翻譯兩個分支；其他 `title:"Copy"` 詞條不一定會命中這個按鈕。
 - 回覆評價送出後的成功提示使用 `u` 條件 expression；一般回饋與重要回饋的兩個英文分支都要翻譯，並以截圖中的短訊息與重要回饋長訊息分別驗證。
 - 選取文字的 Quote 浮動按鈕有保留 g／f 快捷鍵參數的兩個 JSX 變體；只替換 Quote 為「引用」，保留快捷鍵內容（如 Ctrl+L）。
+- 對話側欄釘選按鈕的 Tooltip 使用 `content:Na?"Unpin":"Pin"`，按鈕無障礙標籤使用 `aria-label:Na?"Unpin conversation":"Pin conversation"`；兩個固定來源都要翻譯，不能只翻選單中的 `label`。
+- 模型用量的 `Weekly Limit Remaining`／`Five Hour Limit Remaining` 是後端動態 `displayName`，至少由 quota label 與 quota bucket 兩個 renderer 顯示；兩個來源都要補翻。簡中若 generic exact key 會改寫 map key，lookup key 要使用 JavaScript Unicode escape，讓執行時仍能以英文 displayName 命中中文結果。
+- 右側成品空白狀態的來源是 `emptyText:"No artifacts generated"`；要翻譯 default prop，並保留程序名稱、PID、工具名稱與路徑等動態技術內容。
+- 分支變更模式的 `All changes since ${l}` 與 `All changes since the branch point` 是兩個獨立來源，必須分別翻譯並保留 `${l}`／分支資訊。
+- Commit／Push 的 Tooltip 與停用原因也要完整處理：`Commit staged changes`、`Stage and commit all changes`、動態提交數、`Publish ${a.currentRef} to origin`、`No commits to push`；只翻 `Push` label 不足以涵蓋畫面。
 - npm run check 會驗證 wGb 對照表與固定 Allow 標題模板仍包含原始識別文字與目標語言片段；若來源 expression 改版，先更新規則與驗證器，再建構兩種語言。
 - Listed 0 tasks 應以活動 formatter 的數量模式翻譯，並一併處理 No active tasks. 與 Found subagents；權限標題的 Allow 翻譯值要保留後置空格，動態 actionDescription、指令、路徑與工具名稱則不改動。
 - 右側技能清單、模型用量、設定頁與原生選單；原生內容不是只靠 web bundle 字典完成。
@@ -88,7 +94,7 @@
 - `zh-TW` 與 `zh-CN` 都補上搜尋結果計數的動態 renderer，涵蓋搜尋、檔案搜尋與 Moma 結果；分別輸出「項結果」與「个结果」，不能只依賴 `const Sib` 的摘要單位表。
 - 保留 `qUb("...");` 受保護第三方區段的原始程式碼。若靜態掃描仍在該區段看到 `result/results`，先確認是否為可見 UI，再找安全的外層處理點，不要解除保護區段。
 - 本輪採不部署方式完成 `npm run check`、`node scripts/patcher.js --lang zh-TW` 與 `node scripts/patcher.js --lang zh-CN`；前端及 Electron 語法檢查與 `app.asar.patched` 打包均通過。未重啟或替換正在執行的應用程式，畫面人工驗收仍須標記為 `NOT VERIFIED`。
-- 原先 coverage audit 顯示 `zh-TW` 有 3,022 個 unique `exact_properties`，而 `zh-CN` 只有部分既有詞條；這是簡中仍露出大量英文的直接原因。經後續補翻與動態規則增加後，`npm run check` 目前顯示 `zh-TW` 3,037 個、`zh-CN` 3,192 個 unique exact key，簡中已覆蓋全部繁中 key，並保留簡中專用的 155 個 2.12.0 規則。
+- 原先 coverage audit 顯示 `zh-TW` 有 3,022 個 unique `exact_properties`，而 `zh-CN` 只有部分既有詞條；這是簡中仍露出大量英文的直接原因。經後續補翻與動態規則增加後，`npm run check` 目前顯示 `zh-TW` 3,047 個、`zh-CN` 3,202 個 unique exact key，簡中已覆蓋全部繁中 key，並保留簡中專用的 2.12.0 規則。
 - 同步工具的兩個必要安全條件：key set 使用 `StringComparer.Ordinal`，避免 PowerShell 不分大小寫而漏掉大小寫不同的詞條；`LCMapStringEx` 取值使用 `StringBuilder.ToString(0, $length)`，不可使用完整 buffer，否則短字串後會殘留前一次轉換內容並破壞 JavaScript。
 - `npm run check` 現在包含 `scripts/validate_locales.js`；它會解析兩個 JSON、檢查簡中覆蓋全部繁中 unique key、拒絕簡中重複 key，並攔截疑似 `StringBuilder`／轉換器殘留。之後繁中新增任何詞條，都必須先同步簡中再建構。
 
@@ -299,6 +305,8 @@ node scripts/patcher.js --apply --lang zh-TW
 | `spawnSync npx.cmd EINVAL` | Windows 將 `.cmd` 當成直接可執行檔失敗 | 使用專案內 `node_modules/asar/bin/asar.js` 搭配 Node 執行，不要把錯誤改成忽略 |
 | 前端替換數為 0 或大幅下降 | bundle 結構、來源版本或字串編碼已變 | 重新搜尋乾淨來源，檢查 protected 區段與動態 expression |
 | Tooltip 仍是英文 | 只處理了 badge 或標題，沒有處理 description | 尋找 `tagTitle` 與 `tagDescription` 兩個來源並分別驗證 |
+| `Fast` 徽章仍顯示英文 | 2.12.0 的 `var zW` renderer 分開輸出 `tagTitle` 與 `tagDescription`，只翻 `Limited time` 會遺漏 `Fast` | 同時補翻徽章與 Tooltip 描述的 `Fast` 分支，並建構兩種語言驗證 |
+| `Skills Used` 仍顯示英文 | 區塊標題由動態 `J1` expression 產生；簡中 generic replacement 可能把英文比較值改成目標語言 | 保留英文 runtime lookup key（必要時使用 JavaScript Unicode escape），只翻輸出值為「使用的技能／使用的技能」 |
 | 摘要仍顯示 `3 folders` 等英文單位 | 類別單複數由 `const Sib` 對照表即時產生，沒有命中外層摘要模板 | 以完整 `const Sib` 片段加入 `exact_properties`，並檢查檔案、資料夾、搜尋與指令等類別 |
 | 權限選項仍顯示 `No (tell the agent what to do instead)` | 自訂回覆的 label／placeholder 不經一般選項文字翻譯函式 | 同時定位並翻譯 `writeInLabel` 與 `writeInPlaceholder`，再驗證組合後的畫面文案 |
 | MCP 卡片仍顯示 `6 tools enabled` 或 `Click to disable tool` | 工具數量是 `E`／`v.tools.length` 動態 expression，Tooltip 則是獨立固定字串；只翻固定數字或伺服器標題不會命中 | 重新定位 `B?`${E} tool...enabled`:`${v.tools.length} tool...disabled`` 與兩個 Click Tooltip，保留動態數字並用兩種語言建構驗證 |
@@ -307,6 +315,11 @@ node scripts/patcher.js --apply --lang zh-TW
 | 回覆列複製按鈕仍顯示 `Copy`／`Copied` | 複製按鈕把兩個狀態放在 `J?"Copied":"Copy"` 條件 expression，與其他複製選單來源不同 | 翻譯條件 expression 的兩個分支，並確認未點擊與已點擊狀態 |
 | 點擊回覆評價後仍顯示 `Thanks for your feedback!` | 成功提示由 `u` 條件 expression 在一般／重要回饋兩個分支間切換 | 翻譯完整 expression 並分別驗證短訊息與重要回饋長訊息 |
 | 選取文字浮動按鈕仍顯示 `Quote` | Quote 文字位於帶 g 或 f 快捷鍵內容的 JSX 變體，既有 `title:"Quote"` 詞條不會命中 | 翻譯兩個 Quote JSX 變體，保留 g／f 與快捷鍵值 |
+| 對話釘選 Tooltip 仍顯示 `Unpin`／`Pin` | 可見 Tooltip 使用 `content:Na?"Unpin":"Pin"`，而選單／工具列已有其他獨立來源 | 翻譯 `content` expression，並一併覆蓋 `aria-label` 的對話版本 |
+| 模型用量仍顯示 `Weekly Limit Remaining`／`Five Hour Limit Remaining` | `displayName` 由後端傳入，quota label 與 quota bucket 各有 renderer；簡中 generic replacement 也可能改寫 map lookup key | 同時補翻兩個 renderer；簡中 map key 使用 JS Unicode escape，保留執行時英文 lookup key |
+| 右側成品區仍顯示 `No artifacts generated` | 空白狀態來自 `emptyText` default prop，不是「工作產出」標題 | 翻譯 `emptyText:"No artifacts generated"`；不要改動程序名稱、PID、工具名稱或路徑 |
+| 分支變更仍顯示 `All changes since ...` | 有帶 `${l}` 的 template 與沒有 merge base 的 branch-point fallback 兩個來源 | 分別翻譯兩個 expression，保留 `${l}` 與分支資訊 |
+| Commit／Push Tooltip 或停用原因仍是英文 | Tooltip 含條件分支與動態提交數，`No commits to push` 是另一個 disabled reason | 完整翻譯 staged／all changes、動態 Push／Publish、`No commits to push`，並保留按鈕動態值 |
 | 載入狀態仍顯示 `Working..` 或 `Working...` | `Working` 可能是動畫載入 expression 的 fallback，也可能來自狀態選擇器／子代理摘要；全域短詞替換容易誤傷 `Working directory` | 分別定位 `Compacting`／`Working` 載入 expression、`Executing task` 狀態 expression 與完整 `Working...` 字串，再逐一建構驗證 |
 | 切換語言後原生選單未變 | 使用了上一個已修改 archive，或跳過既有 `i18nMenuDict` | 從乾淨 backup 重建，或更新既有注入字典；不要累加替換 |
 | app.asar 被鎖定 | Antigravity 或 language server 尚未退出 | 只關閉目標程序後重試；不要停止無關程序，不要刪除備份 |

@@ -41,6 +41,18 @@ function assertEntryContains(localeName, locale, key, fragments) {
   }
 }
 
+function assertEntryWithKeyPrefixContains(localeName, locale, keyPrefix, fragments) {
+  const entry = locale.exact_properties.find((candidate) => candidate.key.startsWith(keyPrefix));
+  if (!entry) {
+    throw new Error(localeName + '.json 缺少必要動態詞條前綴：' + keyPrefix);
+  }
+  const value = String(entry.val ?? '');
+  const missing = fragments.filter((fragment) => !value.includes(fragment));
+  if (missing.length > 0) {
+    throw new Error(localeName + '.json 動態詞條 ' + keyPrefix + ' 缺少翻譯內容：' + missing.join(' | '));
+  }
+}
+
 const zhTw = loadLocale('zh-TW');
 const zhCn = loadLocale('zh-CN');
 const twKeys = keySet(zhTw);
@@ -96,6 +108,62 @@ assertEntryContains('zh-CN', zhCn, quoteButtonWithShortcutKey, ['z.createElement
 const feedbackConfirmationKey = 'u?"Thanks for helping make Gemini better! This is a critical part of evaluating and improving our models.":"Thanks for your feedback!"';
 assertEntryContains('zh-TW', zhTw, feedbackConfirmationKey, ['u?"感謝您協助讓 Gemini 變得更好！這是評估及改進我們的模型的重要部分。":"感謝您的意見反映！"']);
 assertEntryContains('zh-CN', zhCn, feedbackConfirmationKey, ['u?"感谢您帮助 Gemini 变得更好！这是评估和改进我们的模型的重要部分。":"感谢您的意见反馈！"']);
+const artifactsEmptyKey = 'emptyText:e="No artifacts generated"';
+assertEntryContains('zh-TW', zhTw, artifactsEmptyKey, ['emptyText:e="尚未產生成品"']);
+assertEntryContains('zh-CN', zhCn, artifactsEmptyKey, ['emptyText:e="尚未生成产物"']);
+const modelBadgeRendererPrefix = 'var zW=({option:a})=>{var b=xB();return';
+assertEntryWithKeyPrefixContains('zh-TW', zhTw, modelBadgeRendererPrefix, [
+  'a.tagTitle==="Fast"?"快速"',
+  'a.tagTitle==="Limited time"?"限時提供"',
+  'a.tagDescription==="Fast"?"快速"',
+  'a.tagDescription==="Limited time"?"限時提供"',
+]);
+assertEntryWithKeyPrefixContains('zh-CN', zhCn, modelBadgeRendererPrefix, [
+  'a.tagTitle==="Fast"?"快速"',
+  'a.tagTitle==="Limited time"?"限时提供"',
+  'a.tagDescription==="Fast"?"快速"',
+  'a.tagDescription==="Limited time"?"限时提供"',
+]);
+const modelSkillsTitlePrefix = 'var J1=({title:a,titleSuffix:b,count:c,badgeCount:e,actions:f,children:g,collapsible:h=!1';
+const runtimeSkillsTitleKey = 'a=a==="'+ String.fromCharCode(92) + 'u0053kills Used"?';
+assertEntryWithKeyPrefixContains('zh-TW', zhTw, modelSkillsTitlePrefix, [
+  runtimeSkillsTitleKey + '"使用的技能":a;',
+]);
+assertEntryWithKeyPrefixContains('zh-CN', zhCn, modelSkillsTitlePrefix, [
+  runtimeSkillsTitleKey + '"使用的技能":a;',
+]);
+const quotaLabelKey = 'label:z.createElement("span",{className:e?"text-secondary-foreground":""},a)';
+const quotaBucketKey = 'z.createElement("span",{className:"text-foreground truncate"},\nm.displayName)';
+for (const key of [quotaLabelKey, quotaBucketKey]) {
+  assertEntryContains('zh-TW', zhTw, key, ['Weekly Limit Remaining', 'Five Hour Limit Remaining']);
+  assertEntryContains('zh-CN', zhCn, key, ['\\u0057eekly Limit Remaining', '\\u0046ive Hour Limit Remaining']);
+}
+const codeTick = String.fromCharCode(96);
+const dollar = '$';
+const branchSubtitleKey = 'subtitle:l?' + codeTick + 'All changes since ' + dollar + '{l}' + codeTick;
+assertEntryContains('zh-TW', zhTw, branchSubtitleKey, ['subtitle:l?' + codeTick + '自 ' + dollar + '{l} 起的所有變更' + codeTick]);
+assertEntryContains('zh-CN', zhCn, branchSubtitleKey, ['subtitle:l?' + codeTick + '自 ' + dollar + '{l} 以来的所有更改' + codeTick]);
+assertEntryContains('zh-TW', zhTw, '"All changes since the branch point"', ['"自分支起點以來的所有變更"']);
+assertEntryContains('zh-CN', zhCn, '"All changes since the branch point"', ['"自分支起点以来的所有更改"']);
+const commitTooltipKey = 'tooltip:(a?.stagedChanges?.length??0)>0?"Commit staged changes":"Stage and commit all changes"';
+assertEntryContains('zh-TW', zhTw, commitTooltipKey, ['tooltip:(a?.stagedChanges?.length??0)>0?"提交已暫存的變更":"暫存並提交所有變更"']);
+assertEntryContains('zh-CN', zhCn, commitTooltipKey, ['tooltip:(a?.stagedChanges?.length??0)>0?"提交已暂存的更改":"暂存并提交所有更改"']);
+assertEntryContains('zh-TW', zhTw, '"No commits to push"', ['"沒有可推送的提交"']);
+assertEntryContains('zh-CN', zhCn, '"No commits to push"', ['"没有可推送的提交"']);
+const pushCommitTooltipKey = codeTick + 'Push ' + dollar + '{c} commit' + dollar + '{c===1?"":"s"} to ' + dollar + '{b}' + codeTick;
+assertEntryContains('zh-TW', zhTw, pushCommitTooltipKey, [codeTick + '推送 ' + dollar + '{c} 個提交至 ' + dollar + '{b}' + codeTick]);
+assertEntryContains('zh-CN', zhCn, pushCommitTooltipKey, [codeTick + '推送 ' + dollar + '{c} 个提交到 ' + dollar + '{b}' + codeTick]);
+const publishTooltipKey = codeTick + 'Publish ' + dollar + '{a.currentRef} to origin' + codeTick;
+assertEntryContains('zh-TW', zhTw, publishTooltipKey, [codeTick + '將 ' + dollar + '{a.currentRef} 發布至 origin' + codeTick]);
+assertEntryContains('zh-CN', zhCn, publishTooltipKey, [codeTick + '将 ' + dollar + '{a.currentRef} 发布到 origin' + codeTick]);
+assertEntryContains('zh-TW', zhTw, ':"Push"', [':"推送"']);
+assertEntryContains('zh-CN', zhCn, ':"Push"', [':"推送"']);
+const conversationPinTooltipKey = 'content:Na?"Unpin":"Pin"';
+assertEntryContains('zh-TW', zhTw, conversationPinTooltipKey, ['content:Na?"取消置頂":"置頂"']);
+assertEntryContains('zh-CN', zhCn, conversationPinTooltipKey, ['content:Na?"取消置顶":"置顶"']);
+const conversationPinAriaKey = '"aria-label":Na?"Unpin conversation":"Pin conversation"';
+assertEntryContains('zh-TW', zhTw, conversationPinAriaKey, ['"aria-label":Na?"取消置頂對話":"置頂對話"']);
+assertEntryContains('zh-CN', zhCn, conversationPinAriaKey, ['"aria-label":Na?"取消置顶对话":"置顶对话"']);
 assertEntryContains('zh-TW', zhTw, 'Click to disable tool', ['按一下以停用工具']);
 assertEntryContains('zh-TW', zhTw, 'Click to enable tool', ['按一下以啟用工具']);
 assertEntryContains('zh-TW', zhTw, mcpToolsCountKey, ['已啟用 ${E} 個工具', '已停用 ${v.tools.length} 個工具']);

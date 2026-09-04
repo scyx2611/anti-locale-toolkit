@@ -690,7 +690,7 @@
     },
     {
       "key": "z.createElement(\"div\",{className:\"max-w-[200px]\"},a.tagDescription)",
-      "val": "z.createElement(\"div\",{className:\"max-w-[200px]\"},a.tagDescription===\"Limited time\"?\"限时提供\":a.tagDescription)"
+      "val": "z.createElement(\"div\",{className:\"max-w-[200px]\"},a.tagDescription===\"Fast\"?\"快速\":a.tagDescription===\"Limited time\"?\"限时提供\":a.tagDescription)"
     },
     {
       "key": "case H.AutocompleteSpeed.FAST:return\"Fast\";case H.AutocompleteSpeed.SLOW:return\"Slow\";default:return\"Fast\"",
@@ -702,7 +702,7 @@
     },
     {
       "key": "var J1=({title:a,titleSuffix:b,count:c,badgeCount:e,actions:f,children:g,collapsible:h=!1,showCountBadge:k=!1,defaultOpen:l=!0,defaultVisibleCount:m=5,autoCollapseExpand:n=!0,open:p,onToggle:r,className:t,contentClassName:u,testId:v})=>{",
-      "val": "var J1=({title:a,titleSuffix:b,count:c,badgeCount:e,actions:f,children:g,collapsible:h=!1,showCountBadge:k=!1,defaultOpen:l=!0,defaultVisibleCount:m=5,autoCollapseExpand:n=!0,open:p,onToggle:r,className:t,contentClassName:u,testId:v})=>{a=a===\"使用的技能\"?\"使用的技能\":a;"
+      "val": "var J1=({title:a,titleSuffix:b,count:c,badgeCount:e,actions:f,children:g,collapsible:h=!1,showCountBadge:k=!1,defaultOpen:l=!0,defaultVisibleCount:m=5,autoCollapseExpand:n=!0,open:p,onToggle:r,className:t,contentClassName:u,testId:v})=>{a=a===\"\\u0053kills Used\"?\"使用的技能\":a;"
     },
     {
       "key": "function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return",
@@ -1772,7 +1772,7 @@
     },
     {
       "key": "y.createElement(\"span\",{className:\"text-foreground truncate\"},\nm.displayName)",
-      "val": "y.createElement(\"span\",{className:\"text-foreground truncate\"},\n({\"Weekly Limit Remaining\":\"每周剩余配额\",\"Five Hour Limit Remaining\":\"5 小时剩余配额\"}[m.displayName]||m.displayName))",
+      "val": "y.createElement(\"span\",{className:\"text-foreground truncate\"},\n({\"\\u0057eekly Limit Remaining\":\"每周剩余配额\",\"\\u0046ive Hour Limit Remaining\":\"5 小时剩余配额\"}[m.displayName]||m.displayName))",
       "description": "配额桶名称"
     },
     {
@@ -1797,7 +1797,7 @@
     },
     {
       "key": "return y.createElement(wtb,{key:f.bucketId||g,label:f.displayName,remainingFraction:h.remainingFraction,refreshText:h.refreshText,disabled:h.disabled})",
-      "val": "return y.createElement(wtb,{key:f.bucketId||g,label:({\"Weekly Limit Remaining\":\"每周剩余配额\",\"Five Hour Limit Remaining\":\"5 小时剩余配额\"}[f.displayName]||f.displayName),remainingFraction:h.remainingFraction,refreshText:h.refreshText,disabled:h.disabled})",
+      "val": "return y.createElement(wtb,{key:f.bucketId||g,label:({\"\\u0057eekly Limit Remaining\":\"每周剩余配额\",\"\\u0046ive Hour Limit Remaining\":\"5 小时剩余配额\"}[f.displayName]||f.displayName),remainingFraction:h.remainingFraction,refreshText:h.refreshText,disabled:h.disabled})",
       "description": "模型配额项目名称"
     },
     {
@@ -12561,7 +12561,7 @@
     },
     {
       "key": "label:z.createElement(\"span\",{className:e?\"text-secondary-foreground\":\"\"},a)",
-      "val": "label:z.createElement(\"span\",{className:e?\"text-secondary-foreground\":\"\"},({\"Weekly Limit Remaining\":\"每周剩余配额\",\"Five Hour Limit Remaining\":\"5 小时剩余配额\"}[a]||a))",
+      "val": "label:z.createElement(\"span\",{className:e?\"text-secondary-foreground\":\"\"},({\"\\u0057eekly Limit Remaining\":\"每周剩余配额\",\"\\u0046ive Hour Limit Remaining\":\"5 小时剩余配额\"}[a]||a))",
       "description": "2.12用量剩余配额标签"
     },
     {
@@ -12571,7 +12571,7 @@
     },
     {
       "key": "z.createElement(\"span\",{className:\"text-foreground truncate\"},\nm.displayName)",
-      "val": "z.createElement(\"span\",{className:\"text-foreground truncate\"},\n({\"Weekly Limit Remaining\":\"每周剩余配额\",\"Five Hour Limit Remaining\":\"5 小时剩余配额\"}[m.displayName]||m.displayName))",
+      "val": "z.createElement(\"span\",{className:\"text-foreground truncate\"},\n({\"\\u0057eekly Limit Remaining\":\"每周剩余配额\",\"\\u0046ive Hour Limit Remaining\":\"5 小时剩余配额\"}[m.displayName]||m.displayName))",
       "description": "2.12模型用量配额标签"
     },
     {
@@ -13241,7 +13241,7 @@
     },
     {
       "key": "var zW=({option:a})=>{var b=xB();return a.tagTitle&&a.tagDescription?z.createElement(z.Fragment,null,z.createElement(\"div\",{\"data-tooltip-id\":b,className:\"bg-secondary opacity-70 flex items-center gap-1 rounded-full px-1.5 text-xs\"},z.createElement(\"span\",null,a.tagTitle),z.createElement(T,{name:\"info\",className:\"h-3 w-3 flex-none\"})),z.createElement(ty,{id:b},z.createElement(\"div\",{className:\"max-w-[200px]\"},a.tagDescription))):a.tagTitle?z.createElement(\"div\",{className:\"bg-secondary rounded-full px-1.5 text-xs\"},\na.tagTitle):null}",
-      "val": "var zW=({option:a})=>{var b=xB(),c=a.tagTitle===\"Limited time\"?\"限时提供\":a.tagTitle;return a.tagTitle&&a.tagDescription?z.createElement(z.Fragment,null,z.createElement(\"div\",{\"data-tooltip-id\":b,className:\"bg-secondary opacity-70 flex items-center gap-1 rounded-full px-1.5 text-xs\"},z.createElement(\"span\",null,c),z.createElement(T,{name:\"info\",className:\"h-3 w-3 flex-none\"})),z.createElement(ty,{id:b},z.createElement(\"div\",{className:\"max-w-[200px]\"},a.tagDescription))):a.tagTitle?z.createElement(\"div\",{className:\"bg-secondary rounded-full px-1.5 text-xs\"},\nc):null}",
+      "val": "var zW=({option:a})=>{var b=xB(),c=a.tagTitle===\"Fast\"?\"快速\":a.tagTitle===\"Limited time\"?\"限时提供\":a.tagTitle;return a.tagTitle&&a.tagDescription?z.createElement(z.Fragment,null,z.createElement(\"div\",{\"data-tooltip-id\":b,className:\"bg-secondary opacity-70 flex items-center gap-1 rounded-full px-1.5 text-xs\"},z.createElement(\"span\",null,c),z.createElement(T,{name:\"info\",className:\"h-3 w-3 flex-none\"})),z.createElement(ty,{id:b},z.createElement(\"div\",{className:\"max-w-[200px]\"},a.tagDescription===\"Fast\"?\"快速\":a.tagDescription===\"Limited time\"?\"限时提供\":a.tagDescription))):a.tagTitle?z.createElement(\"div\",{className:\"bg-secondary rounded-full px-1.5 text-xs\"},\nc):null}",
       "description": "2.12模型限时徽章翻译"
     },
     {
@@ -13432,6 +13432,56 @@
       "key": "u?\"Thanks for helping make Gemini better! This is a critical part of evaluating and improving our models.\":\"Thanks for your feedback!\"",
       "val": "u?\"感谢您帮助 Gemini 变得更好！这是评估和改进我们的模型的重要部分。\":\"感谢您的意见反馈！\"",
       "description": "2.12回复评价提交成功消息"
+    },
+    {
+      "key": "emptyText:e=\"No artifacts generated\"",
+      "val": "emptyText:e=\"尚未生成产物\"",
+      "description": "2.12产物空白状态"
+    },
+    {
+      "key": "subtitle:l?`All changes since ${l}`",
+      "val": "subtitle:l?`自 ${l} 以来的所有更改`",
+      "description": "2.12版本控制分支更改说明"
+    },
+    {
+      "key": "\"All changes since the branch point\"",
+      "val": "\"自分支起点以来的所有更改\"",
+      "description": "2.12版本控制分支起点说明"
+    },
+    {
+      "key": "tooltip:(a?.stagedChanges?.length??0)>0?\"Commit staged changes\":\"Stage and commit all changes\"",
+      "val": "tooltip:(a?.stagedChanges?.length??0)>0?\"提交已暂存的更改\":\"暂存并提交所有更改\"",
+      "description": "2.12版本控制提交 Tooltip"
+    },
+    {
+      "key": "\"No commits to push\"",
+      "val": "\"没有可推送的提交\"",
+      "description": "2.12版本控制推送空白状态"
+    },
+    {
+      "key": "`Push ${c} commit${c===1?\"\":\"s\"} to ${b}`",
+      "val": "`推送 ${c} 个提交到 ${b}`",
+      "description": "2.12版本控制推送 Tooltip"
+    },
+    {
+      "key": "`Publish ${a.currentRef} to origin`",
+      "val": "`将 ${a.currentRef} 发布到 origin`",
+      "description": "2.12版本控制发布 Tooltip"
+    },
+    {
+      "key": ":\"Push\"",
+      "val": ":\"推送\"",
+      "description": "2.12版本控制推送 Tooltip 备援"
+    },
+    {
+      "key": "content:Na?\"Unpin\":\"Pin\"",
+      "val": "content:Na?\"取消置顶\":\"置顶\"",
+      "description": "2.12对话置顶按钮 Tooltip"
+    },
+    {
+      "key": "\"aria-label\":Na?\"Unpin conversation\":\"Pin conversation\"",
+      "val": "\"aria-label\":Na?\"取消置顶对话\":\"置顶对话\"",
+      "description": "2.12对话置顶按钮无障碍标签"
     }
   ],
   "descriptions": [
