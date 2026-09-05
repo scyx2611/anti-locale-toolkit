@@ -12,6 +12,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 目標不是只找出英文，而是讓 AI 能完成「盤點來源 → 判斷版本 → 更新字典與 patcher → 建構驗證 →（獲得授權後）部署 → 回報證據」的完整閉環。
 
 - 先讀取本 Skill 與 [版本更新維護流程](references/version-update-runbook.md)，再開始修改；不要只依賴歷史對話或截圖記憶。
+- 接著讀取專案根目錄的 [翻譯變更台帳](../../TRANSLATION_LOG.md)；它是來源 anchor、動態規則與既有翻譯結果的第一查找入口。
 - 先檢查 Git 分支、HEAD、工作樹與實際安裝檔；保留既有使用者修改，不執行 `reset --hard`、`clean` 或無關檔案刪除。
 - 「建構成功」、「部署成功」、「應用程式成功啟動」與「畫面人工驗收」是四種不同證據，回報時必須分開。
 - 使用者只要求維護或建構時，不要自行套用到正在使用的應用程式；只有明確要求部署時才關閉程序、替換檔案與自動重啟。
@@ -34,9 +35,19 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 1. 先確認安裝目錄、目前 `app.asar`、備份 archive、`.unpacked` 目錄與前端來源，並讀取實際 `package.json` 版本。
 2. 若應用程式不是 2.12.0 或 2.12.2，patcher 會顯示版本不符警告並繼續建構／套用；AI 必須把新版本相容性標為 `NOT VERIFIED`，不能把警告後成功建構或部署當成已支援。只有使用者明確要求部署時才套用；`--allow-version-mismatch` 可作為非目標版本測試的明確標記，但不會提升驗證等級。
 3. 將新文字加入相應語言包。固定文字放 `exact_properties`；描述或完整片段放 `descriptions`；動態 JSX/React 文字要修補其產生值與 Tooltip，不只修畫面上第一個出現位置。
-4. 先做不部署的建構：`npm run check`，再分別執行 `node scripts/patcher.js --lang zh-TW` 與 `node scripts/patcher.js --lang zh-CN`。確認前端與 Electron 原生腳本語法都通過。
-5. 只有在使用者要求實際套用時，才執行 `AntiLocaleToolkit.bat` 或 `node scripts/patcher.js --apply --lang <language>`；這會關閉 Antigravity 及 language server，並替換安裝檔。
-6. 建構成功不等於桌面流程已驗證。若能啟動應用程式，另外檢查實際選單、模型選擇器、技能區塊、回饋頁與還原流程；無法啟動時要明確標記為未驗證。
+4. 在同一個變更中更新 `TRANSLATION_LOG.md`，記錄來源 anchor、雙語輸出、動態保留內容與目前驗證狀態。
+5. 先做不部署的建構：`npm run check`，再分別執行 `node scripts/patcher.js --lang zh-TW` 與 `node scripts/patcher.js --lang zh-CN`。確認前端與 Electron 原生腳本語法都通過。
+6. 只有在使用者要求實際套用時，才執行 `AntiLocaleToolkit.bat` 或 `node scripts/patcher.js --apply --lang <language>`；這會關閉 Antigravity 及 language server，並替換安裝檔。
+7. 建構成功不等於桌面流程已驗證。若能啟動應用程式，另外檢查實際選單、模型選擇器、技能區塊、回饋頁與還原流程；無法啟動時要明確標記為未驗證。
+
+## 翻譯變更台帳（每次變更必做）
+
+- `TRANSLATION_LOG.md` 是翻譯維護的長期記錄，不是可省略的交接文件。開始搜尋乾淨 bundle 前，先用來源 anchor、畫面文字或動態 expression 查台帳。
+- 若台帳已有相同來源，先確認新版本是否仍命中，再沿用既有雙語輸出與動態變數保留規則；只有 anchor 改版時才重新定位，並記錄舊 anchor 與新 anchor 的對照。
+- 每次新增或調整 `locales/`、`scripts/patcher.js`、`scripts/validate_locales.js` 或相關翻譯邏輯，都必須在同一個工作樹變更中新增／更新台帳紀錄。至少記錄：日期、實際應用程式版本、來源 anchor／expression、固定或動態性質、需保留的變數、zh-TW、zh-CN、修改檔案、驗證命令、部署與畫面驗收狀態。
+- 動態文字要記錄「穩定前綴／後綴」與「原樣保留內容」；不可只記錄截圖中的一個數字、命令或任務名稱，也不可把一個動態畫面硬編成逐條 exact key。
+- 尚未提交時標示「未提交」；commit 後補上 hash。未部署或未人工開啟驗證的結果必須保留 `NOT VERIFIED`，不可用建構成功代替。
+- 不要在台帳寫入使用者家目錄、token、完整 bundle、app.asar 或其他機器專屬資料；使用 `%USERPROFILE%`、來源相對路徑與可重定位 anchor。
 
 ## 這次版本的實際經驗
 
@@ -106,4 +117,4 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 
 ## AI 交付格式
 
-完成維護後，至少回報：實際偵測到的應用程式版本、修改的語言包／程式檔、執行過的檢查、是否實際部署、是否啟動應用程式，以及仍標記為 `NOT VERIFIED` 的項目。若公開 Repository 有變更，再列出 commit 與遠端分支；沒有得到發布授權時不要自行 push。
+完成維護後，至少回報：實際偵測到的應用程式版本、修改的語言包／程式檔、台帳紀錄位置、執行過的檢查、是否實際部署、是否啟動應用程式，以及仍標記為 `NOT VERIFIED` 的項目。若公開 Repository 有變更，再列出 commit 與遠端分支；沒有得到發布授權時不要自行 push。

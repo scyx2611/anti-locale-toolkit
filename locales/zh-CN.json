@@ -641,6 +641,19 @@
       "val": "\"思考中...\""
     },
     {
+      "key": "\"Proceeded with\"",
+      "val": "\"已继续处理\""
+    },
+    {
+      "key": "\"Auto-proceeded with\"",
+      "val": "\"已自动继续处理\""
+    },
+    {
+      "key": "\"Run Task\":",
+      "val": "\"Canceled\":\"已取消\",\"Cancelled\":\"已取消\",\"Run Task\":",
+      "description": "2.12工具取消状态翻译"
+    },
+    {
       "key": "\"Continue with Google\"",
       "val": "\"继续使用 Google\""
     },

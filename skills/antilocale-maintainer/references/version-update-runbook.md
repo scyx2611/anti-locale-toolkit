@@ -154,7 +154,7 @@ node scripts/patcher.js --status
 
 ### Phase 0：建立安全基線
 
-先確認目前工作樹與遠端狀態，不要覆蓋未理解的使用者變更：
+先讀取專案根目錄 `TRANSLATION_LOG.md`，再確認目前工作樹與遠端狀態，不要覆蓋未理解的使用者變更：
 
 ```text
 git status --short --branch
@@ -197,6 +197,8 @@ skills/.../references/...    -> 基線、陷阱與驗證結果
 
 目前 patcher 以明確的 `SUPPORTED_APP_VERSIONS` 清單支援 2.12.0 與 2.12.2；新增版本時必須同步更新 `project.json`、README、patcher、驗證器與本 Runbook，並重新做兩種語言建構。不要在 patcher 裡累積無法判斷的全域替換條件。
 
+若版本更新造成既有翻譯來源移動，須同步更新 `TRANSLATION_LOG.md`：保留舊版本 anchor，新增新版本 anchor、雙語輸出與遷移原因；不能只改 Skill 文字而讓下一次維護重新搜尋。
+
 ### Phase 2：取得乾淨來源並比對結構
 
 前端來源按 `scripts/patcher.js` 的解析順序處理：明確指定來源優先，其次是使用者的 `.gemini\\antigravity\\web_bundle`、`web_bundle.source`，最後才是安裝目錄現有 bundle。最後一項必須視為可能已漢化的來源並在結果中警告。
@@ -234,6 +236,7 @@ descriptions: [{ from, to, optional description }]
 - `key` 必須保留來源的引號、跳脫、模板與必要上下文；值必須保持可嵌回原始 JavaScript 的語法。
 - 非 ASCII 可能以 `\\uXXXX` 出現；不必為每個 escaped 變體手寫重複詞條，patcher 會嘗試兩種來源形式。
 - 新增或修改繁中後，檢查簡中是否也需要對應更新；不要因某語言暫時沒有翻譯而刪除結構。
+- 同一輪修改完成後，立即在專案根目錄 `TRANSLATION_LOG.md` 新增紀錄；記錄乾淨來源 anchor、動態變數保留規則、兩種語言輸出、修改檔案與驗證狀態。不要把台帳延後到 commit 後才補。
 - 不翻譯檔案路徑、命令列、模型名稱、API 名稱、程式識別字或品牌名稱，除非它確實是可見 UI 文案。
 - 新增語言只需新增 `locales/<language>.json`；互動選單會掃描 JSON 語言包，只有需要特殊顯示名稱時才更新 `LANGUAGE_LABELS`。
 
@@ -352,6 +355,8 @@ git diff --check
 git ls-files node_modules
 git ls-files | findstr /I "app.asar backup unpacked web_bundle main.js"
 ```
+
+確認 `TRANSLATION_LOG.md` 已包含本輪所有翻譯／patcher／驗證器修改；若尚未 commit，保留「未提交」標記，commit 後再補 hash。
 
 預期：沒有 `node_modules`、`app.asar`、`*.backup`、`.unpacked`、完整 vendor `main.js` 或使用者機器的絕對路徑。用 `rg` 掃描 Token、密碼、私鑰與硬編碼個人路徑；語言包中的說明性英文詞彙不等於秘密。
 

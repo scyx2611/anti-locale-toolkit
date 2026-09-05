@@ -48,6 +48,10 @@ node scripts/patcher.js --status
 
 未來新增語言時，只要在 `locales` 新增對應的 JSON 語言包，並以 `--lang` 指定語言代碼即可；語言包與部署程式彼此分離，方便持續擴充。
 
+## 翻譯維護紀錄
+
+每次補翻或調整都會記錄在 [TRANSLATION_LOG.md](TRANSLATION_LOG.md)，包含乾淨來源的定位、動態文字保留規則、繁中／簡中輸出與驗證結果。Antigravity 更新後，先查閱台帳再重新定位改版的 bundle，避免重複搜尋已知來源。
+
 ## 安全與限制
 
 - 套用前會關閉 Antigravity 及其語言伺服器，以解除檔案鎖定。

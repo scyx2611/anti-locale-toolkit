@@ -123,6 +123,9 @@ for (const [key, twValue, cnValue] of [
   ['"No results found"', '"找不到結果"', '"未找到结果"'],
   ['"Copy Command"', '"複製指令"', '"复制命令"'],
   ['"Copied!"', '"已複製！"', '"已复制！"'],
+  ['"Thinking"', '"思考中"', '"思考中"'],
+  ['"Proceeded with"', '"已繼續處理"', '"已继续处理"'],
+  ['"Auto-proceeded with"', '"已自動繼續處理"', '"已自动继续处理"'],
   ['"1 active goal"', '"1 個進行中的目標"', '"1 个进行中的目标"'],
   ['`${a} active goals`', '`${a} 個進行中的目標`', '`${a} 个进行中的目标`'],
 ]) {
@@ -216,6 +219,9 @@ assertEntryContains('zh-CN', zhCn, chatSendTooltipKey, [
   'return' + codeTick + '发送消息 ' + dollar + '{Q}' + codeTick,
 ]);
 const activityRendererKey = 'function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return';
+const activityCanceledKey = '"Run Task":';
+assertEntryContains('zh-TW', zhTw, activityCanceledKey, ['"Canceled":"已取消"', '"Cancelled":"已取消"']);
+assertEntryContains('zh-CN', zhCn, activityCanceledKey, ['"Canceled":"已取消"', '"Cancelled":"已取消"']);
 assertEntryWithKeyPrefixContains('zh-TW', zhTw, activityRendererKey, [
   'function zhTwRunningSummary(a)',
   'function zhTwActivityTitle(a)',
