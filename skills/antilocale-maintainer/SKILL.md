@@ -73,6 +73,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - Git 操作 Tooltip 要保留條件 expression 的全部分支：Commit 的 `Commit staged changes`／`Stage and commit all changes`、Push 的動態提交數與 `Publish ${a.currentRef} to origin`，以及停用原因 `No commits to push`；不能只翻按鈕 label `Push`。
 - scripts/validate_locales.js 也要驗證 wGb 對照表與固定 Allow 標題模板的翻譯片段，讓 npm run check 能在後續版本更新時及早攔截回歸。
 - 執行活動中的 Listed 0 tasks 是固定動詞加動態數量與單複數，不能只加入 0 的完整詞條；No active tasks. 與 Found subagents 也可能由活動資料帶入，應在 activity formatter 中處理。權限標題翻譯成允許後要保留一個空格，避免接在動態 actionDescription 前面。
+- 執行活動中的 `Timed ${seconds} seconds` 與 `${task} finished` 也是動態狀態；應以數字／任務名稱正則保留動態內容，只翻譯「已計時」與「已完成」，不要只加入 `Timed 5 seconds` 或逐條寫死工具名稱。
 - 靜態檔案檢查只能證明字典與語法正確，不能證明 Electron 啟動、程序關閉、檔案鎖定解除或畫面實際顯示正確。報告結果時分開描述這些證據層級。
 
 ## 完整性盤點與雙語對等門檻

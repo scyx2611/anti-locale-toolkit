@@ -79,6 +79,7 @@
 - Commit／Push 的 Tooltip 與停用原因也要完整處理：`Commit staged changes`、`Stage and commit all changes`、動態提交數、`Publish ${a.currentRef} to origin`、`No commits to push`；只翻 `Push` label 不足以涵蓋畫面。
 - npm run check 會驗證 wGb 對照表與固定 Allow 標題模板仍包含原始識別文字與目標語言片段；若來源 expression 改版，先更新規則與驗證器，再建構兩種語言。
 - Listed 0 tasks 應以活動 formatter 的數量模式翻譯，並一併處理 No active tasks. 與 Found subagents；權限標題的 Allow 翻譯值要保留後置空格，動態 actionDescription、指令、路徑與工具名稱則不改動。
+- 活動 formatter 也要覆蓋 `Timed ${seconds} seconds` 與 `${task} finished`；保留秒數／任務名稱，分別只翻譯為「已計時 ${seconds} 秒」與「${task} 已完成」，不可只補畫面範例的固定數字。
 - 右側技能清單、模型用量、設定頁與原生選單；原生內容不是只靠 web bundle 字典完成。
 
 ### 完整性盤點與雙語對等檢查

@@ -4904,5 +4904,7 @@
     ,{"key":"\"Sends on next turn\"","val":"\"下一回合傳送\"","description":"2.12後續訊息狀態"}
     ,{"key":"\"Copy\"","val":"\"複製\"","description":"2.12複製按鈕與 Tooltip"}
     ,{"key":"\"Copied\"","val":"\"已複製\"","description":"2.12複製完成狀態"}
+    ,{"key":";var b=a.match(/^(Run|Download) (.+) finished$/);","val":";var d=a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/);if(d)return\"已計時 \"+d[1]+\" 秒\";var b=a.match(/^(Run|Download) (.+) finished$/);","description":"2.12工具活動計時狀態"}
+    ,{"key":"+b[2]+\" 已完成\";return ({","val":"+b[2]+\" 已完成\";var e=a.match(/^(.+) finished$/);if(e)return e[1]+\" 已完成\";return ({","description":"2.12工具活動完成狀態"}
   ]
 }

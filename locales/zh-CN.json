@@ -13567,6 +13567,16 @@
       "key": "\"Copied\"",
       "val": "\"已复制\"",
       "description": "2.12复制完成状态"
+    },
+    {
+      "key": ";var b=a.match(/^(Run|Download) (.+) finished$/);",
+      "val": ";var d=a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/);if(d)return\"已计时 \"+d[1]+\" 秒\";var b=a.match(/^(Run|Download) (.+) finished$/);",
+      "description": "2.12工具活动计时状态"
+    },
+    {
+      "key": "+b[2]+\" 已完成\";return ({",
+      "val": "+b[2]+\" 已完成\";var e=a.match(/^(.+) finished$/);if(e)return e[1]+\" 已完成\";return ({",
+      "description": "2.12工具活动完成状态"
     }
   ],
   "descriptions": [

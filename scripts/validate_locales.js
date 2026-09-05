@@ -123,6 +123,18 @@ for (const [key, twValue, cnValue] of [
   assertEntryContains('zh-TW', zhTw, key, [twValue]);
   assertEntryContains('zh-CN', zhCn, key, [cnValue]);
 }
+assertEntryContains('zh-TW', zhTw, ';var b=a.match(/^(Run|Download) (.+) finished$/);', [
+  'var d=a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/);if(d)return"已計時 "+d[1]+" 秒";',
+]);
+assertEntryContains('zh-CN', zhCn, ';var b=a.match(/^(Run|Download) (.+) finished$/);', [
+  'var d=a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/);if(d)return"已计时 "+d[1]+" 秒";',
+]);
+assertEntryContains('zh-TW', zhTw, '+b[2]+" 已完成";return ({', [
+  'var e=a.match(/^(.+) finished$/);if(e)return e[1]+" 已完成";return ({',
+]);
+assertEntryContains('zh-CN', zhCn, '+b[2]+" 已完成";return ({', [
+  'var e=a.match(/^(.+) finished$/);if(e)return e[1]+" 已完成";return ({',
+]);
 const copyButtonStateKey = 'J?"Copied":"Copy"';
 assertEntryContains('zh-TW', zhTw, copyButtonStateKey, ['J?"已複製":"複製"']);
 assertEntryContains('zh-CN', zhCn, copyButtonStateKey, ['J?"已复制":"复制"']);
