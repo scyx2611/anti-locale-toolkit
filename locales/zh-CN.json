@@ -914,6 +914,10 @@
       "val": "\"搜索文件...\""
     },
     {
+      "key": "\"Select category to search...\"",
+      "val": "\"选择要搜索的类别...\""
+    },
+    {
       "key": "\"Search for files in the project...\"",
       "val": "\"搜索项目中的文件...\""
     },
@@ -13078,6 +13082,16 @@
       "key": "`${a} active conversations`",
       "val": "`${a} 个进行中的对话`",
       "description": "2.12删除项目进行中对话数"
+    },
+    {
+      "key": "\"1 active goal\"",
+      "val": "\"1 个进行中的目标\"",
+      "description": "2.12进行中目标数"
+    },
+    {
+      "key": "`${a} active goals`",
+      "val": "`${a} 个进行中的目标`",
+      "description": "2.12进行中目标数"
     },
     {
       "key": "\"1 archived conversation\"",

@@ -4087,6 +4087,8 @@
     {"key":"description:\"Time spent waiting in queue for previous tools to complete or move to background before execution began.\"","val":"description:\"執行開始前，在佇列中等待先前工具完成或移至背景所花費的時間。\""},
     {"key":"description:\"Execution duration for this tool call (including pre/post-tool hooks and user approval prompts).\"","val":"description:\"此工具呼叫的執行時間（包括工具前後掛鉤與使用者核准提示）。\""},
     {"key":"\"Send Feedback\"","val":"\"傳送意見反映\""},
+    {"key":"\"Select category to search...\"","val":"\"選擇要搜尋的類別...\""},
+    {"key":"\"No results found\"","val":"\"找不到結果\""},
     {"key":"\"No results found.\"","val":"\"找不到結果。\""},
     {"key":"\"Loading skills…\"","val":"\"正在載入技能…\""},
     {"key":"\"Loading skills...\"","val":"\"正在載入技能...\""},
@@ -4787,6 +4789,8 @@
     ,{"key":"},\"Delete \",C.capitalized)","val":"},\"刪除\",C.capitalized===\"Project\"?\"專案\":C.capitalized)","description":"2.12刪除專案按鈕"}
     ,{"key":"\"1 active conversation\"","val":"\"1 個進行中的對話\"","description":"2.12刪除專案進行中對話數"}
     ,{"key":"`${a} active conversations`","val":"`${a} 個進行中的對話`","description":"2.12刪除專案進行中對話數"}
+    ,{"key":"\"1 active goal\"","val":"\"1 個進行中的目標\"","description":"2.12進行中目標數"}
+    ,{"key":"`${a} active goals`","val":"`${a} 個進行中的目標`","description":"2.12進行中目標數"}
     ,{"key":"\"1 archived conversation\"","val":"\"1 個已封存的對話\"","description":"2.12刪除專案已封存對話數"}
     ,{"key":"`${b} archived conversations`","val":"`${b} 個已封存的對話`","description":"2.12刪除專案已封存對話數"}
     ,{"key":"return c.join(\" and \")","val":"return c.join(\"，\")","description":"2.12刪除專案對話數連接詞"}

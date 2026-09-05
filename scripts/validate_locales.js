@@ -119,6 +119,10 @@ for (const [key, twValue, cnValue] of [
   ['"Sends on next turn"', '"下一回合傳送"', '"下一轮发送"'],
   ['"Copy"', '"複製"', '"复制"'],
   ['"Copied"', '"已複製"', '"已复制"'],
+  ['"Select category to search..."', '"選擇要搜尋的類別..."', '"选择要搜索的类别..."'],
+  ['"No results found"', '"找不到結果"', '"未找到结果"'],
+  ['"1 active goal"', '"1 個進行中的目標"', '"1 个进行中的目标"'],
+  ['`${a} active goals`', '`${a} 個進行中的目標`', '`${a} 个进行中的目标`'],
 ]) {
   assertEntryContains('zh-TW', zhTw, key, [twValue]);
   assertEntryContains('zh-CN', zhCn, key, [cnValue]);
