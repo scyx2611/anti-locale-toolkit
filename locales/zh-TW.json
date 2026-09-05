@@ -3100,6 +3100,8 @@
     {"key":"\"This extension has no declared permissions requiring user input.\"","val":"\"此擴充功能未宣告需要使用者輸入的權限。\""},
     {"key":"\"Agents created by this automation are granted the permissions below. The automation code itself is assumed to be trusted and therefore unrestricted; these permissions apply only to the agents it spawns. You can change these anytime from the automation's menu → Manage permissions.\"","val":"\"此自動化建立的代理會獲授以下權限。自動化程式碼本身視為可信任，因此不受限制；這些權限只套用至它產生的代理。你可以隨時從自動化選單的「管理權限」變更這些設定。\""},
     {"key":"\"Path copied!\"","val":"\"路徑已複製！\""},
+    {"key":"\"Copy Command\"","val":"\"複製指令\""},
+    {"key":"\"Copied!\"","val":"\"已複製！\""},
     {"key":"\"Loading workspace customizations...\"","val":"\"正在載入工作區個人化設定...\""},
     {"key":"\"Blocked by organization policy\"","val":"\"遭組織原則封鎖\""},
     {"key":"\"Are you sure you want to delete\"","val":"\"確定要刪除\""},

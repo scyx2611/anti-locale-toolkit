@@ -121,6 +121,8 @@ for (const [key, twValue, cnValue] of [
   ['"Copied"', '"已複製"', '"已复制"'],
   ['"Select category to search..."', '"選擇要搜尋的類別..."', '"选择要搜索的类别..."'],
   ['"No results found"', '"找不到結果"', '"未找到结果"'],
+  ['"Copy Command"', '"複製指令"', '"复制命令"'],
+  ['"Copied!"', '"已複製！"', '"已复制！"'],
   ['"1 active goal"', '"1 個進行中的目標"', '"1 个进行中的目标"'],
   ['`${a} active goals`', '`${a} 個進行中的目標`', '`${a} 个进行中的目标`'],
 ]) {
