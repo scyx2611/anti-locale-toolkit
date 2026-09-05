@@ -706,16 +706,16 @@
     },
     {
       "key": "function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return",
-      "val": "function zhCnRunningSummary(a){if(typeof a!==\"string\")return a;return a.replace(/(\\d+) subagents\\/tasks running/g,\"$1 个子代理/任务运行中\").replace(/(\\d+) subagents? running/g,\"$1 个子代理运行中\").replace(/(\\d+) tasks? running/g,\"$1 个任务运行中\")}function zhCnActivityText(a){if(typeof a!==\"string\")return a;var b=a.match(/^(Run|Download) (.+) finished$/);if(b)return (b[1]===\"Run\"?\"运行\":\"下载\")+\" \"+b[2]+\" 已完成\";return ({\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"读取中\",\"Read\":\"已读取\",\"Reading page\":\"正在读取页面\",\"Created outline\":\"已创建大纲\",\"Read page\":\"已读取页面\",\"Searched\":\"已搜索\",\"Searching\":\"搜索中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已编辑\",\"Editing\":\"编辑中\",\"Ran\":\"已运行\",\"Running\":\"运行中\",\"Run\":\"运行\",\"Run Task\":\"运行任务\",\"Running Task\":\"正在运行任务\",\"Ran Task\":\"已运行任务\",\"Task\":\"任务\"}[a]??a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return"
+      "val": "function zhCnRunningSummary(a){if(typeof a!==\"string\")return a;return a.replace(/(\\d+) subagents\\/tasks running/g,\"$1 个子代理/任务运行中\").replace(/(\\d+) subagents? running/g,\"$1 个子代理运行中\").replace(/(\\d+) tasks? running/g,\"$1 个任务运行中\")}function zhCnActivityText(a){if(typeof a!==\"string\")return a;var b=a.match(/^Searching (.+)$/);if(b)return\"搜索中 \"+b[1];var c=a.match(/^Searched (.+)$/);if(c)return\"已搜索 \"+c[1];var b=a.match(/^(Run|Download) (.+) finished$/);if(b)return (b[1]===\"Run\"?\"运行\":\"下载\")+\" \"+b[2]+\" 已完成\";return ({\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"读取中\",\"Read\":\"已读取\",\"Reading page\":\"正在读取页面\",\"Created outline\":\"已创建大纲\",\"Read page\":\"已读取页面\",\"Searched\":\"已搜索\",\"Searching\":\"搜索中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已编辑\",\"Editing\":\"编辑中\",\"Ran\":\"已运行\",\"Running\":\"运行中\",\"Run\":\"运行\",\"Run Task\":\"运行任务\",\"Running Task\":\"正在运行任务\",\"Ran Task\":\"已运行任务\",\"Task\":\"任务\"}[a]??a)}function zhCnActivityTitle(a){if(typeof a!==\"string\")return a;if(a===\"Searching web\")return\"搜索网络\";if(a===\"Searched web\")return\"已搜索网络\";return zhCnActivityText(a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return"
     },
     {
       "key": "y=u?.titlePrefix||void 0;",
-      "val": "y=u?.titlePrefix||void 0;y=zhCnActivityText(y);",
+      "val": "y=u?.titlePrefix||void 0;y=zhCnActivityTitle(y);",
       "description": "2.12一般工具动态任务标题翻译"
     },
     {
       "key": "a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?typeof a===\"string\"?",
-      "val": "a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?(b=zhCnActivityText(b),a=zhCnActivityText(a),typeof a===\"string\"?",
+      "val": "a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?(b=zhCnActivityTitle(b),a=zhCnActivityTitle(a),typeof a===\"string\"?",
       "description": "2.12工具摘要动态任务标题翻译"
     },
     {
@@ -730,7 +730,12 @@
     },
     {
       "key": "e=typeof b===\"string\";return z.createElement",
-      "val": "e=typeof b===\"string\";a=zhCnActivityText(a);b=e?zhCnActivityText(b):b;return z.createElement"
+      "val": "e=typeof b===\"string\";a=zhCnActivityTitle(a);b=e?zhCnActivityTitle(b):b;return z.createElement"
+    },
+    {
+      "key": "a.titlePrefix?`${a.titlePrefix} ${b}`:b",
+      "val": "a.titlePrefix?zhCnActivityTitle(`${a.titlePrefix} ${b}`):b",
+      "description": "2.12活动摘要完整标题翻译"
     },
     {
       "key": "prefix:\"Analyzed\"",
@@ -1162,7 +1167,7 @@
     },
     {
       "key": "title:\"Browser Settings\"",
-      "val": "title:\"浏览器设置\""
+      "val": "title:\"浏览器\""
     },
     {
       "key": "label:\"File Reads\"",
@@ -4686,7 +4691,7 @@
     },
     {
       "key": "title:\"Customizations\"",
-      "val": "title:\"个性化设置\""
+      "val": "title:\"个性化\""
     },
     {
       "key": "title:\"Skills Configuration Error:\"",
@@ -12921,8 +12926,23 @@
     },
     {
       "key": "z.createElement(\"span\",{className:\"text-secondary-foreground\"},r.label)",
-      "val": "z.createElement(\"span\",{className:\"text-secondary-foreground\"},({\"Rules\":\"规则\",\"Skills\":\"技能\",\"MCP\":\"MCP\",\"Agents\":\"代理\",\"Hooks\":\"挂钩\",\"UI Extensions\":\"UI 扩展功能\",\"Automations\":\"自动化\",\"System Prompt\":\"系统提示\"}[r.label]||r.label))",
+      "val": "z.createElement(\"span\",{className:\"text-secondary-foreground\"},({\"Rules\":\"规则\",\"Skills\":\"技能\",\"MCP\":\"MCP\",\"MCP Tools\":\"MCP 工具\",\"Mcp Tools\":\"MCP 工具\",\"Agents\":\"代理\",\"Hooks\":\"挂钩\",\"UI Extensions\":\"UI 扩展功能\",\"Automations\":\"自动化\",\"System Prompt\":\"系统提示\"}[r.label]||r.label))",
       "description": "2.12 Token 分解类别标签"
+    },
+    {
+      "key": "function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return",
+      "val": "function zhCnModelGroupText(a){if(typeof a!==\"string\")return a;return a.replace(/^Models within this group:\\s*/,\"此分组中的模型：\").replace(/,\\s*/g,\"、\")}function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return",
+      "description": "2.12模型分组提示动态翻译"
+    },
+    {
+      "key": "z.createElement(ty,{id:c},a.description)",
+      "val": "z.createElement(ty,{id:c},zhCnModelGroupText(a.description))",
+      "description": "2.12模型分组提示内容翻译"
+    },
+    {
+      "key": "z.createElement(\"span\",{className:\"text-secondary-foreground\"},a.description)",
+      "val": "z.createElement(\"span\",{className:\"text-secondary-foreground\"},zhCnModelGroupText(a.description))",
+      "description": "2.12模型分组说明内容翻译"
     },
     {
       "key": "z.createElement(\"span\",{className:\"tabular-nums text-muted-foreground\"},\"(\",r.tokens.toLocaleString(),\" tokens)\"",
@@ -12966,7 +12986,7 @@
     },
     {
       "key": "z.createElement(N0,{title:\"Customizations\",description:z.createElement(\"span\",null,\"Configure default behaviors, skills, and MCP servers.\"",
-      "val": "z.createElement(N0,{title:\"个性化设置\",description:z.createElement(\"span\",null,\"设置默认行为、技能以及 MCP 服务器。\"",
+      "val": "z.createElement(N0,{title:\"个性化\",description:z.createElement(\"span\",null,\"设置默认行为、技能以及 MCP 服务器。\"",
       "description": "2.12个性化页面说明"
     },
     {

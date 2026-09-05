@@ -158,6 +158,23 @@ for (const key of [modelGroupHeadingKey, modelGroupBadgeKey]) {
   assertEntryContains('zh-TW', zhTw, key, ['"Gemini Models":"Gemini 模型"', '"Claude and GPT models":"Claude 與 GPT 模型"']);
   assertEntryContains('zh-CN', zhCn, key, ['"Gemini Models":"Gemini 模型"', '"Claude and GPT models":"Claude 与 GPT 模型"']);
 }
+const tokenLabelRendererKey = 'z.createElement("span",{className:"text-secondary-foreground"},r.label)';
+assertEntryContains('zh-TW', zhTw, tokenLabelRendererKey, ['"Mcp Tools":"MCP 工具"']);
+assertEntryContains('zh-CN', zhCn, tokenLabelRendererKey, ['"Mcp Tools":"MCP 工具"']);
+const modelGroupTextFormatterKey = 'function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return';
+assertEntryWithKeyPrefixContains('zh-TW', zhTw, modelGroupTextFormatterKey, ['function zhTwModelGroupText(a)', '此分組中的模型：']);
+assertEntryWithKeyPrefixContains('zh-CN', zhCn, modelGroupTextFormatterKey, ['function zhCnModelGroupText(a)', '此分组中的模型：']);
+for (const key of ['z.createElement(ty,{id:c},a.description)', 'z.createElement("span",{className:"text-secondary-foreground"},a.description)']) {
+  assertEntryContains('zh-TW', zhTw, key, ['zhTwModelGroupText(a.description)']);
+  assertEntryContains('zh-CN', zhCn, key, ['zhCnModelGroupText(a.description)']);
+}
+const customizationsPageTitleKey = 'z.createElement(N0,{title:"Customizations",description:z.createElement("span",null,"Configure default behaviors, skills, and MCP servers."';
+assertEntryContains('zh-TW', zhTw, customizationsPageTitleKey, ['title:"個人化"']);
+assertEntryContains('zh-CN', zhCn, customizationsPageTitleKey, ['title:"个性化"']);
+assertEntryContains('zh-TW', zhTw, 'title:"Customizations"', ['title:"個人化"']);
+assertEntryContains('zh-CN', zhCn, 'title:"Customizations"', ['title:"个性化"']);
+assertEntryContains('zh-TW', zhTw, 'title:"Browser Settings"', ['title:"瀏覽器"']);
+assertEntryContains('zh-CN', zhCn, 'title:"Browser Settings"', ['title:"浏览器"']);
 const codeTick = String.fromCharCode(96);
 const dollar = '$';
 const chatSendTooltipKey = 'return' + codeTick + 'Send message ' + dollar + '{Q}' + codeTick;
@@ -170,6 +187,15 @@ assertEntryContains('zh-CN', zhCn, chatSendTooltipKey, [
 const activityRendererKey = 'function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return';
 assertEntryWithKeyPrefixContains('zh-TW', zhTw, activityRendererKey, [
   'function zhTwRunningSummary(a)',
+  'function zhTwActivityTitle(a)',
+  'a==="Searching web"',
+  'return"搜尋網路"',
+  'a==="Searched web"',
+  'return"已搜尋網路"',
+  'a.match(/^Searching (.+)$/)',
+  'return"搜尋中 "+b[1]',
+  'a.match(/^Searched (.+)$/)',
+  'return"已搜尋 "+c[1]',
   'a.match(/^(Run|Download) (.+) finished$/)',
   'b[1]===\"Run\"?\"執行\":\"下載\"',
   'replace(/(\\d+) tasks? running/g,"$1 個任務執行中")',
@@ -179,6 +205,15 @@ assertEntryWithKeyPrefixContains('zh-TW', zhTw, activityRendererKey, [
 ]);
 assertEntryWithKeyPrefixContains('zh-CN', zhCn, activityRendererKey, [
   'function zhCnRunningSummary(a)',
+  'function zhCnActivityTitle(a)',
+  'a==="Searching web"',
+  'return"搜索网络"',
+  'a==="Searched web"',
+  'return"已搜索网络"',
+  'a.match(/^Searching (.+)$/)',
+  'return"搜索中 "+b[1]',
+  'a.match(/^Searched (.+)$/)',
+  'return"已搜索 "+c[1]',
   'a.match(/^(Run|Download) (.+) finished$/)',
   'b[1]===\"Run\"?\"运行\":\"下载\"',
   'replace(/(\\d+) tasks? running/g,"$1 个任务运行中")',
@@ -187,11 +222,14 @@ assertEntryWithKeyPrefixContains('zh-CN', zhCn, activityRendererKey, [
   '\"Ran Task\":\"已运行任务\"',
 ]);
 const genericTaskTitlePrefixKey = 'y=u?.titlePrefix||void 0;';
-assertEntryContains('zh-TW', zhTw, genericTaskTitlePrefixKey, ['y=zhTwActivityText(y);']);
-assertEntryContains('zh-CN', zhCn, genericTaskTitlePrefixKey, ['y=zhCnActivityText(y);']);
+assertEntryContains('zh-TW', zhTw, genericTaskTitlePrefixKey, ['y=zhTwActivityTitle(y);']);
+assertEntryContains('zh-CN', zhCn, genericTaskTitlePrefixKey, ['y=zhCnActivityTitle(y);']);
 const activitySummaryTitleKey = 'a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?typeof a===' + '\"string\"?';
-assertEntryContains('zh-TW', zhTw, activitySummaryTitleKey, ['b=zhTwActivityText(b)', 'a=zhTwActivityText(a)']);
-assertEntryContains('zh-CN', zhCn, activitySummaryTitleKey, ['b=zhCnActivityText(b)', 'a=zhCnActivityText(a)']);
+assertEntryContains('zh-TW', zhTw, activitySummaryTitleKey, ['b=zhTwActivityTitle(b)', 'a=zhTwActivityTitle(a)']);
+assertEntryContains('zh-CN', zhCn, activitySummaryTitleKey, ['b=zhCnActivityTitle(b)', 'a=zhCnActivityTitle(a)']);
+const assembledActivityTitleKey = 'a.titlePrefix?' + codeTick + '${a.titlePrefix} ${b}' + codeTick + ':b';
+assertEntryContains('zh-TW', zhTw, assembledActivityTitleKey, ['a.titlePrefix?zhTwActivityTitle(' + codeTick + '${a.titlePrefix} ${b}' + codeTick + '):b']);
+assertEntryContains('zh-CN', zhCn, assembledActivityTitleKey, ['a.titlePrefix?zhCnActivityTitle(' + codeTick + '${a.titlePrefix} ${b}' + codeTick + '):b']);
 const runningTaskSummaryKey = 'return m.join(\", \")},[h,k,f,g])};';
 assertEntryContains('zh-TW', zhTw, runningTaskSummaryKey, ['return zhTwRunningSummary(m.join(\", \"))']);
 assertEntryContains('zh-CN', zhCn, runningTaskSummaryKey, ['return zhCnRunningSummary(m.join(\", \"))']);

@@ -2614,7 +2614,7 @@
     {"key":"title:\"Experimental features\"","val":"title:\"實驗性功能\""},
     {"key":"title:\"Model Quota\"","val":"title:\"模型配額\""},
     {"key":"title:\"Remote Control\"","val":"title:\"遠端控制\""},
-    {"key":"title:\"Customizations\"","val":"title:\"個人化設定\""},
+    {"key":"title:\"Customizations\"","val":"title:\"個人化\""},
     {"key":"title:\"Skills Configuration Error:\"","val":"title:\"技能設定錯誤：\""},
     {"key":"title:\"MCP Install Error:\"","val":"title:\"MCP 安裝錯誤：\""},
     {"key":"title:\"Jetski Chat\"","val":"title:\"Jetski 聊天\""},
@@ -4485,7 +4485,7 @@
     {"key":"label:\"Workspace URI query parameter\"","val":"label:\"工作區 URI 查詢參數\""},
     {"key":"label:\"Vetted (beta)\"","val":"label:\"已審核（Beta）\""},
     {"key":"description:\"Controls whether terminal commands require your approval before running.\"","val":"description:\"控制終端機指令是否需要你的核准才能執行。\""},
-    {"key":"title:\"Browser Settings\"","val":"title:\"瀏覽器設定\""},
+    {"key":"title:\"Browser Settings\"","val":"title:\"瀏覽器\""},
     {"key":"title:\"Copy value\"","val":"title:\"複製值\""},
     {"key":"title:\"Enable Notifications\"","val":"title:\"啟用通知\""},
     {"key":"title:\"Local\"","val":"title:\"本機\""},
@@ -4752,7 +4752,10 @@
     ,{"key":"\"Browser settings have moved\"","val":"\"瀏覽器設定已移動\"","description":"2.12瀏覽器設定搬移標題"}
     ,{"key":"\"Browser settings have moved to the Browser section of General settings.\"","val":"\"瀏覽器設定已移至一般設定中的瀏覽器區段。\"","description":"2.12瀏覽器設定搬移說明"}
     ,{"key":"\"Go to General settings\"","val":"\"前往一般設定\"","description":"2.12前往一般設定連結"}
-    ,{"key":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},r.label)","val":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},({\"Rules\":\"規則\",\"Skills\":\"技能\",\"MCP\":\"MCP\",\"Agents\":\"代理\",\"Hooks\":\"掛鉤\",\"UI Extensions\":\"UI 擴充功能\",\"Automations\":\"自動化\",\"System Prompt\":\"系統提示\"}[r.label]||r.label))","description":"2.12 Token 分解類別標籤"}
+    ,{"key":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},r.label)","val":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},({\"Rules\":\"規則\",\"Skills\":\"技能\",\"MCP\":\"MCP\",\"MCP Tools\":\"MCP 工具\",\"Mcp Tools\":\"MCP 工具\",\"Agents\":\"代理\",\"Hooks\":\"掛鉤\",\"UI Extensions\":\"UI 擴充功能\",\"Automations\":\"自動化\",\"System Prompt\":\"系統提示\"}[r.label]||r.label))","description":"2.12 Token 分解類別標籤"}
+    ,{"key":"function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return","val":"function zhTwModelGroupText(a){if(typeof a!==\"string\")return a;return a.replace(/^Models within this group:\\s*/,\"此分組中的模型：\").replace(/,\\s*/g,\"、\")}function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return","description":"2.12模型分組提示動態翻譯"}
+    ,{"key":"z.createElement(ty,{id:c},a.description)","val":"z.createElement(ty,{id:c},zhTwModelGroupText(a.description))","description":"2.12模型分組提示內容翻譯"}
+    ,{"key":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},a.description)","val":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},zhTwModelGroupText(a.description))","description":"2.12模型分組說明內容翻譯"}
     ,{"key":"z.createElement(\"span\",{className:\"tabular-nums text-muted-foreground\"},\"(\",r.tokens.toLocaleString(),\" tokens)\"","val":"z.createElement(\"span\",{className:\"tabular-nums text-muted-foreground\"},\"（\",r.tokens.toLocaleString(),\" 個 Token）\"","description":"2.12 Token 分解數量"}
     ,{"key":"y?\"Hide breakdown\":`Show ${u.length} breakdown${u.length===1?\"\":\"s\"}`","val":"y?\"隱藏明細\":`顯示 ${u.length} 項明細`","description":"2.12 Token 分解展開按鈕"}
     ,{"key":"E?\"Hide tools\":`${G.length} tools`","val":"E?\"隱藏工具\":`${G.length} 個工具`","description":"2.12 Token 分解工具按鈕"}
@@ -4761,7 +4764,7 @@
     ,{"key":"z.createElement(CR,{label:b,description:c,rightElement:z.createElement(Yz,\n{variant:\"secondary\",size:\"sm\",onClick:()=>{y(!0)}},\"Add\")","val":"z.createElement(CR,{label:b,description:c,rightElement:z.createElement(Yz,\n{variant:\"secondary\",size:\"sm\",onClick:()=>{y(!0)}},\"新增\")","description":"2.12沙盒外指令新增按鈕"}
     ,{"key":"a===\"use_global\"?\"Inherit General\":a===\n\"turbo\"?\"Always Proceed\":\"Always Ask\"","val":"a===\"use_global\"?\"繼承一般設定\":a===\n\"turbo\"?\"一律執行\":\"一律詢問\"","description":"2.12成品審查策略目前值"}
     ,{"key":"yb===\"use_global\"?\"Inherit General\":yb===\"turbo\"?\"Always Proceed\":\"Always Ask\"","val":"yb===\"use_global\"?\"繼承一般設定\":yb===\"turbo\"?\"一律執行\":\"一律詢問\"","description":"2.12成品審查策略解析器"}
-    ,{"key":"z.createElement(N0,{title:\"Customizations\",description:z.createElement(\"span\",null,\"Configure default behaviors, skills, and MCP servers.\"","val":"z.createElement(N0,{title:\"個人化設定\",description:z.createElement(\"span\",null,\"設定預設行為、技能以及 MCP 伺服器。\"","description":"2.12個人化頁面說明"}
+    ,{"key":"z.createElement(N0,{title:\"Customizations\",description:z.createElement(\"span\",null,\"Configure default behaviors, skills, and MCP servers.\"","val":"z.createElement(N0,{title:\"個人化\",description:z.createElement(\"span\",null,\"設定預設行為、技能以及 MCP 伺服器。\"","description":"2.12個人化頁面說明"}
     ,{"key":"`Manage ${C.lowercase} folders, agent settings, and permissions.`","val":"`管理${C.lowercase===\"project\"?\"專案\":C.lowercase}資料夾、代理設定與權限。`","description":"2.12專案設定頁說明"}
     ,{"key":"z.createElement(\"span\",null,\"Add Folder\")","val":"z.createElement(\"span\",null,\"新增資料夾\")","description":"2.12專案資料夾新增按鈕"}
     ,{"key":"title:\"Local Permissions\"","val":"title:\"本機權限\"","description":"2.12專案本機權限標題"}
@@ -4810,12 +4813,13 @@
     ,{"key":"n=f?e?\"Editing\":\"Edited\":g?e?\"Running\":\n\"Ran\":e?\"Exploring\":\"Explored\"","val":"n=f?e?\"編輯中\":\"已編輯\":g?e?\"執行中\":\"已執行\":e?\"探索中\":\"已探索\"","description":"2.12工具步驟目前狀態"}
     ,{"key":"var gmb=({steps:a,summary:b,debugMode:c,isActive:e=!1})=>","val":"function zhTwToolSummary(a){if(typeof a!==\"string\")return a;return a.replace(/\\bfiles?\\b/g,\"個檔案\").replace(/\\bsearches?\\b/g,\"次搜尋\").replace(/\\bresults?\\b/g,\"項結果\").replace(/,\\s+/g,\"，\")}var gmb=({steps:a,summary:b,debugMode:c,isActive:e=!1})=>","description":"2.12工具摘要動態翻譯"}
     ,{"key":":g&&l?l:b","val":":g&&l?l:zhTwToolSummary(b)","description":"2.12工具群組摘要翻譯"}
-    ,{"key":"function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","val":"function zhTwRunningSummary(a){if(typeof a!==\"string\")return a;return a.replace(/(\\d+) subagents\\/tasks running/g,\"$1 個子代理／任務執行中\").replace(/(\\d+) subagents? running/g,\"$1 個子代理執行中\").replace(/(\\d+) tasks? running/g,\"$1 個任務執行中\")}function zhTwActivityText(a){if(typeof a!==\"string\")return a;var b=a.match(/^(Run|Download) (.+) finished$/);if(b)return (b[1]===\"Run\"?\"執行\":\"下載\")+\" \"+b[2]+\" 已完成\";return ({\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"讀取中\",\"Read\":\"已讀取\",\"Reading page\":\"讀取頁面中\",\"Created outline\":\"已建立大綱\",\"Read page\":\"已讀取頁面\",\"Searched\":\"已搜尋\",\"Searching\":\"搜尋中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已編輯\",\"Editing\":\"編輯中\",\"Ran\":\"已執行\",\"Running\":\"執行中\",\"Run\":\"執行\",\"Run Task\":\"執行任務\",\"Running Task\":\"執行任務中\",\"Ran Task\":\"已執行任務\",\"Task\":\"任務\"}[a]??a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","description":"2.12工具活動前綴翻譯"}
-    ,{"key":"y=u?.titlePrefix||void 0;","val":"y=u?.titlePrefix||void 0;y=zhTwActivityText(y);","description":"2.12一般工具動態任務標題翻譯"}
-    ,{"key":"a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?typeof a===\"string\"?","val":"a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?(b=zhTwActivityText(b),a=zhTwActivityText(a),typeof a===\"string\"?","description":"2.12工具摘要動態任務標題翻譯"}
+    ,{"key":"function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","val":"function zhTwRunningSummary(a){if(typeof a!==\"string\")return a;return a.replace(/(\\d+) subagents\\/tasks running/g,\"$1 個子代理／任務執行中\").replace(/(\\d+) subagents? running/g,\"$1 個子代理執行中\").replace(/(\\d+) tasks? running/g,\"$1 個任務執行中\")}function zhTwActivityText(a){if(typeof a!==\"string\")return a;var b=a.match(/^Searching (.+)$/);if(b)return\"搜尋中 \"+b[1];var c=a.match(/^Searched (.+)$/);if(c)return\"已搜尋 \"+c[1];var b=a.match(/^(Run|Download) (.+) finished$/);if(b)return (b[1]===\"Run\"?\"執行\":\"下載\")+\" \"+b[2]+\" 已完成\";return ({\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"讀取中\",\"Read\":\"已讀取\",\"Reading page\":\"讀取頁面中\",\"Created outline\":\"已建立大綱\",\"Read page\":\"已讀取頁面\",\"Searched\":\"已搜尋\",\"Searching\":\"搜尋中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已編輯\",\"Editing\":\"編輯中\",\"Ran\":\"已執行\",\"Running\":\"執行中\",\"Run\":\"執行\",\"Run Task\":\"執行任務\",\"Running Task\":\"執行任務中\",\"Ran Task\":\"已執行任務\",\"Task\":\"任務\"}[a]??a)}function zhTwActivityTitle(a){if(typeof a!==\"string\")return a;if(a===\"Searching web\")return\"搜尋網路\";if(a===\"Searched web\")return\"已搜尋網路\";return zhTwActivityText(a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","description":"2.12工具活動前綴翻譯"}
+    ,{"key":"y=u?.titlePrefix||void 0;","val":"y=u?.titlePrefix||void 0;y=zhTwActivityTitle(y);","description":"2.12一般工具動態任務標題翻譯"}
+    ,{"key":"a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?typeof a===\"string\"?","val":"a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?(b=zhTwActivityTitle(b),a=zhTwActivityTitle(a),typeof a===\"string\"?","description":"2.12工具摘要動態任務標題翻譯"}
     ,{"key":"return m.join(\", \")},[h,k,f,g])};","val":"return zhTwRunningSummary(m.join(\", \"))},[h,k,f,g])};","description":"2.12執行活動動態任務數量翻譯"}
     ,{"key":"},b,a):a;if(c)","val":"},b,a)):a;if(c)","description":"2.12工具摘要動態任務標題括號修正"}
-    ,{"key":"e=typeof b===\"string\";return z.createElement","val":"e=typeof b===\"string\";a=zhTwActivityText(a);b=e?zhTwActivityText(b):b;return z.createElement","description":"2.12工具活動文字翻譯"}
+    ,{"key":"e=typeof b===\"string\";return z.createElement","val":"e=typeof b===\"string\";a=zhTwActivityTitle(a);b=e?zhTwActivityTitle(b):b;return z.createElement","description":"2.12工具活動文字翻譯"}
+    ,{"key":"a.titlePrefix?`${a.titlePrefix} ${b}`:b","val":"a.titlePrefix?zhTwActivityTitle(`${a.titlePrefix} ${b}`):b","description":"2.12活動摘要完整標題翻譯"}
     ,{"key":"prefix:\"Analyzed\"","val":"prefix:\"已分析\"","description":"2.12分析活動前綴"}
     ,{"key":"prefix:\"Run\"","val":"prefix:\"執行\"","description":"2.12執行活動前綴"}
     ,{"key":"e||(aJ(a)?\"Searching\":\"Searched\")","val":"e||(aJ(a)?\"搜尋中\":\"已搜尋\")","description":"2.12搜尋活動狀態"}
