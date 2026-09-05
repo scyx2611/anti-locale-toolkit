@@ -13527,6 +13527,46 @@
       "key": "\"aria-label\":Na?\"Unpin conversation\":\"Pin conversation\"",
       "val": "\"aria-label\":Na?\"取消置顶对话\":\"置顶对话\"",
       "description": "2.12对话置顶按钮无障碍标签"
+    },
+    {
+      "key": "\"Undo changes up to this point\"",
+      "val": "\"撤销至此处的更改\"",
+      "description": "2.12还原消息 Tooltip"
+    },
+    {
+      "key": "\"This undo action will not make any code changes.\"",
+      "val": "\"此撤销操作不会更改任何代码。\"",
+      "description": "2.12还原确认窗口无更改说明"
+    },
+    {
+      "key": "\"Confirming this undo action will make the following changes:\"",
+      "val": "\"确认此撤销操作将进行以下更改：\"",
+      "description": "2.12还原确认窗口更改说明"
+    },
+    {
+      "key": "\"Confirm\"",
+      "val": "\"确认\"",
+      "description": "2.12还原确认按钮"
+    },
+    {
+      "key": "\"Sends after agent finishes working\"",
+      "val": "\"代理完成工作后发送\"",
+      "description": "2.12后续消息状态"
+    },
+    {
+      "key": "\"Sends on next turn\"",
+      "val": "\"下一轮发送\"",
+      "description": "2.12后续消息状态"
+    },
+    {
+      "key": "\"Copy\"",
+      "val": "\"复制\"",
+      "description": "2.12复制按钮与 Tooltip"
+    },
+    {
+      "key": "\"Copied\"",
+      "val": "\"已复制\"",
+      "description": "2.12复制完成状态"
     }
   ],
   "descriptions": [

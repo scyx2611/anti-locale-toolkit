@@ -61,6 +61,7 @@
 - MCP 執行步驟的標題使用 `prefix:"MCP Tool:"` 加上動態 `serverName`／`toolCall?.name`；只替換固定前綴為 `prefix:"MCP 工具："`，不要翻譯或改動伺服器與工具識別名稱。
 - 回覆評價按鈕的 `"Good response"`／`"Bad response"` 是固定 Tooltip 與 `aria-label`，可直接加入 `exact_properties`；若英文出現在模型實際回覆內容（例如 `Skills / Rules`、`Progressive Disclosure`），那是動態內容，不要以全域字串替換處理。
 - 回覆列的複製按鈕以 `J?"Copied":"Copy"` 同時提供 `aria-label` 與 Tooltip，必須保留條件判斷並翻譯兩個分支；其他 `title:"Copy"` 詞條不一定會命中這個按鈕。
+- 2.12.2 的回覆列、使用者訊息列與還原操作選單另有帶引號的 raw `"Copy"`／`"Copied"` literal；若定點畫面仍顯示 Copy，應加入 quoted exact key，並檢查回覆／使用者兩個 renderer 的未點擊與已點擊狀態。
 - 回覆評價送出後的成功提示使用 `u` 條件 expression；一般回饋與重要回饋的兩個英文分支都要翻譯，並以截圖中的短訊息與重要回饋長訊息分別驗證。
 - 選取文字的 Quote 浮動按鈕有保留 g／f 快捷鍵參數的兩個 JSX 變體；只替換 Quote 為「引用」，保留快捷鍵內容（如 Ctrl+L）。
 - 對話側欄釘選按鈕的 Tooltip 使用 `content:Na?"Unpin":"Pin"`，按鈕無障礙標籤使用 `aria-label:Na?"Unpin conversation":"Pin conversation"`；兩個固定來源都要翻譯，不能只翻選單中的 `label`。
@@ -71,6 +72,8 @@
 - 應用程式設定頁的 `App / General` 分區包含「防止電腦睡眠／保留在選單列」與自動更新開關。`Vwb` 會以 `sectionTitle` 精確比對設定 map 的 `sections[].title`；兩者若被翻成不同值，整個分區會消失。檢查時要比對所有 producer/consumer，並用 validator 確認 `title:\"General\"` 與 `sectionTitle:\"General\"` 的翻譯結果一致。
 - `Keep In Menu Bar` 的 label／description 完整片段在 2.12.2 minified bundle 中是同一行；若語言包 key 把 `label` 後的逗號寫成 `,\\n`，即使翻譯內容正確也不會命中。遇到「詞條已存在但畫面仍是英文」，先用 `source.includes(entry.key)` 比對乾淨來源的實際空白，再做雙語建構驗證。
 - 聊天輸入框的 `Send message Enter` 來自 `return\`Send message ${Q}\``，不是只使用 `"Send message"` 的 fixed string；要保留 `${Q}` 快捷鍵變數。執行任務時若看到 `Run Task`，先確認它是 `tV` 的動態 prefix/content、generic `stepRenderInfo.titlePrefix`，還是摘要 `titlePrefix`；用 formatter 的精確映射翻譯 `Run Task`／`Running Task`／`Ran Task`／`Task`，不要翻譯動態 task name、command line 或 path。完成摘要的動態格式至少要覆蓋 `Run ${task} finished` 與 `Download ${task} finished`，只翻穩定動詞與 `finished`，保留 task name、command line 或 path。`Searching web`／`Searched web` 以及 `Searching ${target}`／`Searched ${target}` 可能由 `titlePrefix`、`titleParts` 或活動內容組合，必須翻譯穩定狀態詞並保留 `${target}`，不能只翻 `Searching`／`Searched`。輸入框上方的 `1 task running` 來自 `qGb` 的數量模板；要用數量正則處理 `task/tasks`、`subagent(s)`、`subagents/tasks` 與 `running`，保留動態數字並同步驗證雙語輸出。
+- 訊息還原流程的 `Undo changes up to this point` 是獨立 Tooltip；`Confirm Undo` 視窗另有 `This undo action will not make any code changes.`、`Confirming this undo action will make the following changes:` 與原始 `Confirm` 按鈕，必須分別加入字典並檢查按下還原後的視窗，不可只翻標題。
+- `Queued Messages` 卡片的說明由策略動態選出 `Sends on next turn` 或 `Sends after agent finishes working`；標題翻譯不會涵蓋這兩個 renderer 分支，兩種狀態都要驗證。
 - 右側成品空白狀態的來源是 `emptyText:"No artifacts generated"`；要翻譯 default prop，並保留程序名稱、PID、工具名稱與路徑等動態技術內容。
 - 分支變更模式的 `All changes since ${l}` 與 `All changes since the branch point` 是兩個獨立來源，必須分別翻譯並保留 `${l}`／分支資訊。
 - Commit／Push 的 Tooltip 與停用原因也要完整處理：`Commit staged changes`、`Stage and commit all changes`、動態提交數、`Publish ${a.currentRef} to origin`、`No commits to push`；只翻 `Push` label 不足以涵蓋畫面。

@@ -55,6 +55,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - MCP 執行步驟標題的 `prefix:"MCP Tool:"` 是固定前綴；只翻譯成 `prefix:"MCP 工具："`，保留同一 expression 中動態的 `serverName` 與 `toolCall?.name`。
 - 回覆下方的 `"Good response"`／`"Bad response"` 同時用於固定 `aria-label` 與 Tooltip，可以加入 `exact_properties`；模型實際回覆內容中的 `Skills / Rules`、`Progressive Disclosure` 等英文則屬於動態生成內容，不要用全域替換改寫。
 - 回覆下方的複製按鈕使用 `J?"Copied":"Copy"` 同時產生 `aria-label` 與 Tooltip；要翻譯這個條件 expression 的兩個分支（已複製／複製），不能只依賴其他畫面的 `title:"Copy"` 詞條。
+- 2.12.2 的回覆列、使用者訊息列與還原操作選單還可能直接使用帶引號的 `"Copy"`／`"Copied"`；若截圖仍顯示 Copy，要補查這些 raw literal，並同時驗證未點擊與已點擊狀態。
 - 回覆評價送出後的成功提示使用 `u` 條件 expression；一般回饋與重要回饋的兩個英文訊息都要翻譯，不能只處理畫面目前顯示的 `Thanks for your feedback!`。
 - 選取文字浮動按鈕的 Quote 可能出現在不帶快捷鍵的 g 變體或帶 f（例如 Ctrl+L）的變體；要翻譯按鈕文字為「引用」，保留快捷鍵變數，不要只翻 title:Quote。
 - 對話側欄釘選按鈕的可見 Tooltip 使用 `content:Na?"Unpin":"Pin"`，圖示另有 `aria-label:Na?"Unpin conversation":"Pin conversation"`；兩者都要翻譯，分別保留「取消置頂／置頂」與對話語意，不要只處理選單 label。
@@ -65,6 +66,8 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - 應用程式設定頁的三個原生開關位於 `App / General` 分區；若畫面只剩遠端控制、通知、版本或進階區塊，先檢查 `sectionTitle` 與設定 map 的 `title` 是否因翻譯不一致，而不是直接新增開關詞條。
 - `Keep In Menu Bar` 的 2.12.2 來源片段在 `label` 與 `description` 之間沒有換行；`exact_properties` 的 key 必須逐字保留乾淨 bundle 的空白與換行，否則標籤和完整說明會一起回退英文。補翻時要在產出 bundle 驗證「保留在選單列／保留在菜单列」及其說明，而不只檢查 label 詞條存在。
 - 聊天輸入框的 `Send message Enter` 不是一般的 `"Send message"` 固定字串，而是 `return\`Send message ${Q}\`` 模板；必須保留 `${Q}`（Enter／Alt+Enter 等快捷鍵），分別翻譯模板前綴。執行中的 `Run Task` 也不是乾淨 bundle 內的固定完整字串，可能來自 `tV` 活動 renderer 或 `stepRenderInfo.titlePrefix`／摘要 `titlePrefix`；要在動態 formatter 覆蓋 `Run Task`、`Running Task`、`Ran Task` 與 `Task`，保留實際任務名稱、命令與路徑，不可把動態內容整句改寫。若完成摘要出現 `Run ${task} finished` 或 `Download ${task} finished`，需只翻譯穩定動詞與 `finished`，保留 `${task}` 原文，不可逐條寫死。`Searching web`／`Searched web` 以及 `Searching ${target}`／`Searched ${target}` 都可能由 `titlePrefix`、`titleParts` 或活動內容組成；要翻譯穩定狀態詞並保留 `${target}`，不能只翻固定的 `Searching`／`Searched`。輸入框上方的 `1 task running` 則由 `qGb` 以數量、單複數與狀態動態組合；需翻譯 `task/tasks`、`subagent(s)`、`subagents/tasks` 與 `running`，不可寫死數字或只加入 `1 task running` 詞條。
+- 訊息還原流程的 `Undo changes up to this point` 是獨立 Tooltip；點擊後的 `Confirm Undo` 視窗還有動態分支說明與原始 `Confirm` 按鈕，必須同時檢查 Tooltip、無程式碼變更說明與「將進行以下變更」說明，不能只翻標題 `Confirm Undo`。
+- 後續訊息卡片的 `Sends on next turn`／`Sends after agent finishes working` 是由送出策略動態選出的狀態文字，和已翻譯的 `Queued Messages` 標題不是同一個來源；兩個分支都要補翻。
 - 成品區空白狀態使用 `emptyText:"No artifacts generated"`；要翻譯這個 default prop，不能只翻右側的「工作產出」標題。程序名稱、PID、工具名稱與路徑是動態技術內容，不要改寫。
 - 版本控制分支模式有兩個獨立來源：`subtitle:l?`All changes since ${l}`` 與 `"All changes since the branch point"`；兩者都要翻譯並保留 `${l}`／分支資訊。
 - Git 操作 Tooltip 要保留條件 expression 的全部分支：Commit 的 `Commit staged changes`／`Stage and commit all changes`、Push 的動態提交數與 `Publish ${a.currentRef} to origin`，以及停用原因 `No commits to push`；不能只翻按鈕 label `Push`。

@@ -110,6 +110,19 @@ assertEntryContains('zh-TW', zhTw, '"Good response"', ['"回覆良好"']);
 assertEntryContains('zh-TW', zhTw, '"Bad response"', ['"回覆不佳"']);
 assertEntryContains('zh-CN', zhCn, '"Good response"', ['"回复良好"']);
 assertEntryContains('zh-CN', zhCn, '"Bad response"', ['"回复不佳"']);
+for (const [key, twValue, cnValue] of [
+  ['"Undo changes up to this point"', '"復原至此處的變更"', '"撤销至此处的更改"'],
+  ['"This undo action will not make any code changes."', '"此復原動作不會變更任何程式碼。"', '"此撤销操作不会更改任何代码。"'],
+  ['"Confirming this undo action will make the following changes:"', '"確認此復原動作將進行以下變更："', '"确认此撤销操作将进行以下更改："'],
+  ['"Confirm"', '"確認"', '"确认"'],
+  ['"Sends after agent finishes working"', '"代理完成工作後傳送"', '"代理完成工作后发送"'],
+  ['"Sends on next turn"', '"下一回合傳送"', '"下一轮发送"'],
+  ['"Copy"', '"複製"', '"复制"'],
+  ['"Copied"', '"已複製"', '"已复制"'],
+]) {
+  assertEntryContains('zh-TW', zhTw, key, [twValue]);
+  assertEntryContains('zh-CN', zhCn, key, [cnValue]);
+}
 const copyButtonStateKey = 'J?"Copied":"Copy"';
 assertEntryContains('zh-TW', zhTw, copyButtonStateKey, ['J?"已複製":"複製"']);
 assertEntryContains('zh-CN', zhCn, copyButtonStateKey, ['J?"已复制":"复制"']);

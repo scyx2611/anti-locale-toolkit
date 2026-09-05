@@ -4896,5 +4896,13 @@
     ,{"key":":\"Push\"","val":":\"推送\"","description":"2.12版本控制推送 Tooltip 備援"}
     ,{"key":"content:Na?\"Unpin\":\"Pin\"","val":"content:Na?\"取消置頂\":\"置頂\"","description":"2.12對話釘選按鈕 Tooltip"}
     ,{"key":"\"aria-label\":Na?\"Unpin conversation\":\"Pin conversation\"","val":"\"aria-label\":Na?\"取消置頂對話\":\"置頂對話\"","description":"2.12對話釘選按鈕無障礙標籤"}
+    ,{"key":"\"Undo changes up to this point\"","val":"\"復原至此處的變更\"","description":"2.12還原訊息 Tooltip"}
+    ,{"key":"\"This undo action will not make any code changes.\"","val":"\"此復原動作不會變更任何程式碼。\"","description":"2.12還原確認視窗無變更說明"}
+    ,{"key":"\"Confirming this undo action will make the following changes:\"","val":"\"確認此復原動作將進行以下變更：\"","description":"2.12還原確認視窗變更說明"}
+    ,{"key":"\"Confirm\"","val":"\"確認\"","description":"2.12還原確認按鈕"}
+    ,{"key":"\"Sends after agent finishes working\"","val":"\"代理完成工作後傳送\"","description":"2.12後續訊息狀態"}
+    ,{"key":"\"Sends on next turn\"","val":"\"下一回合傳送\"","description":"2.12後續訊息狀態"}
+    ,{"key":"\"Copy\"","val":"\"複製\"","description":"2.12複製按鈕與 Tooltip"}
+    ,{"key":"\"Copied\"","val":"\"已複製\"","description":"2.12複製完成狀態"}
   ]
 }
