@@ -1,6 +1,6 @@
 /**
  * Antigravity Client i18n Patcher
- * 專為 Google Antigravity 2.12.0 桌面客戶端打造的多語言部署工具
+ * 專為 Google Antigravity 2.12.0、2.12.2 桌面客戶端打造的多語言部署工具
  */
 
 const fs = require('fs');
@@ -13,7 +13,12 @@ const CLI_ARGS = process.argv.slice(2);
 const PROJECT_DIR = path.resolve(__dirname, '..');
 const LOCALES_DIR = path.join(PROJECT_DIR, 'locales');
 const PROJECT_NAME = 'AntiLocale Toolkit';
-const SUPPORTED_APP_VERSION = '2.12.0';
+const SUPPORTED_APP_VERSIONS = Object.freeze(['2.12.0', '2.12.2']);
+const SUPPORTED_APP_VERSION = SUPPORTED_APP_VERSIONS[SUPPORTED_APP_VERSIONS.length - 1];
+
+function formatSupportedVersions() {
+  return SUPPORTED_APP_VERSIONS.join('、');
+}
 
 function getOption(name, fallback = '') {
   const inline = CLI_ARGS.find((arg) => arg.startsWith(`${name}=`));
@@ -111,19 +116,33 @@ function getArchiveVersion(archivePath) {
   }
 }
 
-function assertSupportedVersion(version, context = '應用程式') {
-  console.log(`支援的應用程式版本：${SUPPORTED_APP_VERSION}`);
-  console.log(`偵測到${context}版本：${version || '無法判定'}`);
-  if (version === SUPPORTED_APP_VERSION) return;
-  if (CLI_ARGS.includes('--allow-version-mismatch')) {
-    console.warn('已使用 --allow-version-mismatch，繼續執行非目標版本部署。');
-    return;
-  }
-  throw new Error(
-    `${context}版本不符合目前支援範圍。此工具目前只支援 ${SUPPORTED_APP_VERSION}，` +
-      `如要自行承擔風險測試其他版本，請加上 --allow-version-mismatch。`
-  );
+function getVersionCompatibility(version) {
+  return {
+    supported: SUPPORTED_APP_VERSIONS.includes(version),
+    expected: [...SUPPORTED_APP_VERSIONS],
+    detected: version || null,
+  };
 }
+
+function assertSupportedVersion(version, context = '應用程式') {
+  const compatibility = getVersionCompatibility(version);
+  const detectedLabel = compatibility.detected || '無法判定';
+  console.log('支援的應用程式版本：' + formatSupportedVersions());
+  console.log('偵測到' + context + '版本：' + detectedLabel);
+  if (compatibility.supported) return compatibility;
+
+  const mismatchMessage =
+    context + '版本不符合目前支援範圍。目前支援版本為 ' + formatSupportedVersions() +
+    '，偵測到 ' + detectedLabel + '。';
+  if (CLI_ARGS.includes('--allow-version-mismatch')) {
+    console.warn('警告：' + mismatchMessage + '已使用 --allow-version-mismatch，將繼續執行。');
+  } else {
+    console.warn('警告：' + mismatchMessage + '工具將繼續提供建構與套用流程，但此版本尚未完整驗證。');
+    console.warn('如要明確標記為非目標版本測試，可加上 --allow-version-mismatch。');
+  }
+  return compatibility;
+}
+
 
 function isWebBundleDirectory(candidate) {
   return Boolean(candidate && fs.existsSync(path.join(candidate, 'main.js')));
@@ -239,7 +258,7 @@ function checkStatus() {
   console.log('\n====================================================');
   console.log('       Antigravity 客戶端漢化狀態檢查');
   console.log('====================================================');
-  console.log(`支援的應用程式版本：${SUPPORTED_APP_VERSION}`);
+  console.log(`支援的應用程式版本：${formatSupportedVersions()}`);
   console.log(`安裝目錄: ${APP_DIR}`);
   console.log(`app.asar 存在: ${fs.existsSync(ASAR_PATH) ? '是' : '否'}`);
   console.log(`原版備份存在: ${fs.existsSync(BACKUP_ASAR_PATH) ? '是' : '否'}`);
@@ -745,7 +764,7 @@ function runInteractive() {
     console.log('====================================================');
     console.log(`       ${PROJECT_NAME}`);
     console.log('====================================================');
-    console.log(`支援的應用程式版本：${SUPPORTED_APP_VERSION}`);
+    console.log(`支援的應用程式版本：${formatSupportedVersions()}`);
     console.log('');
     languagePacks.forEach((lang, index) => {
       console.log(`  [${index + 1}] ${languageLabel(lang)}`);
@@ -796,7 +815,7 @@ function main() {
 
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`${PROJECT_NAME}`);
-    console.log(`支援的應用程式版本：${SUPPORTED_APP_VERSION}`);
+    console.log(`支援的應用程式版本：${formatSupportedVersions()}`);
     console.log('');
     console.log('用法：');
     console.log('  node scripts/patcher.js --interactive');
@@ -806,7 +825,7 @@ function main() {
     console.log('  node scripts/patcher.js --status');
     console.log('');
     console.log('選用參數：--app-dir、--source-web-bundle、--source-extracted-app');
-    console.log('其他版本僅限明確測試時使用：--allow-version-mismatch');
+    console.log('版本不符時會先顯示警告並繼續；可用 --allow-version-mismatch 明確標記為非目標版本測試');
     return;
   }
 
@@ -830,6 +849,13 @@ function main() {
   buildAsar(lang);
   console.log('\n構建完成！若要套用到客戶端，請加上 --apply 參數，或使用 -i 進入互動選單。');
 }
+
+module.exports = {
+  SUPPORTED_APP_VERSIONS,
+  SUPPORTED_APP_VERSION,
+  getVersionCompatibility,
+  assertSupportedVersion,
+};
 
 if (require.main === module) {
   main();

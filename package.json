@@ -10,7 +10,7 @@
     "apply:zh-cn": "node scripts/patcher.js --apply --lang zh-CN",
     "restore": "node scripts/patcher.js --restore",
     "status": "node scripts/patcher.js --status",
-    "check": "node --check scripts/patcher.js && node scripts/validate_locales.js"
+    "check": "node --check scripts/patcher.js && node scripts/validate_locales.js && node scripts/validate_version_policy.js"
   },
   "engines": {
     "node": ">=20"

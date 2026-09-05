@@ -19,10 +19,12 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 
 ## 重要不變條件
 
-- 目前支援的應用程式版本是 **2.12.0**。版本資訊必須同步檢查 `project.json`、`README.md` 與 `scripts/patcher.js`；字典檔內的 `version` 是字典自身資料，不可誤當成應用程式版本。
+- 目前支援的應用程式版本是 **2.12.0、2.12.2**。版本資訊必須同步檢查 `project.json` 的 `supportedApplicationVersions`、`README.md` 與 `scripts/patcher.js`；字典檔內的 `version` 是字典自身資料，不可誤當成應用程式版本。
 - 不把 Antigravity 的 `app.asar`、完整 `main.js`、解包目錄或使用者專屬來源檔提交到公開 Repository。工具只提交部署程式、語言包、維護 Skill 與必要文件。
 - 語言包放在 `locales/`，部署程式應使用語言代碼載入它們；不要為每種語言複製一份整套 patcher。
 - 來源必須來自使用者目前安裝的應用程式或明確指定的乾淨來源。不要回退到舊的臨時工作目錄，也不要把上一個語言的已修改 bundle 當成乾淨來源而默默覆蓋。
+- `web_bundle` 不隨公開 Repository 或下載包附帶；`%USERPROFILE%\\.gemini\\antigravity\\web_bundle` 是每位使用者自己的候選路徑，不可寫死成 `C:\\Users\\yx`。patcher 找不到它時會依序嘗試 `resources\\web_bundle.source` 與安裝目錄的 `resources\\web_bundle`，最後才要求使用者用 `--source-web-bundle` 指定乾淨來源。
+- 設定頁的 `screen`、`title` 與 `sectionTitle` 可能同時是畫面文字與執行期查找值；例如 `Vwb` 會以 `sectionTitle` 精確比對 `uW().get(screen).sections[].title`。翻譯後兩側必須完全相同，否則整個設定分區（包含開關）會靜默不渲染。新增或修改設定分區翻譯時，必須同步檢查 producer/consumer，並由 `scripts/validate_locales.js` 驗證 `title:\"General\"` 與 `sectionTitle:\"General\"` 的結果一致。
 - 前端 `main.js` 中 `qUb("...");` 包住的區段是受保護的第三方程式碼；只在非受保護區段套用字典，以免破壞 JavaScript。
 - 套用前保留 `app.asar.backup` 與 `web_bundle.backup`。不要使用 Git reset、廣泛清理或刪除使用者備份來「修復」部署問題。
 - 部署前記錄 Antigravity 是否正在執行；只有原本已開啟時，部署或還原完成後才自動重新啟動，不要無條件啟動使用者未開啟的軟體。
@@ -30,7 +32,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 ## 維護流程
 
 1. 先確認安裝目錄、目前 `app.asar`、備份 archive、`.unpacked` 目錄與前端來源，並讀取實際 `package.json` 版本。
-2. 若應用程式不是 2.12.0，先停止並說明不相容；只有使用者明確要求測試其他版本時，才使用 `--allow-version-mismatch`。
+2. 若應用程式不是 2.12.0 或 2.12.2，patcher 會顯示版本不符警告並繼續建構／套用；AI 必須把新版本相容性標為 `NOT VERIFIED`，不能把警告後成功建構或部署當成已支援。只有使用者明確要求部署時才套用；`--allow-version-mismatch` 可作為非目標版本測試的明確標記，但不會提升驗證等級。
 3. 將新文字加入相應語言包。固定文字放 `exact_properties`；描述或完整片段放 `descriptions`；動態 JSX/React 文字要修補其產生值與 Tooltip，不只修畫面上第一個出現位置。
 4. 先做不部署的建構：`npm run check`，再分別執行 `node scripts/patcher.js --lang zh-TW` 與 `node scripts/patcher.js --lang zh-CN`。確認前端與 Electron 原生腳本語法都通過。
 5. 只有在使用者要求實際套用時，才執行 `AntiLocaleToolkit.bat` 或 `node scripts/patcher.js --apply --lang <language>`；這會關閉 Antigravity 及 language server，並替換安裝檔。
@@ -57,6 +59,11 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - 選取文字浮動按鈕的 Quote 可能出現在不帶快捷鍵的 g 變體或帶 f（例如 Ctrl+L）的變體；要翻譯按鈕文字為「引用」，保留快捷鍵變數，不要只翻 title:Quote。
 - 對話側欄釘選按鈕的可見 Tooltip 使用 `content:Na?"Unpin":"Pin"`，圖示另有 `aria-label:Na?"Unpin conversation":"Pin conversation"`；兩者都要翻譯，分別保留「取消置頂／置頂」與對話語意，不要只處理選單 label。
 - 模型用量中的 `Weekly Limit Remaining`／`Five Hour Limit Remaining` 是後端動態 `displayName`，而且至少有兩個 renderer（quota label 與 quota bucket）；兩個來源都要處理。簡中若已有 generic exact key 會改寫相同文字，注入 map 的英文 lookup key 必須用 JavaScript Unicode escape 保留執行時的英文 key，避免 lookup 失效後回退顯示英文。
+- 模型用量的群組標題 `Gemini Models`／`Claude and GPT models` 同時出現在群組標題與額度卡片 badge renderer；繁中應輸出「Gemini 模型／Claude 與 GPT 模型」，簡中應輸出「Gemini 模型／Claude 与 GPT 模型」。保留英文 map key 供後端 `displayName` 查找，並驗證兩個 renderer 都有映射。
+- `Models & Usage` 的頁面標題與設定側欄導覽必須統一：繁中使用「模型與使用量」，簡中使用「模型与使用量」；不要混用「模型與用量」或「模型和用量」。額度名稱、Token 用量與後端動態數值則依各自上下文翻譯，不要為了統一標題而改寫動態 key。
+- 應用程式設定頁的三個原生開關位於 `App / General` 分區；若畫面只剩遠端控制、通知、版本或進階區塊，先檢查 `sectionTitle` 與設定 map 的 `title` 是否因翻譯不一致，而不是直接新增開關詞條。
+- `Keep In Menu Bar` 的 2.12.2 來源片段在 `label` 與 `description` 之間沒有換行；`exact_properties` 的 key 必須逐字保留乾淨 bundle 的空白與換行，否則標籤和完整說明會一起回退英文。補翻時要在產出 bundle 驗證「保留在選單列／保留在菜单列」及其說明，而不只檢查 label 詞條存在。
+- 聊天輸入框的 `Send message Enter` 不是一般的 `"Send message"` 固定字串，而是 `return\`Send message ${Q}\`` 模板；必須保留 `${Q}`（Enter／Alt+Enter 等快捷鍵），分別翻譯模板前綴。執行中的 `Run Task` 也不是乾淨 bundle 內的固定完整字串，可能來自 `tV` 活動 renderer 或 `stepRenderInfo.titlePrefix`／摘要 `titlePrefix`；要在動態 formatter 覆蓋 `Run Task`、`Running Task`、`Ran Task` 與 `Task`，保留實際任務名稱、命令與路徑，不可把動態內容整句改寫。若完成摘要出現 `Run ${task} finished` 或 `Download ${task} finished`，需只翻譯穩定動詞與 `finished`，保留 `${task}` 原文，不可逐條寫死。輸入框上方的 `1 task running` 則由 `qGb` 以數量、單複數與狀態動態組合；需翻譯 `task/tasks`、`subagent(s)`、`subagents/tasks` 與 `running`，不可寫死數字或只加入 `1 task running` 詞條。
 - 成品區空白狀態使用 `emptyText:"No artifacts generated"`；要翻譯這個 default prop，不能只翻右側的「工作產出」標題。程序名稱、PID、工具名稱與路徑是動態技術內容，不要改寫。
 - 版本控制分支模式有兩個獨立來源：`subtitle:l?`All changes since ${l}`` 與 `"All changes since the branch point"`；兩者都要翻譯並保留 `${l}`／分支資訊。
 - Git 操作 Tooltip 要保留條件 expression 的全部分支：Commit 的 `Commit staged changes`／`Stage and commit all changes`、Push 的動態提交數與 `Publish ${a.currentRef} to origin`，以及停用原因 `No commits to push`；不能只翻按鈕 label `Push`。
@@ -84,11 +91,13 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 
 本輪 2.12.0 補翻已同步處理兩種語言的搜尋結果計數（包含畫面中的 `14 results`／`1 result` 類型）、檔案搜尋與 Moma 結果 renderer；簡中另外清理設定、帳戶、模型用量與混入的繁中用字，並統一將 `Inherit General` 顯示為「继承一般设置」。同一輪也重新確認 `Preview`／`Raw`／`New Preview`、`Open File`／`New Terminal`、模型徽章 Tooltip、執行時間秒數與動態資料夾數量。這些變更完成後，兩個語言包都必須重新做不部署建構；原生 Electron 與受保護第三方程式碼的靜態命中仍要依可見性判斷，不能把靜態掃描結果直接當成畫面驗收。
 
-本輪另完成繁中到簡中的覆蓋率修復：原先 `zh-TW` 有 3,022 個 unique `exact_properties`，簡中只有部分詞條；經後續補翻後，目前 `npm run check` 顯示 `zh-TW` 有 3,047 個、`zh-CN` 有 3,202 個 unique 詞條，簡中已覆蓋全部繁中 key，並保留簡中專用的 2.12.0 動態規則。`npm run check` 會執行 `scripts/validate_locales.js`，只要繁中新增 key 而簡中未同步，檢查就會失敗。
+本輪另完成繁中到簡中的覆蓋率修復：原先 `zh-TW` 有 3,022 個 unique `exact_properties`，簡中只有部分詞條；經後續補翻後，目前 `npm run check` 顯示 `zh-TW` 有 3,052 個、`zh-CN` 有 3,206 個 unique 詞條，簡中已覆蓋全部繁中 key，並保留簡中專用的 2.12.0／2.12.2 動態規則。`npm run check` 會執行 `scripts/validate_locales.js`，只要繁中新增 key 而簡中未同步，檢查就會失敗。
+
+本輪新增 2.12.2 支援：實際偵測到的 `app.asar` 版本為 2.12.2，繁中與簡中都完成不部署建構、Electron 語法檢查與 `app.asar.patched` 打包；未替換安裝檔、未重啟應用程式，桌面畫面驗收仍為 `NOT VERIFIED`。
 
 `scripts/sync_zh_cn_coverage.ps1` 只作為繁中詞條同步的機械化起點，執行後仍要人工檢查簡中用語與動態 expression。它必須使用大小寫敏感的 key set；PowerShell 預設 hashtable 不分大小寫，會漏掉 `New Conversation`／`New conversation` 這類不同 key。Windows `LCMapStringEx` 轉換也必須使用回傳長度 `ToString(0, $length)`，否則 `StringBuilder` 舊內容會黏到翻譯後的 JavaScript，並由 `node --check` 攔截。
 
-進行版本更新或較大的維護時，請讀取 [版本更新維護流程](references/version-update-runbook.md)，其中記錄來源選擇、字典定位、驗證矩陣與這次 2.12.0 維護的具體陷阱。
+進行版本更新或較大的維護時，請讀取 [版本更新維護流程](references/version-update-runbook.md)，其中記錄來源選擇、字典定位、驗證矩陣與這次 2.12.0／2.12.2 維護的具體陷阱。
 
 ## AI 交付格式
 

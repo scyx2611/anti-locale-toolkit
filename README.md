@@ -4,9 +4,9 @@ Antigravity Desktop 的多語言漢化部署工具。以語言包為核心，讓
 
 ## 支援版本
 
-**支援的應用程式版本：2.12.0**
+**支援的應用程式版本：2.12.0、2.12.2**
 
-工具會在部署前檢查 Antigravity 的版本；非 2.12.0 預設會停止，避免更新後誤套用。若要自行測試其他版本，才使用 `--allow-version-mismatch`。
+工具會在部署前檢查 Antigravity 的版本；若偵測到不在上述清單，會顯示「版本不符合目前支援範圍」警告後繼續建構／套用，但該版本相容性仍是未驗證。若要明確標記為非目標版本測試，可加上 `--allow-version-mismatch`。
 
 ## 一鍵使用
 
@@ -20,11 +20,13 @@ Antigravity Desktop 的多語言漢化部署工具。以語言包為核心，讓
 
 ## 來源檔案
 
-工具不包含 Antigravity 應用程式本體，也不會把使用者專屬檔案提交到專案。部署時會使用目前電腦的 Antigravity 安裝檔，並依序尋找前端來源：
+工具不包含 Antigravity 應用程式本體，也不會把使用者專屬檔案提交到專案。以下路徑是每台電腦自己的來源候選，不是下載包內預先附帶的檔案；部署時會依序尋找：
 
-- `%USERPROFILE%\.gemini\antigravity\web_bundle`
-- `Antigravity\resources\web_bundle.source`
-- 安裝目錄中的 `web_bundle`（僅作最後備援）
+- `%USERPROFILE%\.gemini\antigravity\web_bundle`（若使用者已有乾淨來源）
+- Antigravity 安裝目錄的 `resources\web_bundle.source`
+- Antigravity 安裝目錄的 `resources\web_bundle`（最後備援，會提示可能已被修改）
+
+因此其他使用者下載後不需要擁有 `C:\Users\yx`；工具會把 `%USERPROFILE%` 展開成該使用者自己的資料夾。若前兩個乾淨來源都不存在，才會使用安裝目錄中的 `web_bundle`；若安裝檔也沒有可用來源，請用 `--source-web-bundle` 指定乾淨的 `web_bundle`。
 
 如果來源放在其他位置，可用：
 
@@ -50,4 +52,4 @@ node scripts/patcher.js --status
 
 - 套用前會關閉 Antigravity 及其語言伺服器，以解除檔案鎖定。
 - 還原只會使用工具建立的備份，不會清理其他資料夾或修改遠端專案。
-- Antigravity 更新後可能需要重新執行工具；若版本不是 2.12.0，請先確認補丁相容性。
+- Antigravity 更新後可能需要重新執行工具；若版本不是 2.12.0 或 2.12.2，工具會警告後繼續，但必須將相容性標記為 `NOT VERIFIED`，不能把建構或部署成功視為已支援。

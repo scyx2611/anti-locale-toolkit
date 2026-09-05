@@ -1822,8 +1822,8 @@
       "description": "設定-防止電腦睡眠"
     },
     {
-      "key": "label:\"Keep In Menu Bar\",\ndescription:\"Keep the app accessible from the menu bar and running in the background when all windows are closed.\"",
-      "val": "label:\"保留在選單列\",\ndescription:\"在所有視窗關閉時，保持應用程式可在系統選單列存取並在背景持續執行。\"",
+      "key": "label:\"Keep In Menu Bar\",description:\"Keep the app accessible from the menu bar and running in the background when all windows are closed.\"",
+      "val": "label:\"保留在選單列\",description:\"在所有視窗關閉時，保持應用程式可在系統選單列存取並在背景持續執行。\"",
       "description": "設定-保留選單列"
     },
     {
@@ -2583,6 +2583,7 @@
     {"key":"title:\"Terminal\"","val":"title:\"終端機\""},
     {"key":"title:\"Advanced\"","val":"title:\"進階\""},
     {"key":"title:\"General\"","val":"title:\"一般\""},
+    {"key":"sectionTitle:\"General\"","val":"sectionTitle:\"一般\""},
     {"key":"title:\"Quota\"","val":"title:\"配額\""},
     {"key":"title:\"Add inline comment\"","val":"title:\"新增內嵌註解\""},
     {"key":"title:\"MCP Configuration Error:\"","val":"title:\"MCP 設定錯誤：\""},
@@ -3890,6 +3891,7 @@
     {"key":"\"Stop Recording\"","val":"\"停止錄音\""},
     {"key":"\"Finalizing transcription...\"","val":"\"正在完成轉錄...\""},
     {"key":"\"Send message\"","val":"\"傳送訊息\""},
+    {"key":"return`Send message ${Q}`","val":"return`傳送訊息 ${Q}`","description":"2.12聊天框傳送訊息快捷鍵提示"},
     {"key":"\"MCP Error\"","val":"\"MCP 錯誤\""},
     {"key":"\"View MCP settings\"","val":"\"檢視 MCP 設定\""},
     {"key":"\"Autonomous Mode\"","val":"\"自主模式\""},
@@ -4796,7 +4798,7 @@
     ,{"key":"Agent settings and permissions for conversations outside of ${C.lowercasePlural}.","val":"管理專案外對話的代理設定與權限。","description":"2.12專案外對話說明"}
     ,{"key":"\"Inherit General\"","val":"\"繼承一般設定\"","description":"2.12繼承一般設定選項"}
     ,{"key":"\"Inherits your General settings when working in this project.\"","val":"\"在此專案工作時繼承一般設定。\"","description":"2.12繼承一般設定說明"}
-    ,{"key":"\"Models & Usage\"","val":"\"模型與用量\"","description":"2.12模型用量頁標題"}
+    ,{"key":"\"Models & Usage\"","val":"\"模型與使用量\"","description":"2.12模型用量頁標題"}
     ,{"key":"\"Manage your model quota and credits.\"","val":"\"管理您的模型額度與點數。\"","description":"2.12模型用量頁說明"}
     ,{"key":"p=c?.userTier?.upgradeSubscriptionText||\"\";","val":"p=(c?.userTier?.upgradeSubscriptionText||\"\").replace(\"You can upgrade to a Google AI Ultra plan to receive higher rate limits.\",\"您可以升級至 Google AI Ultra 方案，以取得更高的使用上限。\");","description":"2.12模型用量方案升級說明"}
     ,{"key":"title:\"File Permissions\"","val":"title:\"檔案權限\"","description":"2.12檔案權限頁標題"}
@@ -4808,7 +4810,11 @@
     ,{"key":"n=f?e?\"Editing\":\"Edited\":g?e?\"Running\":\n\"Ran\":e?\"Exploring\":\"Explored\"","val":"n=f?e?\"編輯中\":\"已編輯\":g?e?\"執行中\":\"已執行\":e?\"探索中\":\"已探索\"","description":"2.12工具步驟目前狀態"}
     ,{"key":"var gmb=({steps:a,summary:b,debugMode:c,isActive:e=!1})=>","val":"function zhTwToolSummary(a){if(typeof a!==\"string\")return a;return a.replace(/\\bfiles?\\b/g,\"個檔案\").replace(/\\bsearches?\\b/g,\"次搜尋\").replace(/\\bresults?\\b/g,\"項結果\").replace(/,\\s+/g,\"，\")}var gmb=({steps:a,summary:b,debugMode:c,isActive:e=!1})=>","description":"2.12工具摘要動態翻譯"}
     ,{"key":":g&&l?l:b","val":":g&&l?l:zhTwToolSummary(b)","description":"2.12工具群組摘要翻譯"}
-    ,{"key":"function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","val":"function zhTwActivityText(a){if(typeof a!==\"string\")return a;return ({\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"讀取中\",\"Read\":\"已讀取\",\"Reading page\":\"讀取頁面中\",\"Created outline\":\"已建立大綱\",\"Read page\":\"已讀取頁面\",\"Searched\":\"已搜尋\",\"Searching\":\"搜尋中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已編輯\",\"Editing\":\"編輯中\",\"Ran\":\"已執行\",\"Running\":\"執行中\",\"Run\":\"執行\"}[a]??a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","description":"2.12工具活動前綴翻譯"}
+    ,{"key":"function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","val":"function zhTwRunningSummary(a){if(typeof a!==\"string\")return a;return a.replace(/(\\d+) subagents\\/tasks running/g,\"$1 個子代理／任務執行中\").replace(/(\\d+) subagents? running/g,\"$1 個子代理執行中\").replace(/(\\d+) tasks? running/g,\"$1 個任務執行中\")}function zhTwActivityText(a){if(typeof a!==\"string\")return a;var b=a.match(/^(Run|Download) (.+) finished$/);if(b)return (b[1]===\"Run\"?\"執行\":\"下載\")+\" \"+b[2]+\" 已完成\";return ({\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"讀取中\",\"Read\":\"已讀取\",\"Reading page\":\"讀取頁面中\",\"Created outline\":\"已建立大綱\",\"Read page\":\"已讀取頁面\",\"Searched\":\"已搜尋\",\"Searching\":\"搜尋中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已編輯\",\"Editing\":\"編輯中\",\"Ran\":\"已執行\",\"Running\":\"執行中\",\"Run\":\"執行\",\"Run Task\":\"執行任務\",\"Running Task\":\"執行任務中\",\"Ran Task\":\"已執行任務\",\"Task\":\"任務\"}[a]??a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","description":"2.12工具活動前綴翻譯"}
+    ,{"key":"y=u?.titlePrefix||void 0;","val":"y=u?.titlePrefix||void 0;y=zhTwActivityText(y);","description":"2.12一般工具動態任務標題翻譯"}
+    ,{"key":"a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?typeof a===\"string\"?","val":"a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?(b=zhTwActivityText(b),a=zhTwActivityText(a),typeof a===\"string\"?","description":"2.12工具摘要動態任務標題翻譯"}
+    ,{"key":"return m.join(\", \")},[h,k,f,g])};","val":"return zhTwRunningSummary(m.join(\", \"))},[h,k,f,g])};","description":"2.12執行活動動態任務數量翻譯"}
+    ,{"key":"},b,a):a;if(c)","val":"},b,a)):a;if(c)","description":"2.12工具摘要動態任務標題括號修正"}
     ,{"key":"e=typeof b===\"string\";return z.createElement","val":"e=typeof b===\"string\";a=zhTwActivityText(a);b=e?zhTwActivityText(b):b;return z.createElement","description":"2.12工具活動文字翻譯"}
     ,{"key":"prefix:\"Analyzed\"","val":"prefix:\"已分析\"","description":"2.12分析活動前綴"}
     ,{"key":"prefix:\"Run\"","val":"prefix:\"執行\"","description":"2.12執行活動前綴"}

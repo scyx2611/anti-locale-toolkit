@@ -7,12 +7,12 @@
 - 專案：AntiLocale Toolkit
 - Repository：`anti-locale-toolkit`
 - 目標應用程式：Antigravity Desktop
-- 目前支援版本：`2.12.0`
+- 目前支援版本：`2.12.0`、`2.12.2`
 - 語言包：`locales/zh-TW.json`、`locales/zh-CN.json`
 - 入口：`AntiLocaleToolkit.bat`
 - 核心程式：`scripts/patcher.js`
 
-版本更新時，先確認 `project.json`、README 與 patcher 的版本值一致，再檢查實際 archive 內的 `package.json`。不要只改文件中的版本文字。
+版本更新時，先確認 `project.json` 的 `supportedApplicationVersions`、README 與 patcher 的版本清單一致，再檢查實際 archive 內的 `package.json`。不要只改文件中的版本文字。
 
 ## 來源與備份
 
@@ -22,6 +22,8 @@
 2. `%USERPROFILE%\\.gemini\\antigravity\\web_bundle`。
 3. 安裝目錄下的 `resources\\web_bundle.source`。
 4. 安裝目錄下現有的 `resources\\web_bundle`，只作最後備援，且要警告它可能已經被翻譯過。
+
+這些來源不會隨公開 Repository 或下載包附帶；`%USERPROFILE%` 必須在每台電腦上解析成目前使用者的家目錄，不能把某次執行的 `C:\\Users\\yx` 路徑寫入設定或文件。若安裝目錄也沒有可用 bundle，才要求使用者以 `--source-web-bundle` 指向乾淨來源。
 
 `app.asar` 的原生來源優先使用 `app.asar.backup`。某些 archive 會引用旁邊的 `.unpacked` 資料；如果備份 archive 與目前 archive 版本一致、而備份 `.unpacked` 不存在，可以用目前同版本的 `.unpacked` 建立對應資料，再解包備份。版本不一致時不要混用。
 
@@ -63,6 +65,11 @@
 - 選取文字的 Quote 浮動按鈕有保留 g／f 快捷鍵參數的兩個 JSX 變體；只替換 Quote 為「引用」，保留快捷鍵內容（如 Ctrl+L）。
 - 對話側欄釘選按鈕的 Tooltip 使用 `content:Na?"Unpin":"Pin"`，按鈕無障礙標籤使用 `aria-label:Na?"Unpin conversation":"Pin conversation"`；兩個固定來源都要翻譯，不能只翻選單中的 `label`。
 - 模型用量的 `Weekly Limit Remaining`／`Five Hour Limit Remaining` 是後端動態 `displayName`，至少由 quota label 與 quota bucket 兩個 renderer 顯示；兩個來源都要補翻。簡中若 generic exact key 會改寫 map key，lookup key 要使用 JavaScript Unicode escape，讓執行時仍能以英文 displayName 命中中文結果。
+- 模型用量的群組標題 `Gemini Models`／`Claude and GPT models` 也有兩個來源：群組標題 renderer 與額度卡片 badge renderer。兩者都要保留英文 lookup key 並映射繁中「Gemini 模型／Claude 與 GPT 模型」、簡中「Gemini 模型／Claude 与 GPT 模型」，不能只補其中一個畫面。
+- `Models & Usage` 的頁面標題與設定側欄導覽要使用一致詞彙：繁中「模型與使用量」、簡中「模型与使用量」；`View Usage`、`Usage`、Token usage 與動態額度名稱可依按鈕或額度上下文保留「用量／配額」等不同譯法。
+- 應用程式設定頁的 `App / General` 分區包含「防止電腦睡眠／保留在選單列」與自動更新開關。`Vwb` 會以 `sectionTitle` 精確比對設定 map 的 `sections[].title`；兩者若被翻成不同值，整個分區會消失。檢查時要比對所有 producer/consumer，並用 validator 確認 `title:\"General\"` 與 `sectionTitle:\"General\"` 的翻譯結果一致。
+- `Keep In Menu Bar` 的 label／description 完整片段在 2.12.2 minified bundle 中是同一行；若語言包 key 把 `label` 後的逗號寫成 `,\\n`，即使翻譯內容正確也不會命中。遇到「詞條已存在但畫面仍是英文」，先用 `source.includes(entry.key)` 比對乾淨來源的實際空白，再做雙語建構驗證。
+- 聊天輸入框的 `Send message Enter` 來自 `return\`Send message ${Q}\``，不是只使用 `"Send message"` 的 fixed string；要保留 `${Q}` 快捷鍵變數。執行任務時若看到 `Run Task`，先確認它是 `tV` 的動態 prefix/content、generic `stepRenderInfo.titlePrefix`，還是摘要 `titlePrefix`；用 formatter 的精確映射翻譯 `Run Task`／`Running Task`／`Ran Task`／`Task`，不要翻譯動態 task name、command line 或 path。完成摘要的動態格式至少要覆蓋 `Run ${task} finished` 與 `Download ${task} finished`，只翻穩定動詞與 `finished`，保留 task name、command line 或 path。輸入框上方的 `1 task running` 來自 `qGb` 的數量模板；要用數量正則處理 `task/tasks`、`subagent(s)`、`subagents/tasks` 與 `running`，保留動態數字並同步驗證雙語輸出。
 - 右側成品空白狀態的來源是 `emptyText:"No artifacts generated"`；要翻譯 default prop，並保留程序名稱、PID、工具名稱與路徑等動態技術內容。
 - 分支變更模式的 `All changes since ${l}` 與 `All changes since the branch point` 是兩個獨立來源，必須分別翻譯並保留 `${l}`／分支資訊。
 - Commit／Push 的 Tooltip 與停用原因也要完整處理：`Commit staged changes`、`Stage and commit all changes`、動態提交數、`Publish ${a.currentRef} to origin`、`No commits to push`；只翻 `Push` label 不足以涵蓋畫面。
@@ -94,7 +101,8 @@
 - `zh-TW` 與 `zh-CN` 都補上搜尋結果計數的動態 renderer，涵蓋搜尋、檔案搜尋與 Moma 結果；分別輸出「項結果」與「个结果」，不能只依賴 `const Sib` 的摘要單位表。
 - 保留 `qUb("...");` 受保護第三方區段的原始程式碼。若靜態掃描仍在該區段看到 `result/results`，先確認是否為可見 UI，再找安全的外層處理點，不要解除保護區段。
 - 本輪採不部署方式完成 `npm run check`、`node scripts/patcher.js --lang zh-TW` 與 `node scripts/patcher.js --lang zh-CN`；前端及 Electron 語法檢查與 `app.asar.patched` 打包均通過。未重啟或替換正在執行的應用程式，畫面人工驗收仍須標記為 `NOT VERIFIED`。
-- 原先 coverage audit 顯示 `zh-TW` 有 3,022 個 unique `exact_properties`，而 `zh-CN` 只有部分既有詞條；這是簡中仍露出大量英文的直接原因。經後續補翻與動態規則增加後，`npm run check` 目前顯示 `zh-TW` 3,047 個、`zh-CN` 3,202 個 unique exact key，簡中已覆蓋全部繁中 key，並保留簡中專用的 2.12.0 規則。
+- 原先 coverage audit 顯示 `zh-TW` 有 3,022 個 unique `exact_properties`，而 `zh-CN` 只有部分既有詞條；這是簡中仍露出大量英文的直接原因。經後續補翻與動態規則增加後，`npm run check` 目前顯示 `zh-TW` 3,052 個、`zh-CN` 3,206 個 unique exact key，簡中已覆蓋全部繁中 key，並保留簡中專用的 2.12.0／2.12.2 規則。
+- 2.12.2 已加入正式支援清單；本輪實際以 2.12.2 `app.asar` 完成繁中與簡中不部署建構、Electron 語法檢查與 `app.asar.patched` 打包。安裝檔替換、應用程式重啟與桌面畫面驗收尚未執行，這些項目仍為 `NOT VERIFIED`。
 - 同步工具的兩個必要安全條件：key set 使用 `StringComparer.Ordinal`，避免 PowerShell 不分大小寫而漏掉大小寫不同的詞條；`LCMapStringEx` 取值使用 `StringBuilder.ToString(0, $length)`，不可使用完整 buffer，否則短字串後會殘留前一次轉換內容並破壞 JavaScript。
 - `npm run check` 現在包含 `scripts/validate_locales.js`；它會解析兩個 JSON、檢查簡中覆蓋全部繁中 unique key、拒絕簡中重複 key，並攔截疑似 `StringBuilder`／轉換器殘留。之後繁中新增任何詞條，都必須先同步簡中再建構。
 
@@ -170,19 +178,19 @@ node scripts/patcher.js --status
 3. 乾淨前端來源資料夾是否有 `main.js`，以及它的檔案大小與修改時間。
 4. `dist` 下的六個原生檔案是否仍存在：`languageServer.js`、`loadingOverlay.js`、`menu.js`、`updater.js`、`tray.js`、`main.js`。
 
-若版本不是目前支援版本，先不要部署。建立更新分支或至少保留現有 commit，對照新舊來源的 anchor；只有使用者明確要求測試時才使用 `--allow-version-mismatch`。不要把舊版本的完整解包目錄、舊 scratch 路徑或舊 bundle 複製進公開專案。
+若版本不在目前支援清單，patcher 會提示版本不符並繼續建構／套用流程；不要把它標成已支援，回報時必須列為 `NOT VERIFIED`。建立更新分支或至少保留現有 commit，對照新舊來源的 anchor；只有使用者明確要求部署時才套用。`--allow-version-mismatch` 可作為非目標版本測試的明確標記，但不會提升驗證等級。不要把舊版本的完整解包目錄、舊 scratch 路徑或舊 bundle 複製進公開專案。
 
 確認相容後，才同步更新：
 
 ```text
-project.json                 -> supportedApplicationVersion
-scripts/patcher.js           -> SUPPORTED_APP_VERSION
+project.json                 -> supportedApplicationVersions
+scripts/patcher.js           -> SUPPORTED_APP_VERSIONS
 README.md                    -> 支援版本與限制
 skills/.../SKILL.md          -> 不變條件（若維護規則改變）
 skills/.../references/...    -> 基線、陷阱與驗證結果
 ```
 
-若未來要同時支援多個應用程式版本，應設計明確的 version profile；不要在 patcher 裡累積無法判斷的全域替換條件。
+目前 patcher 以明確的 `SUPPORTED_APP_VERSIONS` 清單支援 2.12.0 與 2.12.2；新增版本時必須同步更新 `project.json`、README、patcher、驗證器與本 Runbook，並重新做兩種語言建構。不要在 patcher 裡累積無法判斷的全域替換條件。
 
 ### Phase 2：取得乾淨來源並比對結構
 
@@ -304,8 +312,11 @@ node scripts/patcher.js --apply --lang zh-TW
 | archive 解包找不到 `.unpacked` 檔案 | 備份 archive 依賴旁側外部檔案 | 先比對 archive 版本；同版本才建立對應 `.unpacked`，否則停止 |
 | `spawnSync npx.cmd EINVAL` | Windows 將 `.cmd` 當成直接可執行檔失敗 | 使用專案內 `node_modules/asar/bin/asar.js` 搭配 Node 執行，不要把錯誤改成忽略 |
 | 前端替換數為 0 或大幅下降 | bundle 結構、來源版本或字串編碼已變 | 重新搜尋乾淨來源，檢查 protected 區段與動態 expression |
+| 應用程式版本不符 | patcher 偵測到的版本不是目前支援基線 | 保留版本警告並繼續流程；將新版本相容性標為 `NOT VERIFIED`，不要把建構／部署成功當成正式支援 |
 | Tooltip 仍是英文 | 只處理了 badge 或標題，沒有處理 description | 尋找 `tagTitle` 與 `tagDescription` 兩個來源並分別驗證 |
 | `Fast` 徽章仍顯示英文 | 2.12.0 的 `var zW` renderer 分開輸出 `tagTitle` 與 `tagDescription`，只翻 `Limited time` 會遺漏 `Fast` | 同時補翻徽章與 Tooltip 描述的 `Fast` 分支，並建構兩種語言驗證 |
+| 應用程式頁面的睡眠／選單列／自動更新開關消失 | `Vwb` 用 `sectionTitle` 精確查找設定 map；翻譯後它與 `sections[].title` 不一致，查找回傳空值 | 讓同一個來源分區的 `title` 與 `sectionTitle` 使用完全相同的目標語言值，並在 `scripts/validate_locales.js` 加入一致性檢查 |
+| `Keep In Menu Bar` 標籤或完整說明仍是英文 | exact key 的換行／空白與 minified bundle 不一致，整條 `label`＋`description` 沒有命中 | 從乾淨來源重新複製完整片段（保留實際空白），驗證產出 bundle 同時包含目標語言 label 與 description |
 | `Skills Used` 仍顯示英文 | 區塊標題由動態 `J1` expression 產生；簡中 generic replacement 可能把英文比較值改成目標語言 | 保留英文 runtime lookup key（必要時使用 JavaScript Unicode escape），只翻輸出值為「使用的技能／使用的技能」 |
 | 摘要仍顯示 `3 folders` 等英文單位 | 類別單複數由 `const Sib` 對照表即時產生，沒有命中外層摘要模板 | 以完整 `const Sib` 片段加入 `exact_properties`，並檢查檔案、資料夾、搜尋與指令等類別 |
 | 權限選項仍顯示 `No (tell the agent what to do instead)` | 自訂回覆的 label／placeholder 不經一般選項文字翻譯函式 | 同時定位並翻譯 `writeInLabel` 與 `writeInPlaceholder`，再驗證組合後的畫面文案 |

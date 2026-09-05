@@ -53,6 +53,20 @@ function assertEntryWithKeyPrefixContains(localeName, locale, keyPrefix, fragmen
   }
 }
 
+function assertSectionTitleMatchesSectionLabel(localeName, locale, sourceTitle) {
+  const titleKey = `title:"${sourceTitle}"`;
+  const sectionTitleKey = `sectionTitle:"${sourceTitle}"`;
+  const titleEntry = locale.exact_properties.find((entry) => entry.key === titleKey);
+  const sectionTitleEntry = locale.exact_properties.find((entry) => entry.key === sectionTitleKey);
+  if (!titleEntry || !sectionTitleEntry) {
+    throw new Error(`${localeName}.json 缺少 ${sourceTitle} 的 title/sectionTitle 詞條`);
+  }
+  const expected = String(titleEntry.val ?? '').replace(/^title:/, 'sectionTitle:');
+  if (String(sectionTitleEntry.val ?? '') !== expected) {
+    throw new Error(`${localeName}.json 的 ${sourceTitle} sectionTitle 與 title 翻譯不一致`);
+  }
+}
+
 const zhTw = loadLocale('zh-TW');
 const zhCn = loadLocale('zh-CN');
 const twKeys = keySet(zhTw);
@@ -138,8 +152,49 @@ for (const key of [quotaLabelKey, quotaBucketKey]) {
   assertEntryContains('zh-TW', zhTw, key, ['Weekly Limit Remaining', 'Five Hour Limit Remaining']);
   assertEntryContains('zh-CN', zhCn, key, ['\\u0057eekly Limit Remaining', '\\u0046ive Hour Limit Remaining']);
 }
+const modelGroupHeadingKey = 'z.createElement("span",null,a.displayName)';
+const modelGroupBadgeKey = 'k.displayName&&z.createElement(vR,{className:"pt-1 pb-0.5 px-2"},k.displayName)';
+for (const key of [modelGroupHeadingKey, modelGroupBadgeKey]) {
+  assertEntryContains('zh-TW', zhTw, key, ['"Gemini Models":"Gemini 模型"', '"Claude and GPT models":"Claude 與 GPT 模型"']);
+  assertEntryContains('zh-CN', zhCn, key, ['"Gemini Models":"Gemini 模型"', '"Claude and GPT models":"Claude 与 GPT 模型"']);
+}
 const codeTick = String.fromCharCode(96);
 const dollar = '$';
+const chatSendTooltipKey = 'return' + codeTick + 'Send message ' + dollar + '{Q}' + codeTick;
+assertEntryContains('zh-TW', zhTw, chatSendTooltipKey, [
+  'return' + codeTick + '傳送訊息 ' + dollar + '{Q}' + codeTick,
+]);
+assertEntryContains('zh-CN', zhCn, chatSendTooltipKey, [
+  'return' + codeTick + '发送消息 ' + dollar + '{Q}' + codeTick,
+]);
+const activityRendererKey = 'function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return';
+assertEntryWithKeyPrefixContains('zh-TW', zhTw, activityRendererKey, [
+  'function zhTwRunningSummary(a)',
+  'a.match(/^(Run|Download) (.+) finished$/)',
+  'b[1]===\"Run\"?\"執行\":\"下載\"',
+  'replace(/(\\d+) tasks? running/g,"$1 個任務執行中")',
+  '\"Run Task\":\"執行任務\"',
+  '\"Running Task\":\"執行任務中\"',
+  '\"Ran Task\":\"已執行任務\"',
+]);
+assertEntryWithKeyPrefixContains('zh-CN', zhCn, activityRendererKey, [
+  'function zhCnRunningSummary(a)',
+  'a.match(/^(Run|Download) (.+) finished$/)',
+  'b[1]===\"Run\"?\"运行\":\"下载\"',
+  'replace(/(\\d+) tasks? running/g,"$1 个任务运行中")',
+  '\"Run Task\":\"运行任务\"',
+  '\"Running Task\":\"正在运行任务\"',
+  '\"Ran Task\":\"已运行任务\"',
+]);
+const genericTaskTitlePrefixKey = 'y=u?.titlePrefix||void 0;';
+assertEntryContains('zh-TW', zhTw, genericTaskTitlePrefixKey, ['y=zhTwActivityText(y);']);
+assertEntryContains('zh-CN', zhCn, genericTaskTitlePrefixKey, ['y=zhCnActivityText(y);']);
+const activitySummaryTitleKey = 'a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?typeof a===' + '\"string\"?';
+assertEntryContains('zh-TW', zhTw, activitySummaryTitleKey, ['b=zhTwActivityText(b)', 'a=zhTwActivityText(a)']);
+assertEntryContains('zh-CN', zhCn, activitySummaryTitleKey, ['b=zhCnActivityText(b)', 'a=zhCnActivityText(a)']);
+const runningTaskSummaryKey = 'return m.join(\", \")},[h,k,f,g])};';
+assertEntryContains('zh-TW', zhTw, runningTaskSummaryKey, ['return zhTwRunningSummary(m.join(\", \"))']);
+assertEntryContains('zh-CN', zhCn, runningTaskSummaryKey, ['return zhCnRunningSummary(m.join(\", \"))']);
 const branchSubtitleKey = 'subtitle:l?' + codeTick + 'All changes since ' + dollar + '{l}' + codeTick;
 assertEntryContains('zh-TW', zhTw, branchSubtitleKey, ['subtitle:l?' + codeTick + '自 ' + dollar + '{l} 起的所有變更' + codeTick]);
 assertEntryContains('zh-CN', zhCn, branchSubtitleKey, ['subtitle:l?' + codeTick + '自 ' + dollar + '{l} 以来的所有更改' + codeTick]);
@@ -150,6 +205,15 @@ assertEntryContains('zh-TW', zhTw, commitTooltipKey, ['tooltip:(a?.stagedChanges
 assertEntryContains('zh-CN', zhCn, commitTooltipKey, ['tooltip:(a?.stagedChanges?.length??0)>0?"提交已暂存的更改":"暂存并提交所有更改"']);
 assertEntryContains('zh-TW', zhTw, '"No commits to push"', ['"沒有可推送的提交"']);
 assertEntryContains('zh-CN', zhCn, '"No commits to push"', ['"没有可推送的提交"']);
+assertEntryContains('zh-TW', zhTw, '"Models & Usage"', ['"模型與使用量"']);
+assertEntryContains('zh-CN', zhCn, '"Models & Usage"', ['"模型与使用量"']);
+assertEntryContains('zh-TW', zhTw, 'y.createElement("span",null,"Models & Usage")', ['"模型與使用量"']);
+assertEntryContains('zh-CN', zhCn, 'y.createElement("span",null,"Models & Usage")', ['"模型与使用量"']);
+const runInBackgroundSettingKey = 'label:"Keep In Menu Bar",description:"Keep the app accessible from the menu bar and running in the background when all windows are closed."';
+assertEntryContains('zh-TW', zhTw, runInBackgroundSettingKey, ['label:"保留在選單列"', 'description:"在所有視窗關閉時，保持應用程式可在系統選單列存取並在背景持續執行。"']);
+assertEntryContains('zh-CN', zhCn, runInBackgroundSettingKey, ['label:"保留在菜单列"', 'description:"在所有窗口关闭时，保持应用程序可在系统菜单列存取并在背景持续执行。"']);
+assertSectionTitleMatchesSectionLabel('zh-TW', zhTw, 'General');
+assertSectionTitleMatchesSectionLabel('zh-CN', zhCn, 'General');
 const pushCommitTooltipKey = codeTick + 'Push ' + dollar + '{c} commit' + dollar + '{c===1?"":"s"} to ' + dollar + '{b}' + codeTick;
 assertEntryContains('zh-TW', zhTw, pushCommitTooltipKey, [codeTick + '推送 ' + dollar + '{c} 個提交至 ' + dollar + '{b}' + codeTick]);
 assertEntryContains('zh-CN', zhCn, pushCommitTooltipKey, [codeTick + '推送 ' + dollar + '{c} 个提交到 ' + dollar + '{b}' + codeTick]);
