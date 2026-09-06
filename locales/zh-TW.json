@@ -3695,7 +3695,13 @@
     {"key":"\"Use business account\"","val":"\"使用企業帳戶\""},
     {"key":"\"Sign in with business account\"","val":"\"使用企業帳戶登入\""},
     {"key":"\"Use advanced SSO config\"","val":"\"使用進階 SSO 設定\""},
+    {"key":"\"Continue with Google\"","val":"\"繼續使用 Google\""},
     {"key":"\"Continue with Google Cloud\"","val":"\"繼續使用 Google Cloud\""},
+    {"key":"\"Success, Continuing...\"","val":"\"成功，繼續中...\""},
+    {"key":"\"Awaiting Authentication...\"","val":"\"等待驗證中...\""},
+    {"key":"\"Signing in...\"","val":"\"登入中...\""},
+    {"key":"\"Having trouble? Let us know\"","val":"\"遇到問題？請告訴我們\""},
+    {"key":"\"Copy sign-in link\"","val":"\"複製登入連結\""},
     {"key":"\"Welcome back!\"","val":"\"歡迎回來！\""},
     {"key":"\"Other sign-in options\"","val":"\"其他登入選項\""},
     {"key":"\"Use Google Cloud project instead\"","val":"\"改用 Google Cloud 專案\""},
@@ -4930,5 +4936,7 @@
     ,{"key":";var b=a.match(/^(Run|Download) (.+) finished$/);","val":";var d=a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/);if(d)return\"已計時 \"+d[1]+\" 秒\";var b=a.match(/^(Run|Download) (.+) finished$/);","description":"2.12工具活動計時狀態"}
     ,{"key":"+b[2]+\" 已完成\";return ({","val":"+b[2]+\" 已完成\";var e=a.match(/^(.+) finished$/);if(e)return e[1]+\" 已完成\";return ({","description":"2.12工具活動完成狀態"}
     ,{"key":"`${t} ${t===1?\"file\":\"files\"} changed`","val":"`${t} 個檔案已變更`","description":"2.12 Git 變更檔案數量"}
+    ,{"key":"className:`w-64 px-3 py-2 rounded-lg ${e?\"opacity-100 pointer-events-auto\":\"opacity-0 pointer-events-none\"}`},\"Previous\")","val":"className:`w-64 px-3 py-2 rounded-lg ${e?\"opacity-100 pointer-events-auto\":\"opacity-0 pointer-events-none\"}`},\"上一步\")","description":"2.12引導精靈上一步按鈕"}
+    ,{"key":"className:`w-64 px-3 py-2 rounded-lg shadow-sm ${f?\"opacity-100 pointer-events-auto\":\"opacity-0 pointer-events-none\"}`},c?\"Finish\":\"Next\")","val":"className:`w-64 px-3 py-2 rounded-lg shadow-sm ${f?\"opacity-100 pointer-events-auto\":\"opacity-0 pointer-events-none\"}`},c?\"完成\":\"下一步\")","description":"2.12引導精靈完成與下一步按鈕"}
   ]
 }

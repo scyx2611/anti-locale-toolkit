@@ -422,6 +422,23 @@ assertEntryContains('zh-TW', zhTw, mcpToolsCountKey, ['已啟用 ${E} 個工具'
 assertEntryContains('zh-CN', zhCn, 'Click to disable tool', ['点击以停用工具']);
 assertEntryContains('zh-CN', zhCn, 'Click to enable tool', ['点击以启用工具']);
 assertEntryContains('zh-CN', zhCn, mcpToolsCountKey, ['已启用 ${E} 个工具', '已停用 ${v.tools.length} 个工具']);
+assertEntryContains('zh-TW', zhTw, '"Awaiting Authentication..."', ['"等待驗證中..."']);
+assertEntryContains('zh-CN', zhCn, '"Awaiting Authentication..."', ['"等待验证..."']);
+assertEntryContains('zh-TW', zhTw, '"Continue with Google"', ['"繼續使用 Google"']);
+assertEntryContains('zh-CN', zhCn, '"Continue with Google"', ['"继续使用 Google"']);
+assertEntryContains('zh-TW', zhTw, '"Success, Continuing..."', ['"成功，繼續中..."']);
+assertEntryContains('zh-CN', zhCn, '"Success, Continuing..."', ['"成功，继续中..."']);
+assertEntryContains('zh-TW', zhTw, '"Having trouble? Let us know"', ['"遇到問題？請告訴我們"']);
+assertEntryContains('zh-CN', zhCn, '"Having trouble? Let us know"', ['"遇到问题？请告诉我们"']);
+assertEntryContains('zh-TW', zhTw, '"Signing in..."', ['"登入中..."']);
+assertEntryContains('zh-CN', zhCn, '"Signing in..."', ['"登录中..."']);
+const onboardingPrevBtnKey = 'className:`w-64 px-3 py-2 rounded-lg ${e?"opacity-100 pointer-events-auto":"opacity-0 pointer-events-none"}`},"Previous")';
+const onboardingNextBtnKey = 'className:`w-64 px-3 py-2 rounded-lg shadow-sm ${f?"opacity-100 pointer-events-auto":"opacity-0 pointer-events-none"}`},c?"Finish":"Next")';
+assertEntryContains('zh-TW', zhTw, onboardingPrevBtnKey, ['"上一步"']);
+assertEntryContains('zh-CN', zhCn, onboardingPrevBtnKey, ['"上一步"']);
+assertEntryContains('zh-TW', zhTw, onboardingNextBtnKey, ['"完成"', '"下一步"']);
+assertEntryContains('zh-CN', zhCn, onboardingNextBtnKey, ['"完成"', '"下一步"']);
+
 
 if (missingInCn.length > 0) {
   throw new Error(`zh-CN 缺少 ${missingInCn.length} 個 zh-TW exact_properties 詞條：${missingInCn.slice(0, 10).join(' | ')}`);

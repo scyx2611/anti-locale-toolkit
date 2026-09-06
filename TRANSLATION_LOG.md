@@ -52,6 +52,35 @@
 
 ## 已提交紀錄（2026-09-06）
 
+### 2026-09-06 | Antigravity 2.12.2 | `f861ce1`
+
+- 範圍：補齊登入流程狀態（等待驗證、成功繼續、繼續使用 Google、求助連結、複製登入連結、登入中）與引導精靈導覽按鈕（上一步、下一步、完成）。
+- 來源 anchor：
+  - `"Awaiting Authentication..."`：登入按鈕 title 與文字。
+  - `"Having trouble? Let us know"`：登入與授權頁面底部反饋連結。
+  - `"Continue with Google"`、`"Success, Continuing..."`、`"Copy sign-in link"`、`"Signing in..."`：登入卡片狀態與操作。
+  - `Bvb` 引導元件按鈕：`className:\`w-64 px-3 py-2 rounded-lg \${e?"opacity-100 pointer-events-auto":"opacity-0 pointer-events-none"}\`},"Previous")` 與 `className:\`w-64 px-3 py-2 rounded-lg shadow-sm \${f?"opacity-100 pointer-events-auto":"opacity-0 pointer-events-none"}\`},c?"Finish":"Next")`。
+- 類型：固定文字與條件 JSX 分支；保留按鈕樣式、屬性與條件判斷。
+- zh-TW：
+  - `Awaiting Authentication...` → `等待驗證中...`
+  - `Having trouble? Let us know` → `遇到問題？請告訴我們`
+  - `Continue with Google` → `繼續使用 Google`
+  - `Success, Continuing...` → `成功，繼續中...`
+  - `Copy sign-in link` → `複製登入連結`
+  - `Signing in...` → `登入中...`
+  - 引導按鈕：`Previous` → `上一步`、`Next` → `下一步`、`Finish` → `完成`
+- zh-CN：
+  - `Awaiting Authentication...` → `等待验证...`
+  - `Having trouble? Let us know` → `遇到问题？请告诉我们`
+  - `Continue with Google` → `继续使用 Google`
+  - `Success, Continuing...` → `成功，继续中...`
+  - `Copy sign-in link` → `复制登录链接`
+  - `Signing in...` → `登录中...`
+  - 引導按鈕：`Previous` → `上一步`、`Next` → `下一步`、`Finish` → `完成`
+- 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
+- 驗證：`npm run check` 通過（zh-TW 3,099、zh-CN 3,245 個 unique exact_properties，簡中覆蓋全部繁中詞條）；包含登入狀態與引導按鈕斷言檢查。
+- 部署與畫面驗收：未部署；桌面實際畫面仍為 `NOT VERIFIED`。
+
 ### 2026-09-06 | Antigravity 2.12.2 | `d3d412f`
 
 - 範圍：補齊活動狀態與自動繼續狀態，並修正取消任務狀態。

@@ -670,6 +670,10 @@
       "val": "\"等待验证...\""
     },
     {
+      "key": "\"Signing in...\"",
+      "val": "\"登录中...\""
+    },
+    {
       "key": "\"Thought for \"",
       "val": "\"思考时间 \""
     },
@@ -13678,6 +13682,16 @@
       "key": "`${t} ${t===1?\"file\":\"files\"} changed`",
       "val": "`${t} 个文件已更改`",
       "description": "2.12 Git 动态文件数量"
+    },
+    {
+      "key": "className:`w-64 px-3 py-2 rounded-lg ${e?\"opacity-100 pointer-events-auto\":\"opacity-0 pointer-events-none\"}`},\"Previous\")",
+      "val": "className:`w-64 px-3 py-2 rounded-lg ${e?\"opacity-100 pointer-events-auto\":\"opacity-0 pointer-events-none\"}`},\"上一步\")",
+      "description": "2.12引導精靈上一步按鈕"
+    },
+    {
+      "key": "className:`w-64 px-3 py-2 rounded-lg shadow-sm ${f?\"opacity-100 pointer-events-auto\":\"opacity-0 pointer-events-none\"}`},c?\"Finish\":\"Next\")",
+      "val": "className:`w-64 px-3 py-2 rounded-lg shadow-sm ${f?\"opacity-100 pointer-events-auto\":\"opacity-0 pointer-events-none\"}`},c?\"完成\":\"下一步\")",
+      "description": "2.12引導精靈完成與下一步按鈕"
     }
   ],
   "descriptions": [
