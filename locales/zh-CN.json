@@ -8926,6 +8926,26 @@
       "val": "\"使用进阶 SSO 设置\""
     },
     {
+      "key": "z.createElement(\"span\",{className:\"text-xs text-muted-foreground font-medium uppercase select-none\"},\"OR\")",
+      "val": "z.createElement(\"span\",{className:\"text-xs text-muted-foreground font-medium uppercase select-none\"},\"或\")"
+    },
+    {
+      "key": "\"Use this option if your administrator has provided you with advanced login configurations\"",
+      "val": "\"如果管理员提供了进阶登录设置，请使用此选项\""
+    },
+    {
+      "key": "\"WIF Config\"",
+      "val": "\"WIF 设置\""
+    },
+    {
+      "key": "\"Enter the SSO URL provided by your IT admin to connect your work account\"",
+      "val": "\"输入 IT 管理员提供的 SSO 网址，以连接你的工作账户\""
+    },
+    {
+      "key": "\"Sign in with SSO \\u2192\"",
+      "val": "\"使用 SSO 登录 \\u2192\""
+    },
+    {
       "key": "\"Welcome back!\"",
       "val": "\"欢迎回来！\""
     },

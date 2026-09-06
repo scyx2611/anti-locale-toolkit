@@ -52,7 +52,33 @@
 
 ## 已提交紀錄（2026-09-06）
 
-### 2026-09-06 | Antigravity 2.12.2 | `f861ce1`
+### 2026-09-06 | Antigravity 2.12.2 | `2b99392`
+
+- 範圍：補齊登入進階 SSO 面板（分隔線 OR、管理員進階登入設定說明、WIF Config 標籤、SSO 網址說明、Sign in with SSO 按鈕）。
+- 來源 anchor：
+  - `z.createElement("span",{className:"text-xs text-muted-foreground font-medium uppercase select-none"},"OR")`：登入方式分隔字。使用完整 JSX 避免誤傷終端機 ANSI escape sequence。
+  - `"Use this option if your administrator has provided you with advanced login configurations"`：進階設定說明。
+  - `"WIF Config"`：WIF 設定標籤。
+  - `"Enter the SSO URL provided by your IT admin to connect your work account"`：IT 管理員 SSO 網址說明。
+  - `"Sign in with SSO \\u2192"`：SSO 登入按鈕。
+- 類型：固定文字與特定上下文 JSX 節點。
+- zh-TW：
+  - `OR` → `或`
+  - `Use this option if your administrator has provided you with advanced login configurations` → `如果管理員提供了進階登入設定，請使用此選項`
+  - `WIF Config` → `WIF 設定`
+  - `Enter the SSO URL provided by your IT admin to connect your work account` → `輸入 IT 管理員提供的 SSO 網址，以連線你的工作帳戶`
+  - `Sign in with SSO \u2192` → `使用 SSO 登入 \u2192`
+- zh-CN：
+  - `OR` → `或`
+  - `Use this option if your administrator has provided you with advanced login configurations` → `如果管理员提供了进阶登录设置，请使用此选项`
+  - `WIF Config` → `WIF 设置`
+  - `Enter the SSO URL provided by your IT admin to connect your work account` → `输入 IT 管理员提供的 SSO 网址，以连接你的工作账户`
+  - `Sign in with SSO \u2192` → `使用 SSO 登录 \u2192`
+- 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
+- 驗證：`npm run check` 通過（zh-TW 3,104、zh-CN 3,250 個 unique exact_properties，簡中覆蓋全部繁中詞條）；包含進階 SSO 面板斷言檢查。
+- 部署與畫面驗收：未部署；桌面實際畫面仍為 `NOT VERIFIED`。
+
+### 2026-09-06 | Antigravity 2.12.2 | `0e22b62`
 
 - 範圍：補齊登入流程狀態（等待驗證、成功繼續、繼續使用 Google、求助連結、複製登入連結、登入中）與引導精靈導覽按鈕（上一步、下一步、完成）。
 - 來源 anchor：

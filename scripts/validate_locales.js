@@ -438,6 +438,18 @@ assertEntryContains('zh-TW', zhTw, onboardingPrevBtnKey, ['"上一步"']);
 assertEntryContains('zh-CN', zhCn, onboardingPrevBtnKey, ['"上一步"']);
 assertEntryContains('zh-TW', zhTw, onboardingNextBtnKey, ['"完成"', '"下一步"']);
 assertEntryContains('zh-CN', zhCn, onboardingNextBtnKey, ['"完成"', '"下一步"']);
+const ssoOrSeparatorKey = 'z.createElement("span",{className:"text-xs text-muted-foreground font-medium uppercase select-none"},"OR")';
+assertEntryContains('zh-TW', zhTw, ssoOrSeparatorKey, ['"或"']);
+assertEntryContains('zh-CN', zhCn, ssoOrSeparatorKey, ['"或"']);
+assertEntryContains('zh-TW', zhTw, '"Use this option if your administrator has provided you with advanced login configurations"', ['"如果管理員提供了進階登入設定，請使用此選項"']);
+assertEntryContains('zh-CN', zhCn, '"Use this option if your administrator has provided you with advanced login configurations"', ['"如果管理员提供了进阶登录设置，请使用此选项"']);
+assertEntryContains('zh-TW', zhTw, '"WIF Config"', ['"WIF 設定"']);
+assertEntryContains('zh-CN', zhCn, '"WIF Config"', ['"WIF 设置"']);
+assertEntryContains('zh-TW', zhTw, '"Enter the SSO URL provided by your IT admin to connect your work account"', ['"輸入 IT 管理員提供的 SSO 網址，以連線你的工作帳戶"']);
+assertEntryContains('zh-CN', zhCn, '"Enter the SSO URL provided by your IT admin to connect your work account"', ['"输入 IT 管理员提供的 SSO 网址，以连接你的工作账户"']);
+assertEntryContains('zh-TW', zhTw, '"Sign in with SSO \\u2192"', ['"使用 SSO 登入 \\u2192"']);
+assertEntryContains('zh-CN', zhCn, '"Sign in with SSO \\u2192"', ['"使用 SSO 登录 \\u2192"']);
+
 
 
 if (missingInCn.length > 0) {
