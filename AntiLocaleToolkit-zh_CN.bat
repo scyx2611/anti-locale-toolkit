@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 setlocal
-title AntiLocale Toolkit - zh-CN
+title Antigravity Chinese Toolkit - zh-CN
 cd /d "%~dp0"
 
 where node >nul 2>&1

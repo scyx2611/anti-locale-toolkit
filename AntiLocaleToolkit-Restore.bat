@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title AntiLocale Toolkit - Restore
+title Antigravity Chinese Toolkit - Restore
 cd /d "%~dp0"
 
 where node >nul 2>&1

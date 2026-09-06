@@ -1,9 +1,9 @@
 ---
 name: antilocale-maintainer
-description: Maintain and extend AntiLocale Toolkit Chinese patching for Antigravity Desktop, especially after an application version update or when a translated UI string is missing.
+description: Maintain and extend Antigravity Chinese Toolkit patching for Antigravity Desktop, especially after an application version update or when a translated UI string is missing.
 ---
 
-# AntiLocale Toolkit 漢化工具 AI 版本維護 Skill
+# Antigravity Chinese Toolkit AI 版本維護 Skill
 
 這個 Skill 用於維護本專案的 Antigravity Desktop 多語言部署工具。它適用於新增語言、補翻譯、修補版本更新後的介面、檢查部署失敗，以及確認語言切換仍可安全還原。
 

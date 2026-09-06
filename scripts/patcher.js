@@ -12,7 +12,7 @@ const readline = require('readline');
 const CLI_ARGS = process.argv.slice(2);
 const PROJECT_DIR = path.resolve(__dirname, '..');
 const LOCALES_DIR = path.join(PROJECT_DIR, 'locales');
-const PROJECT_NAME = 'AntiLocale Toolkit 漢化工具';
+const PROJECT_NAME = 'Antigravity Chinese Toolkit';
 const SUPPORTED_APP_VERSIONS = Object.freeze(['2.12.0', '2.12.2']);
 const SUPPORTED_APP_VERSION = SUPPORTED_APP_VERSIONS[SUPPORTED_APP_VERSIONS.length - 1];
 const MIN_NODE_MAJOR = 20;
@@ -38,7 +38,6 @@ function normalizeLanguage(lang = 'zh-TW') {
 }
 
 const SIMPLIFIED_CLI_PHRASES = Object.freeze([
-  ['AntiLocale Toolkit 漢化工具', 'AntiLocale Toolkit 汉化工具'],
   ['需要 Node.js ', '需要 Node.js '],
   ['目前偵測到', '当前检测到'],
   ['偵測到', '检测到'],

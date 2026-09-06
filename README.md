@@ -1,8 +1,8 @@
-# AntiLocale Toolkit 漢化工具
+# Antigravity Chinese Toolkit
 
 Antigravity Desktop 的多語言漢化部署工具。以語言包為核心，讓你可以選擇語言後一鍵套用，並保留一鍵還原與狀態檢查。
 
-技術套件／Repository identifier 仍保留 `anti-locale-toolkit`，顯示專案名稱統一為 **AntiLocale Toolkit 漢化工具**。
+技術套件／Repository identifier 仍保留 `anti-locale-toolkit`，顯示專案名稱統一為 **Antigravity Chinese Toolkit**。
 
 ## 支援版本
 

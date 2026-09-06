@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title AntiLocale Toolkit - zh-TW
+title Antigravity Chinese Toolkit - zh-TW
 cd /d "%~dp0"
 
 where node >nul 2>&1

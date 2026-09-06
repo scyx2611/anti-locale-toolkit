@@ -1,4 +1,4 @@
-# AntiLocale Toolkit 漢化工具 Repository Instructions
+# Antigravity Chinese Toolkit Repository Instructions
 
 進行版本更新、補翻譯、部署修復或語言包維護前，必須先閱讀：
 

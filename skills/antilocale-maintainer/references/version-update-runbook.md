@@ -1,10 +1,10 @@
-# AntiLocale Toolkit 漢化工具版本更新維護流程
+# Antigravity Chinese Toolkit 版本更新維護流程
 
 這份文件是給後續 AI 維護本專案用的操作紀錄。它記錄可重複的判斷方式，不把某一次搜尋結果或替換數量當成永久不變的規格。
 
 ## 目前基線
 
-- 專案：AntiLocale Toolkit 漢化工具
+- 專案：Antigravity Chinese Toolkit
 - Repository：`anti-locale-toolkit`
 - 目標應用程式：Antigravity Desktop
 - 目前支援版本：`2.12.0`、`2.12.2`

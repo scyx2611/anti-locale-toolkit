@@ -255,6 +255,15 @@ assertEntryContains('zh-TW', zhTw, baselineQuotaKey, [
 assertEntryContains('zh-CN', zhCn, baselineQuotaKey, [
   '您的方案基准配额将在 ' + dollar + '{h} 重置。',
 ]);
+const quotaUpgradeTextKey = 'z.createElement("span",null,a?.userTier?.upgradeSubscriptionText)';
+assertEntryContains('zh-TW', zhTw, quotaUpgradeTextKey, [
+  'You can upgrade to a Google AI Ultra plan to receive higher rate limits.',
+  '您可以升級至 Google AI Ultra 方案，以取得更高的使用上限。',
+]);
+assertEntryContains('zh-CN', zhCn, quotaUpgradeTextKey, [
+  'You can upgrade to a Google AI Ultra plan to receive higher rate limits.',
+  '您可以升级至 Google AI Ultra 方案，以获得更高的使用上限。',
+]);
 assertEntryContains('zh-TW', zhTw, 'e||"See plans"', ['e||"查看方案"']);
 assertEntryContains('zh-CN', zhCn, 'e||"See plans"', ['e||"查看方案"']);
 const chatSendTooltipKey = 'return' + codeTick + 'Send message ' + dollar + '{Q}' + codeTick;
@@ -432,4 +441,4 @@ if (staleBuildArtifacts.length > 0) {
   throw new Error(`zh-CN 有疑似轉換器殘留內容的詞條：${staleBuildArtifacts.slice(0, 10).join(', ')}`);
 }
 
-console.log(`AntiLocale Toolkit 漢化工具語言包檢查通過：zh-TW ${twKeys.size} 個 unique exact_properties；zh-CN ${cnKeys.size} 個，已覆蓋全部繁中詞條`);
+console.log(`Antigravity Chinese Toolkit 語言包檢查通過：zh-TW ${twKeys.size} 個 unique exact_properties；zh-CN ${cnKeys.size} 個，已覆蓋全部繁中詞條`);

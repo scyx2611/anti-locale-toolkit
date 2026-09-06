@@ -1,6 +1,6 @@
-# AntiLocale Toolkit 漢化工具翻譯變更台帳
+# Antigravity Chinese Toolkit 翻譯變更台帳
 
-這份台帳是 AntiLocale Toolkit 漢化工具的可重用翻譯索引。它記錄「乾淨 Antigravity bundle 的來源 anchor」與「語言包實際輸出」之間的關係，讓 Antigravity 更新後可以先重用既有定位，再處理真正改版的來源。
+這份台帳是 Antigravity Chinese Toolkit 的可重用翻譯索引。它記錄「乾淨 Antigravity bundle 的來源 anchor」與「語言包實際輸出」之間的關係，讓 Antigravity 更新後可以先重用既有定位，再處理真正改版的來源。
 
 ## 維護規則
 
@@ -189,6 +189,27 @@
 - zh-CN：`重试`。
 - 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
 - 驗證：`npm run check`、`git diff --check` 與 `node scripts/patcher.js --preflight` 通過；zh-TW（2,821 個前端替換）與 zh-CN（2,951 個前端替換）不部署建構均通過前端／Electron 語法檢查並產出 `app.asar.patched`；乾淨來源命中 3 個 `Retry`，兩種輸出皆確認沒有剩餘的帶引號 `Retry`，並命中「重試／重试」按鈕與 Tooltip。
+- 部署與畫面驗收：未部署；桌面實際畫面仍為 `NOT VERIFIED`。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊個人額度錯誤卡片中直接顯示的 Google AI Ultra 方案升級說明。
+- 來源 anchor：`z.createElement("span",null,a?.userTier?.upgradeSubscriptionText)`；此節點直接渲染後端 `upgradeSubscriptionText`，不會經過既有方案頁的替換路徑。
+- 類型：動態；只替換完整固定英文句，保留後端其他方案說明內容與 React 節點結構。
+- zh-TW：`You can upgrade to a Google AI Ultra plan to receive higher rate limits.` → `您可以升級至 Google AI Ultra 方案，以取得更高的使用上限。`
+- zh-CN：`You can upgrade to a Google AI Ultra plan to receive higher rate limits.` → `您可以升级至 Google AI Ultra 方案，以获得更高的使用上限。`
+- 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
+- 驗證：`npm run check` 與 `git diff --check` 通過；zh-TW（2,827 個前端替換）與 zh-CN（2,957 個前端替換）不部署建構均通過前端／Electron 語法檢查並產出 `app.asar.patched`；兩種輸出均確認原始直接渲染式已改為對應語言的動態 `.replace(...)`。
+- 部署與畫面驗收：未部署；桌面實際畫面仍為 `NOT VERIFIED`。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：統一專案顯示名稱為 `Antigravity Chinese Toolkit`。
+- 來源 anchor：`project.json` 的 `name`、`scripts/patcher.js` 的 `PROJECT_NAME`，以及 README／BAT／維護文件中的顯示名稱。
+- 類型：固定專案品牌文字；保留 Repository identifier `anti-locale-toolkit`、目錄名稱、套件名稱與既有 BAT 檔名。
+- zh-TW／zh-CN：專案品牌均使用 `Antigravity Chinese Toolkit`。
+- 修改檔案：`project.json`、`README.md`、`AGENTS.md`、三個 BAT 入口、`scripts/patcher.js`、`scripts/validate_locales.js`、維護 Skill／runbook、本台帳。
+- 驗證：`npm run check`、`git diff --check` 通過；舊顯示名稱已無剩餘命中。
 - 部署與畫面驗收：未部署；桌面實際畫面仍為 `NOT VERIFIED`。
 
 ## 已提交歷史索引

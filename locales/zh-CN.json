@@ -13006,6 +13006,11 @@
       "description": "2.12額度錯誤訊息翻譯"
     },
     {
+      "key": "z.createElement(\"span\",null,a?.userTier?.upgradeSubscriptionText)",
+      "val": "z.createElement(\"span\",null,(a?.userTier?.upgradeSubscriptionText||\"\").replace(\"You can upgrade to a Google AI Ultra plan to receive higher rate limits.\",\"您可以升级至 Google AI Ultra 方案，以获得更高的使用上限。\"))",
+      "description": "2.12额度错误方案升级说明"
+    },
+    {
       "key": "g+=` Your plan's baseline quota will refresh on ${h}.`",
       "val": "g+=` 您的方案基准配额将在 ${h} 重置。`",
       "description": "2.12方案基準額度重設訊息"
