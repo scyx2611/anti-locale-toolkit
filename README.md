@@ -10,6 +10,12 @@ Antigravity Desktop 的多語言漢化部署工具。以語言包為核心，讓
 
 工具會在部署前檢查 Antigravity 的版本；若偵測到不在上述清單，會顯示「版本不符合目前支援範圍」警告後繼續建構／套用，但該版本相容性仍是未驗證。若要明確標記為非目標版本測試，可加上 `--allow-version-mismatch`。
 
+## 支援平台
+
+目前僅支援 Windows。
+
+macOS 尚未適配，也未完成 macOS 的建構、套用、還原與程序重啟驗證；請勿在 macOS 執行 Windows `.bat` 入口。程式目前依賴 `Antigravity.exe`、`taskkill`、Windows 路徑與程序管理，因此 macOS 支援狀態為 `NOT VERIFIED`。
+
 ## 一鍵使用
 
 1. 確認已安裝 Node.js 20 或更新版本。
