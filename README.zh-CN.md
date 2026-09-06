@@ -4,8 +4,6 @@
 
 Antigravity Desktop 的中文汉化部署工具，支持繁体中文与简体中文。以语言包为核心，让你可以选择语言后一键应用，并保留一键还原与状态检查。
 
-技术套件／Repository identifier 仍保留 `anti-locale-toolkit`，显示项目名称统一为 **Antigravity Chinese Toolkit**。
-
 ## 支持语言
 
 - 繁体中文（`zh-TW`）
