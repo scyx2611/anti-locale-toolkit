@@ -1,8 +1,14 @@
 # Antigravity Chinese Toolkit
+[繁體中文](README.md) | [简体中文](README.zh-CN.md)
 
-Antigravity Desktop 的多語言漢化部署工具。以語言包為核心，讓你可以選擇語言後一鍵套用，並保留一鍵還原與狀態檢查。
+Antigravity Desktop 的中文漢化部署工具，支援繁體中文與簡體中文。以語言包為核心，讓你可以選擇語言後一鍵套用，並保留一鍵還原與狀態檢查。
 
 技術套件／Repository identifier 仍保留 `anti-locale-toolkit`，顯示專案名稱統一為 **Antigravity Chinese Toolkit**。
+
+## 支援語言
+
+- 繁體中文（`zh-TW`）
+- 簡體中文（`zh-CN`）
 
 ## 支援版本
 
