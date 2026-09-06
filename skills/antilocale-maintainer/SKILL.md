@@ -1,9 +1,9 @@
 ---
 name: antilocale-maintainer
-description: Maintain and extend AntiLocale Toolkit localization for Antigravity Desktop, especially after an application version update or when a translated UI string is missing.
+description: Maintain and extend AntiLocale Toolkit Chinese patching for Antigravity Desktop, especially after an application version update or when a translated UI string is missing.
 ---
 
-# AntiLocale Toolkit AI 版本維護 Skill
+# AntiLocale Toolkit 漢化工具 AI 版本維護 Skill
 
 這個 Skill 用於維護本專案的 Antigravity Desktop 多語言部署工具。它適用於新增語言、補翻譯、修補版本更新後的介面、檢查部署失敗，以及確認語言切換仍可安全還原。
 
@@ -24,20 +24,22 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - 不把 Antigravity 的 `app.asar`、完整 `main.js`、解包目錄或使用者專屬來源檔提交到公開 Repository。工具只提交部署程式、語言包、維護 Skill 與必要文件。
 - 語言包放在 `locales/`，部署程式應使用語言代碼載入它們；不要為每種語言複製一份整套 patcher。
 - 來源必須來自使用者目前安裝的應用程式或明確指定的乾淨來源。不要回退到舊的臨時工作目錄，也不要把上一個語言的已修改 bundle 當成乾淨來源而默默覆蓋。
-- `web_bundle` 不隨公開 Repository 或下載包附帶；`%USERPROFILE%\\.gemini\\antigravity\\web_bundle` 是每位使用者自己的候選路徑，不可寫死成 `C:\\Users\\yx`。patcher 找不到它時會依序嘗試 `resources\\web_bundle.source` 與安裝目錄的 `resources\\web_bundle`，最後才要求使用者用 `--source-web-bundle` 指定乾淨來源。
+- `web_bundle` 不隨公開 Repository 或下載包附帶；`%USERPROFILE%\\.gemini\\antigravity\\web_bundle` 是每位使用者自己的候選路徑，不可寫死成 `C:\\Users\\yx`。patcher 會依序嘗試使用者來源、`resources\\web_bundle.source`、`resources\\web_bundle.backup`，最後才使用安裝目錄的 `resources\\web_bundle` 並提出警告；找不到時再要求 `--source-web-bundle`。安裝目錄也會依 `--app-dir`／環境變數、使用者安裝路徑與常見系統安裝路徑自動尋找。
 - 設定頁的 `screen`、`title` 與 `sectionTitle` 可能同時是畫面文字與執行期查找值；例如 `Vwb` 會以 `sectionTitle` 精確比對 `uW().get(screen).sections[].title`。翻譯後兩側必須完全相同，否則整個設定分區（包含開關）會靜默不渲染。新增或修改設定分區翻譯時，必須同步檢查 producer/consumer，並由 `scripts/validate_locales.js` 驗證 `title:\"General\"` 與 `sectionTitle:\"General\"` 的結果一致。
 - 前端 `main.js` 中 `qUb("...");` 包住的區段是受保護的第三方程式碼；只在非受保護區段套用字典，以免破壞 JavaScript。
 - 套用前保留 `app.asar.backup` 與 `web_bundle.backup`。不要使用 Git reset、廣泛清理或刪除使用者備份來「修復」部署問題。
 - 部署前記錄 Antigravity 是否正在執行；只有原本已開啟時，部署或還原完成後才自動重新啟動，不要無條件啟動使用者未開啟的軟體。
+- `--preflight` 必須是唯讀檢查，至少回報 Node.js、`asar`、安裝目錄、app 版本、resources 權限、來源 bundle、備份與程序狀態；應用程式版本不在清單時警告並標記 `NOT VERIFIED`，不可直接假稱支援。
+- `--auto` 才能自動安裝專案缺少的 `asar` 相依元件，且必須先通過同一套 preflight；不自動安裝 Node.js 或 Antigravity，不繞過來源、權限或 archive 缺失錯誤。
 
 ## 維護流程
 
-1. 先確認安裝目錄、目前 `app.asar`、備份 archive、`.unpacked` 目錄與前端來源，並讀取實際 `package.json` 版本。
+1. 先執行 `node scripts/patcher.js --preflight`，再確認安裝目錄、目前 `app.asar`、備份 archive、`.unpacked` 目錄與前端來源，並讀取實際 `package.json` 版本；若前置檢查失敗，先處理原因，不要直接部署。
 2. 若應用程式不是 2.12.0 或 2.12.2，patcher 會顯示版本不符警告並繼續建構／套用；AI 必須把新版本相容性標為 `NOT VERIFIED`，不能把警告後成功建構或部署當成已支援。只有使用者明確要求部署時才套用；`--allow-version-mismatch` 可作為非目標版本測試的明確標記，但不會提升驗證等級。
 3. 將新文字加入相應語言包。固定文字放 `exact_properties`；描述或完整片段放 `descriptions`；動態 JSX/React 文字要修補其產生值與 Tooltip，不只修畫面上第一個出現位置。
 4. 在同一個變更中更新 `TRANSLATION_LOG.md`，記錄來源 anchor、雙語輸出、動態保留內容與目前驗證狀態。
 5. 先做不部署的建構：`npm run check`，再分別執行 `node scripts/patcher.js --lang zh-TW` 與 `node scripts/patcher.js --lang zh-CN`。確認前端與 Electron 原生腳本語法都通過。
-6. 只有在使用者要求實際套用時，才執行 `AntiLocaleToolkit.bat` 或 `node scripts/patcher.js --apply --lang <language>`；這會關閉 Antigravity 及 language server，並替換安裝檔。
+6. 只有在使用者要求實際套用時，才執行 `AntiLocaleToolkit-zh_TW.bat`、`AntiLocaleToolkit-zh_CN.bat` 或 `node scripts/patcher.js --apply --lang <language>`；還原使用 `AntiLocaleToolkit-Restore.bat`。兩個語言入口的 `--auto` 會先檢查並視需要安裝專案相依元件，接著關閉 Antigravity 及 language server，再替換安裝檔。
 7. 建構成功不等於桌面流程已驗證。若能啟動應用程式，另外檢查實際選單、模型選擇器、技能區塊、回饋頁與還原流程；無法啟動時要明確標記為未驗證。
 
 ## 翻譯變更台帳（每次變更必做）
@@ -82,6 +84,7 @@ description: Maintain and extend AntiLocale Toolkit localization for Antigravity
 - 成品區空白狀態使用 `emptyText:"No artifacts generated"`；要翻譯這個 default prop，不能只翻右側的「工作產出」標題。程序名稱、PID、工具名稱與路徑是動態技術內容，不要改寫。
 - 版本控制分支模式有兩個獨立來源：`subtitle:l?`All changes since ${l}`` 與 `"All changes since the branch point"`；兩者都要翻譯並保留 `${l}`／分支資訊。
 - Git 操作 Tooltip 要保留條件 expression 的全部分支：Commit 的 `Commit staged changes`／`Stage and commit all changes`、Push 的動態提交數與 `Publish ${a.currentRef} to origin`，以及停用原因 `No commits to push`；不能只翻按鈕 label `Push`。
+- Git 變更檔案摘要使用 ```${t} ${t===1?"file":"files"} changed``` 動態模板；翻譯時保留 `${t}`，繁中輸出 ```${t} 個檔案已變更```、簡中輸出 ```${t} 个文件已更改```，不可把截圖中的 `17` 寫死。
 - scripts/validate_locales.js 也要驗證 wGb 對照表與固定 Allow 標題模板的翻譯片段，讓 npm run check 能在後續版本更新時及早攔截回歸。
 - 執行活動中的 Listed 0 tasks 是固定動詞加動態數量與單複數，不能只加入 0 的完整詞條；No active tasks. 與 Found subagents 也可能由活動資料帶入，應在 activity formatter 中處理。權限標題翻譯成允許後要保留一個空格，避免接在動態 actionDescription 前面。
 - 執行活動中的 `Timed ${seconds} seconds` 與 `${task} finished` 也是動態狀態；應以數字／任務名稱正則保留動態內容，只翻譯「已計時」與「已完成」，不要只加入 `Timed 5 seconds` 或逐條寫死工具名稱。

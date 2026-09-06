@@ -1,15 +1,15 @@
-# AntiLocale Toolkit 版本更新維護流程
+# AntiLocale Toolkit 漢化工具版本更新維護流程
 
 這份文件是給後續 AI 維護本專案用的操作紀錄。它記錄可重複的判斷方式，不把某一次搜尋結果或替換數量當成永久不變的規格。
 
 ## 目前基線
 
-- 專案：AntiLocale Toolkit
+- 專案：AntiLocale Toolkit 漢化工具
 - Repository：`anti-locale-toolkit`
 - 目標應用程式：Antigravity Desktop
 - 目前支援版本：`2.12.0`、`2.12.2`
 - 語言包：`locales/zh-TW.json`、`locales/zh-CN.json`
-- 入口：`AntiLocaleToolkit.bat`
+- 入口：`AntiLocaleToolkit-zh_TW.bat`、`AntiLocaleToolkit-zh_CN.bat`、`AntiLocaleToolkit-Restore.bat`
 - 核心程式：`scripts/patcher.js`
 
 版本更新時，先確認 `project.json` 的 `supportedApplicationVersions`、README 與 patcher 的版本清單一致，再檢查實際 archive 內的 `package.json`。不要只改文件中的版本文字。
@@ -21,7 +21,8 @@
 1. 使用者明確指定的 `--source-web-bundle` 或 `ANTIGRAVITY_WEB_BUNDLE`。
 2. `%USERPROFILE%\\.gemini\\antigravity\\web_bundle`。
 3. 安裝目錄下的 `resources\\web_bundle.source`。
-4. 安裝目錄下現有的 `resources\\web_bundle`，只作最後備援，且要警告它可能已經被翻譯過。
+4. 安裝目錄下的 `resources\\web_bundle.backup`，優先使用工具建立的原始備份。
+5. 安裝目錄下現有的 `resources\\web_bundle`，只作最後備援，且要警告它可能已經被翻譯過。
 
 這些來源不會隨公開 Repository 或下載包附帶；`%USERPROFILE%` 必須在每台電腦上解析成目前使用者的家目錄，不能把某次執行的 `C:\\Users\\yx` 路徑寫入設定或文件。若安裝目錄也沒有可用 bundle，才要求使用者以 `--source-web-bundle` 指向乾淨來源。
 
@@ -129,6 +130,7 @@
 ### 每次字典或 patcher 變更
 
 ```text
+node scripts/patcher.js --preflight
 npm run check
 node scripts/patcher.js --lang zh-TW
 node scripts/patcher.js --lang zh-CN
@@ -143,6 +145,16 @@ node scripts/patcher.js --status
 node scripts/patcher.js --apply --lang zh-TW
 node scripts/patcher.js --status
 ```
+
+若使用者明確要求部署，可用以下語言明確的入口；它會先執行 preflight，只有缺少專案 `asar` 相依元件時才自動執行 `npm install`：
+
+```text
+AntiLocaleToolkit-zh_TW.bat
+AntiLocaleToolkit-zh_CN.bat
+AntiLocaleToolkit-Restore.bat
+```
+
+兩個語言入口內部使用 `--auto`，不會安裝 Node.js 或 Antigravity；找不到安裝檔、來源 bundle、寫入權限或可讀取的 archive 時會停止。版本不在支援清單時仍可繼續，但必須把相容性保留為 `NOT VERIFIED`。
 
 重新啟動應用程式後，至少人工確認：語言選單、模型選擇器、Tooltip、技能區塊、檔案／終端機選單、回饋頁與系統匣。再用 `--apply --lang zh-CN` 測試切換，確認原生選單與前端不會殘留繁中。
 
@@ -289,13 +301,15 @@ node scripts/patcher.js --status
 
 替換數量只用來發現異常變化，不可當成固定成功門檻。若新版本替換數突然大幅下降，回到 Phase 2 檢查來源與字串結構。
 
-可以用互動入口做不部署測試：
+可以用三個固定入口的 `--help` 做不部署 smoke test：
 
 ```text
-cmd.exe /d /c "echo 0|call AntiLocaleToolkit.bat"
+cmd.exe /d /c "call AntiLocaleToolkit-zh_TW.bat --help"
+cmd.exe /d /c "call AntiLocaleToolkit-zh_CN.bat --help"
+cmd.exe /d /c "call AntiLocaleToolkit-Restore.bat --help"
 ```
 
-確認語言選單列出 `繁體中文(TW)`、`简体中文`，並且不會因缺少語言包而崩潰。
+確認三個入口都能啟動，且不會因缺少語言包而崩潰。
 
 ### Phase 6：獲得授權後才部署
 

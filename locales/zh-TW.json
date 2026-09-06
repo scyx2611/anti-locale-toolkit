@@ -623,7 +623,7 @@
     },
     {
       "key": "p.refreshText&&y.createElement(\"span\",{className:\"text-muted-foreground truncate\"},p.refreshText)",
-      "val": "p.refreshText&&y.createElement(\"span\",{className:\"text-muted-foreground truncate\"},p.refreshText.replace(\"You have used some of your weekly quota\",\"您已使用部分每週額度\").replace(\"You have used some of your 5-hour quota\",\"您已使用部分5小時額度\").replace(\"Resets in\",\"重設於\"))",
+      "val": "p.refreshText&&y.createElement(\"span\",{className:\"text-muted-foreground truncate\"},zhTwModelQuotaText(p.refreshText))",
       "description": "額度刷新文案"
     },
     {
@@ -648,7 +648,7 @@
     },
     {
       "key": "refreshText:a.description||\"\"",
-      "val": "refreshText:a.description?a.description.replace(/You have used some of your weekly (?:quota|limit), it will fully refresh in /,\"您已使用部分每週額度，將在 \").replace(/You have used some of your 5-hour (?:quota|limit), it will fully refresh in /,\"您已使用部分 5 小時額度，將在 \").replace(\"You have used some of your weekly quota\",\"您已使用部分每週額度\").replace(\"You have used some of your weekly limit\",\"您已使用部分每週額度\").replace(\"You have used some of your 5-hour quota\",\"您已使用部分 5 小時額度\").replace(\"You have used some of your 5-hour limit\",\"您已使用部分 5 小時額度\").replace(\"it will fully refresh in\",\"將在\").replace(\"Resets in\",\"將於\").replace(/(\\d+)\\s+days?/g,\"$1 天\").replace(/(\\d+)\\s+hours?/g,\"$1 小時\").replace(/(\\d+)\\s+minutes?/g,\"$1 分鐘\").replace(/,\\s+/g,\"、\").replace(/、\\s*將在/g,\"，將在\").replace(/\\.$/,\"後全部恢復。\"):\"\"",
+      "val": "refreshText:a.description?zhTwModelQuotaText(a.description):\"\"",
       "description": "模型額度刷新文案"
     },
     {
@@ -4234,6 +4234,7 @@
     {"key":"content:\"Reset to preset\"","val":"content:\"重設為預設值\""},
     {"key":"content:\"Restore Conversation\"","val":"content:\"還原對話\""},
     {"key":"content:\"Retry\"","val":"content:\"重試\""},
+    {"key":"\"Retry\"","val":"\"重試\"","description":"2.12錯誤卡片重試按鈕"},
     {"key":"content:\"Stop Execution\"","val":"content:\"停止執行\""},
     {"key":"content:\"Unknown edit\"","val":"content:\"未知的編輯\""},
     {"key":"content:\"Unknown file edit\"","val":"content:\"未知的檔案編輯\""},
@@ -4761,9 +4762,13 @@
     ,{"key":"\"Browser settings have moved to the Browser section of General settings.\"","val":"\"瀏覽器設定已移至一般設定中的瀏覽器區段。\"","description":"2.12瀏覽器設定搬移說明"}
     ,{"key":"\"Go to General settings\"","val":"\"前往一般設定\"","description":"2.12前往一般設定連結"}
     ,{"key":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},r.label)","val":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},({\"Rules\":\"規則\",\"Skills\":\"技能\",\"MCP\":\"MCP\",\"MCP Tools\":\"MCP 工具\",\"Mcp Tools\":\"MCP 工具\",\"Agents\":\"代理\",\"Hooks\":\"掛鉤\",\"UI Extensions\":\"UI 擴充功能\",\"Automations\":\"自動化\",\"System Prompt\":\"系統提示\"}[r.label]||r.label))","description":"2.12 Token 分解類別標籤"}
-    ,{"key":"function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return","val":"function zhTwModelGroupText(a){if(typeof a!==\"string\")return a;return a.replace(/^Models within this group:\\s*/,\"此分組中的模型：\").replace(/,\\s*/g,\"、\")}function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return","description":"2.12模型分組提示動態翻譯"}
+    ,{"key":"function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return","val":"function zhTwModelQuotaText(a){if(typeof a!==\"string\")return a;return a.replace(/^You have hit your 5-hour (?:quota|limit)\\s*[-–—·]\\s*so the weekly (?:quota|limit) does not currently apply\\.\\s*Your 5-hour (?:quota|limit) will refresh in (.+?)(?:\\.)?$/,\"您已達到 5 小時額度上限，因此目前不適用每週額度。您的 5 小時額度將在 $1 後恢復。\").replace(/^You have hit your 5-hour (?:quota|limit)\\s*[-–—·]\\s*it will refresh in (.+?)(?:\\.)?$/,\"您已達到 5 小時額度上限，將在 $1 後恢復。\").replace(/You have hit your 5-hour (?:quota|limit)/g,\"您已達到 5 小時額度上限\").replace(/so the weekly (?:quota|limit) does not currently apply/g,\"因此目前不適用每週額度\").replace(/Your 5-hour (?:quota|limit) will refresh in/g,\"您的 5 小時額度將在\").replace(/it will refresh in/g,\"將在\").replace(/You have used some of your weekly (?:quota|limit)/g,\"您已使用部分每週額度\").replace(/You have used some of your 5-hour (?:quota|limit)/g,\"您已使用部分 5 小時額度\").replace(/it will fully refresh in/g,\"將在\").replace(/Resets in/g,\"將於\").replace(/(\\d+)\\s+days?/g,\"$1 天\").replace(/(\\d+)\\s+hours?/g,\"$1 小時\").replace(/(\\d+)\\s+minutes?/g,\"$1 分鐘\").replace(/,\\s+/g,\"、\").replace(/、\\s*將在/g,\"，將在\").replace(/\\.$/,\"後全部恢復。\").replace(/\\./g,\"。\").replace(/\\s+後/g,\"後\")}function zhTwModelGroupText(a){if(typeof a!==\"string\")return a;return zhTwModelQuotaText(a.replace(/^Models within this group:\\s*/,\"此分組中的模型：\").replace(/,\\s*/g,\"、\"))}function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return","description":"2.12模型分組提示動態翻譯"}
     ,{"key":"z.createElement(ty,{id:c},a.description)","val":"z.createElement(ty,{id:c},zhTwModelGroupText(a.description))","description":"2.12模型分組提示內容翻譯"}
     ,{"key":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},a.description)","val":"z.createElement(\"span\",{className:\"text-secondary-foreground\"},zhTwModelGroupText(a.description))","description":"2.12模型分組說明內容翻譯"}
+    ,{"key":"var SI=(a,b,c,e)=>{var f=RI(a,b,c,e);return","val":"function zhTwQuotaErrorText(a){if(typeof a!==\"string\")return a;return a.replace(/^Error\\b/,\"錯誤\").replace(\"Individual quota reached\",\"個人額度已達上限\").replace(\"Please upgrade your subscription to increase your limits\",\"請升級您的訂閱方案以提高使用上限\").replace(\"Resets in\",\"將於\").replace(/(將於\\s+[^.。]+)(?:\\.|。)?$/,\"$1後重設。\").replace(/\\./g,\"。\").replace(/。\\s+/g,\"。\")}var SI=(a,b,c,e)=>{var f=RI(a,b,c,e);return","description":"2.12個人額度錯誤動態翻譯"}
+    ,{"key":"userErrorMessage:a?.userErrorMessage","val":"userErrorMessage:zhTwQuotaErrorText(a?.userErrorMessage)","description":"2.12額度錯誤訊息翻譯"}
+    ,{"key":"g+=` Your plan's baseline quota will refresh on ${h}.`","val":"g+=` 您的方案基準額度將於 ${h} 重設。`","description":"2.12方案基準額度重設訊息"}
+    ,{"key":"e||\"See plans\"","val":"e||\"查看方案\"","description":"2.12方案連結文字"}
     ,{"key":"z.createElement(\"span\",{className:\"tabular-nums text-muted-foreground\"},\"(\",r.tokens.toLocaleString(),\" tokens)\"","val":"z.createElement(\"span\",{className:\"tabular-nums text-muted-foreground\"},\"（\",r.tokens.toLocaleString(),\" 個 Token）\"","description":"2.12 Token 分解數量"}
     ,{"key":"y?\"Hide breakdown\":`Show ${u.length} breakdown${u.length===1?\"\":\"s\"}`","val":"y?\"隱藏明細\":`顯示 ${u.length} 項明細`","description":"2.12 Token 分解展開按鈕"}
     ,{"key":"E?\"Hide tools\":`${G.length} tools`","val":"E?\"隱藏工具\":`${G.length} 個工具`","description":"2.12 Token 分解工具按鈕"}
@@ -4823,13 +4828,20 @@
     ,{"key":"n=f?e?\"Editing\":\"Edited\":g?e?\"Running\":\n\"Ran\":e?\"Exploring\":\"Explored\"","val":"n=f?e?\"編輯中\":\"已編輯\":g?e?\"執行中\":\"已執行\":e?\"探索中\":\"已探索\"","description":"2.12工具步驟目前狀態"}
     ,{"key":"var gmb=({steps:a,summary:b,debugMode:c,isActive:e=!1})=>","val":"function zhTwToolSummary(a){if(typeof a!==\"string\")return a;return a.replace(/\\bfiles?\\b/g,\"個檔案\").replace(/\\bsearches?\\b/g,\"次搜尋\").replace(/\\bresults?\\b/g,\"項結果\").replace(/,\\s+/g,\"，\")}var gmb=({steps:a,summary:b,debugMode:c,isActive:e=!1})=>","description":"2.12工具摘要動態翻譯"}
     ,{"key":":g&&l?l:b","val":":g&&l?l:zhTwToolSummary(b)","description":"2.12工具群組摘要翻譯"}
-    ,{"key":"function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","val":"function zhTwRunningSummary(a){if(typeof a!==\"string\")return a;return a.replace(/(\\d+) subagents\\/tasks running/g,\"$1 個子代理／任務執行中\").replace(/(\\d+) subagents? running/g,\"$1 個子代理執行中\").replace(/(\\d+) tasks? running/g,\"$1 個任務執行中\")}function zhTwActivityText(a){if(typeof a!==\"string\")return a;var b=a.match(/^Searching (.+)$/);if(b)return\"搜尋中 \"+b[1];var c=a.match(/^Searched (.+)$/);if(c)return\"已搜尋 \"+c[1];var b=a.match(/^(Run|Download) (.+) finished$/);if(b)return (b[1]===\"Run\"?\"執行\":\"下載\")+\" \"+b[2]+\" 已完成\";return ({\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"讀取中\",\"Read\":\"已讀取\",\"Reading page\":\"讀取頁面中\",\"Created outline\":\"已建立大綱\",\"Read page\":\"已讀取頁面\",\"Searched\":\"已搜尋\",\"Searching\":\"搜尋中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已編輯\",\"Editing\":\"編輯中\",\"Ran\":\"已執行\",\"Running\":\"執行中\",\"Run\":\"執行\",\"Run Task\":\"執行任務\",\"Running Task\":\"執行任務中\",\"Ran Task\":\"已執行任務\",\"Task\":\"任務\"}[a]??a)}function zhTwActivityTitle(a){if(typeof a!==\"string\")return a;if(a===\"Searching web\")return\"搜尋網路\";if(a===\"Searched web\")return\"已搜尋網路\";return zhTwActivityText(a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","description":"2.12工具活動前綴翻譯"}
-    ,{"key":"y=u?.titlePrefix||void 0;","val":"y=u?.titlePrefix||void 0;y=zhTwActivityTitle(y);","description":"2.12一般工具動態任務標題翻譯"}
+    ,{"key":"function dW(a){var b=a?.titleParts??[];return b.length===0?a?.title||void 0:b.every(c=>c.part.case===\"text\")?b.map(c=>c.part.value).join(\" \")||void 0:z.createElement(\"span\",{className:\"inline-flex items-center gap-1 overflow-hidden\"},b.map((c,e)=>z.createElement(unb,{key:e,part:c})))}","val":"function dW(a){var b=a?.titleParts??[];return b.length===0?zhTwActivityTitle(a?.title||void 0):b.every(c=>c.part.case===\"text\")?zhTwActivityTitle(b.map(c=>c.part.value).join(\" \")||void 0):z.createElement(\"span\",{className:\"inline-flex items-center gap-1 overflow-hidden\"},b.map((c,e)=>z.createElement(unb,{key:e,part:c})))}","description":"2.12工具卡片標題動態翻譯"}
+    ,{"key":"case \"text\":return z.createElement(\"span\",{className:\"truncate\"},a.part.value);","val":"case \"text\":return z.createElement(\"span\",{className:\"truncate\"},zhTwActivityTitle(a.part.value));","description":"2.12工具卡片混合標題動態翻譯"}
+    ,{"key":"z.createElement(tV,{content:b.title})","val":"z.createElement(tV,{content:zhTwActivityTitle(b.title)})","description":"2.12瀏覽器 JavaScript 活動標題動態翻譯"}
+    ,{"key":"function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","val":"function zhTwRunningSummary(a){if(typeof a!==\"string\")return a;return a.replace(/(\\d+) subagents\\/tasks running/g,\"$1 個子代理／任務執行中\").replace(/(\\d+) subagents? running/g,\"$1 個子代理執行中\").replace(/(\\d+) tasks? running/g,\"$1 個任務執行中\").replace(/(\\d+) active goals?/g,\"$1 個進行中的目標\")}function zhTwActivityText(a){if(typeof a!==\"string\")return a;var f=a.match(/^(\\d+) active goals?$/);if(f)return f[1]+\" 個進行中的目標\";var b=a.match(/^Searching (.+)$/);if(b)return\"搜尋中 \"+b[1];var c=a.match(/^Searched (.+)$/);if(c)return\"已搜尋 \"+c[1];var d=a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/);if(d)return\"已計時 \"+d[1]+\" 秒\";var b=a.match(/^(Run|Download) (.+) finished$/);if(b)return (b[1]===\"Run\"?\"執行\":\"下載\")+\" \"+b[2]+\" 已完成\";return ({\"\\u0047oal\":\"目標\",\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"讀取中\",\"Read\":\"已讀取\",\"Reading page\":\"讀取頁面中\",\"Created outline\":\"已建立大綱\",\"Read page\":\"已讀取頁面\",\"Searched\":\"已搜尋\",\"Searching\":\"搜尋中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已編輯\",\"Editing\":\"編輯中\",\"Ran\":\"已執行\",\"Running\":\"執行中\",\"Run\":\"執行\",\"Run Task\":\"執行任務\",\"Running Task\":\"執行任務中\",\"Ran Task\":\"已執行任務\",\"Task\":\"任務\"}[a]??a)}function zhTwActivityTitle(a){if(typeof a!==\"string\")return a;if(a===\"Searching web\")return\"搜尋網路\";if(a===\"Searched web\")return\"已搜尋網路\";return zhTwActivityText(a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return","description":"2.12工具活動前綴翻譯"}
+    ,{"key":"z.createElement(\"div\",{className:\"flex flex-row items-center gap-1 overflow-hidden whitespace-nowrap\"},e);e=typeof b===\"string\";","val":"z.createElement(\"div\",{className:\"flex flex-row items-center gap-1 overflow-hidden whitespace-nowrap\"},zhTwActivityTitle(e));e=typeof b===\"string\";","description":"2.12工具活動自訂標題翻譯"}
+    ,{"key":"z.createElement(\"span\",{className:\"truncate text-muted-foreground text-xs\"},c)))","val":"z.createElement(\"span\",{className:\"truncate text-muted-foreground text-xs\"},zhTwActivityText(c))))","description":"2.12工具活動進度計時翻譯"}
+   ,{"key":"y=u?.titlePrefix||void 0;","val":"y=u?.titlePrefix||void 0;y=zhTwActivityTitle(y);","description":"2.12一般工具動態任務標題翻譯"}
     ,{"key":"a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?typeof a===\"string\"?","val":"a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?(b=zhTwActivityTitle(b),a=zhTwActivityTitle(a),typeof a===\"string\"?","description":"2.12工具摘要動態任務標題翻譯"}
     ,{"key":"return m.join(\", \")},[h,k,f,g])};","val":"return zhTwRunningSummary(m.join(\", \"))},[h,k,f,g])};","description":"2.12執行活動動態任務數量翻譯"}
-    ,{"key":"},b,a):a;if(c)","val":"},b,a)):a;if(c)","description":"2.12工具摘要動態任務標題括號修正"}
+     ,{"key":"},b,a):a;if(c)","val":"},b,a)):zhTwActivityTitle(a);if(c)","description":"2.12系統活動標題與工具摘要括號修正"}
     ,{"key":"e=typeof b===\"string\";return z.createElement","val":"e=typeof b===\"string\";a=zhTwActivityTitle(a);b=e?zhTwActivityTitle(b):b;return z.createElement","description":"2.12工具活動文字翻譯"}
-    ,{"key":"a.titlePrefix?`${a.titlePrefix} ${b}`:b","val":"a.titlePrefix?zhTwActivityTitle(`${a.titlePrefix} ${b}`):b","description":"2.12活動摘要完整標題翻譯"}
+     ,{"key":"a.titlePrefix?`${a.titlePrefix} ${b}`:b","val":"zhTwActivityTitle(a.titlePrefix?`${a.titlePrefix} ${b}`:b)","description":"2.12活動摘要完整標題翻譯"}
+     ,{"key":"K=K.label||(L?`${M}: ${L}`:M);","val":"K=zhTwActivityTitle(K.label||(L?`${M}: ${L}`:M));","description":"2.12執行面板累積項目標題翻譯"}
+     ,{"key":"title:p.title||p.key,count","val":"title:zhTwActivityTitle(p.title||p.key),count","description":"2.12側欄累積區段標題翻譯"}
     ,{"key":"prefix:\"Analyzed\"","val":"prefix:\"已分析\"","description":"2.12分析活動前綴"}
     ,{"key":"prefix:\"Run\"","val":"prefix:\"執行\"","description":"2.12執行活動前綴"}
     ,{"key":"e||(aJ(a)?\"Searching\":\"Searched\")","val":"e||(aJ(a)?\"搜尋中\":\"已搜尋\")","description":"2.12搜尋活動狀態"}
@@ -4916,5 +4928,6 @@
     ,{"key":"\"Copied\"","val":"\"已複製\"","description":"2.12複製完成狀態"}
     ,{"key":";var b=a.match(/^(Run|Download) (.+) finished$/);","val":";var d=a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/);if(d)return\"已計時 \"+d[1]+\" 秒\";var b=a.match(/^(Run|Download) (.+) finished$/);","description":"2.12工具活動計時狀態"}
     ,{"key":"+b[2]+\" 已完成\";return ({","val":"+b[2]+\" 已完成\";var e=a.match(/^(.+) finished$/);if(e)return e[1]+\" 已完成\";return ({","description":"2.12工具活動完成狀態"}
+    ,{"key":"`${t} ${t===1?\"file\":\"files\"} changed`","val":"`${t} 個檔案已變更`","description":"2.12 Git 變更檔案數量"}
   ]
 }

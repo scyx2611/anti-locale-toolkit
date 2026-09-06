@@ -1,9 +1,16 @@
 @echo off
 setlocal
-title AntiLocale Toolkit
+title AntiLocale Toolkit - zh-TW
 cd /d "%~dp0"
 
 where node >nul 2>&1
+if errorlevel 1 (
+  echo Node.js 20 or newer is required.
+  pause
+  exit /b 1
+)
+
+node -e "process.exit(Number(process.versions.node.split('.')[0]) >= 20 ? 0 : 1)" >nul 2>&1
 if errorlevel 1 (
   echo Node.js 20 or newer is required.
   pause
@@ -20,6 +27,7 @@ if not exist "%~dp0node_modules\asar" (
   )
 )
 
-node "%~dp0scripts\patcher.js" --interactive
-if errorlevel 1 pause
-endlocal
+node "%~dp0scripts\patcher.js" --auto --lang zh-TW %*
+set "EXIT_CODE=%ERRORLEVEL%"
+if not "%EXIT_CODE%"=="0" pause
+endlocal & exit /b %EXIT_CODE%

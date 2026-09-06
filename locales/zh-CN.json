@@ -718,10 +718,35 @@
       "val": "var J1=({title:a,titleSuffix:b,count:c,badgeCount:e,actions:f,children:g,collapsible:h=!1,showCountBadge:k=!1,defaultOpen:l=!0,defaultVisibleCount:m=5,autoCollapseExpand:n=!0,open:p,onToggle:r,className:t,contentClassName:u,testId:v})=>{a=a===\"\\u0053kills Used\"?\"使用的技能\":a;"
     },
     {
-      "key": "function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return",
-      "val": "function zhCnRunningSummary(a){if(typeof a!==\"string\")return a;return a.replace(/(\\d+) subagents\\/tasks running/g,\"$1 个子代理/任务运行中\").replace(/(\\d+) subagents? running/g,\"$1 个子代理运行中\").replace(/(\\d+) tasks? running/g,\"$1 个任务运行中\")}function zhCnActivityText(a){if(typeof a!==\"string\")return a;var b=a.match(/^Searching (.+)$/);if(b)return\"搜索中 \"+b[1];var c=a.match(/^Searched (.+)$/);if(c)return\"已搜索 \"+c[1];var b=a.match(/^(Run|Download) (.+) finished$/);if(b)return (b[1]===\"Run\"?\"运行\":\"下载\")+\" \"+b[2]+\" 已完成\";return ({\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"读取中\",\"Read\":\"已读取\",\"Reading page\":\"正在读取页面\",\"Created outline\":\"已创建大纲\",\"Read page\":\"已读取页面\",\"Searched\":\"已搜索\",\"Searching\":\"搜索中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已编辑\",\"Editing\":\"编辑中\",\"Ran\":\"已运行\",\"Running\":\"运行中\",\"Run\":\"运行\",\"Run Task\":\"运行任务\",\"Running Task\":\"正在运行任务\",\"Ran Task\":\"已运行任务\",\"Task\":\"任务\"}[a]??a)}function zhCnActivityTitle(a){if(typeof a!==\"string\")return a;if(a===\"Searching web\")return\"搜索网络\";if(a===\"Searched web\")return\"已搜索网络\";return zhCnActivityText(a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return"
+      "key": "function dW(a){var b=a?.titleParts??[];return b.length===0?a?.title||void 0:b.every(c=>c.part.case===\"text\")?b.map(c=>c.part.value).join(\" \")||void 0:z.createElement(\"span\",{className:\"inline-flex items-center gap-1 overflow-hidden\"},b.map((c,e)=>z.createElement(unb,{key:e,part:c})))}",
+      "val": "function dW(a){var b=a?.titleParts??[];return b.length===0?zhCnActivityTitle(a?.title||void 0):b.every(c=>c.part.case===\"text\")?zhCnActivityTitle(b.map(c=>c.part.value).join(\" \")||void 0):z.createElement(\"span\",{className:\"inline-flex items-center gap-1 overflow-hidden\"},b.map((c,e)=>z.createElement(unb,{key:e,part:c})))}",
+      "description": "2.12工具卡片标题动态翻译"
     },
     {
+      "key": "case \"text\":return z.createElement(\"span\",{className:\"truncate\"},a.part.value);",
+      "val": "case \"text\":return z.createElement(\"span\",{className:\"truncate\"},zhCnActivityTitle(a.part.value));",
+      "description": "2.12工具卡片混合标题动态翻译"
+    },
+    {
+      "key": "z.createElement(tV,{content:b.title})",
+      "val": "z.createElement(tV,{content:zhCnActivityTitle(b.title)})",
+      "description": "2.12浏览器 JavaScript 活动标题动态翻译"
+    },
+    {
+      "key": "function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return",
+      "val": "function zhCnRunningSummary(a){if(typeof a!==\"string\")return a;return a.replace(/(\\d+) subagents\\/tasks running/g,\"$1 个子代理/任务运行中\").replace(/(\\d+) subagents? running/g,\"$1 个子代理运行中\").replace(/(\\d+) tasks? running/g,\"$1 个任务运行中\").replace(/(\\d+) active goals?/g,\"$1 个进行中的目标\")}function zhCnActivityText(a){if(typeof a!==\"string\")return a;var f=a.match(/^(\\d+) active goals?$/);if(f)return f[1]+\" 个进行中的目标\";var b=a.match(/^Searching (.+)$/);if(b)return\"搜索中 \"+b[1];var c=a.match(/^Searched (.+)$/);if(c)return\"已搜索 \"+c[1];var d=a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/);if(d)return\"已计时 \"+d[1]+\" 秒\";var b=a.match(/^(Run|Download) (.+) finished$/);if(b)return (b[1]===\"Run\"?\"运行\":\"下载\")+\" \"+b[2]+\" 已完成\";return ({\"\\u0047oal\":\"目标\",\"Analyzed\":\"已分析\",\"Analyzing\":\"分析中\",\"Reading\":\"读取中\",\"Read\":\"已读取\",\"Reading page\":\"正在读取页面\",\"Created outline\":\"已创建大纲\",\"Read page\":\"已读取页面\",\"Searched\":\"已搜索\",\"Searching\":\"搜索中\",\"Explored\":\"已探索\",\"Exploring\":\"探索中\",\"Edited\":\"已编辑\",\"Editing\":\"编辑中\",\"Ran\":\"已运行\",\"Running\":\"运行中\",\"Run\":\"运行\",\"Run Task\":\"运行任务\",\"Running Task\":\"正在运行任务\",\"Ran Task\":\"已运行任务\",\"Task\":\"任务\"}[a]??a)}function zhCnActivityTitle(a){if(typeof a!==\"string\")return a;if(a===\"Searching web\")return\"搜索网络\";if(a===\"Searched web\")return\"已搜索网络\";return zhCnActivityText(a)}function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return"
+   },
+    {
+      "key": "z.createElement(\"div\",{className:\"flex flex-row items-center gap-1 overflow-hidden whitespace-nowrap\"},e);e=typeof b===\"string\";",
+      "val": "z.createElement(\"div\",{className:\"flex flex-row items-center gap-1 overflow-hidden whitespace-nowrap\"},zhCnActivityTitle(e));e=typeof b===\"string\";",
+      "description": "2.12工具活动自定义标题翻译"
+    },
+    {
+      "key": "z.createElement(\"span\",{className:\"truncate text-muted-foreground text-xs\"},c)))",
+      "val": "z.createElement(\"span\",{className:\"truncate text-muted-foreground text-xs\"},zhCnActivityText(c))))",
+      "description": "2.12工具活动进度计时翻译"
+    },
+   {
       "key": "y=u?.titlePrefix||void 0;",
       "val": "y=u?.titlePrefix||void 0;y=zhCnActivityTitle(y);",
       "description": "2.12一般工具动态任务标题翻译"
@@ -738,8 +763,8 @@
     },
     {
       "key": "},b,a):a;if(c)",
-      "val": "},b,a)):a;if(c)",
-      "description": "2.12工具摘要动态任务标题括号修正"
+      "val": "},b,a)):zhCnActivityTitle(a);if(c)",
+      "description": "2.12系统活动标题与工具摘要括号修正"
     },
     {
       "key": "e=typeof b===\"string\";return z.createElement",
@@ -747,8 +772,18 @@
     },
     {
       "key": "a.titlePrefix?`${a.titlePrefix} ${b}`:b",
-      "val": "a.titlePrefix?zhCnActivityTitle(`${a.titlePrefix} ${b}`):b",
+      "val": "zhCnActivityTitle(a.titlePrefix?`${a.titlePrefix} ${b}`:b)",
       "description": "2.12活动摘要完整标题翻译"
+    },
+    {
+      "key": "K=K.label||(L?`${M}: ${L}`:M);",
+      "val": "K=zhCnActivityTitle(K.label||(L?`${M}: ${L}`:M));",
+      "description": "2.12运行面板累积项目标题翻译"
+    },
+    {
+      "key": "title:p.title||p.key,count",
+      "val": "title:zhCnActivityTitle(p.title||p.key),count",
+      "description": "2.12侧栏累积区段标题翻译"
     },
     {
       "key": "prefix:\"Analyzed\"",
@@ -1823,7 +1858,7 @@
     },
     {
       "key": "p.refreshText&&y.createElement(\"span\",{className:\"text-muted-foreground truncate\"},p.refreshText)",
-      "val": "p.refreshText&&y.createElement(\"span\",{className:\"text-muted-foreground truncate\"},p.refreshText.replace(\"You have used some of your weekly quota\",\"您已使用部分每周配额\").replace(\"You have used some of your 5-hour quota\",\"您已使用部分5小时配额\").replace(\"Resets in\",\"重置于\"))",
+      "val": "p.refreshText&&y.createElement(\"span\",{className:\"text-muted-foreground truncate\"},zhCnModelQuotaText(p.refreshText))",
       "description": "配额刷新文案"
     },
     {
@@ -1848,7 +1883,7 @@
     },
     {
       "key": "refreshText:a.description||\"\"",
-      "val": "refreshText:a.description?a.description.replace(/You have used some of your weekly (?:quota|limit), it will fully refresh in /,\"您已使用部分每周配额，将在 \").replace(/You have used some of your 5-hour (?:quota|limit), it will fully refresh in /,\"您已使用部分 5 小时配额，将在 \").replace(\"You have used some of your weekly quota\",\"您已使用部分每周配额\").replace(\"You have used some of your weekly limit\",\"您已使用部分每周配额\").replace(\"You have used some of your 5-hour quota\",\"您已使用部分 5 小时配额\").replace(\"You have used some of your 5-hour limit\",\"您已使用部分 5 小时配额\").replace(\"it will fully refresh in\",\"将在\").replace(\"Resets in\",\"将于\").replace(/(\\d+)\\s+days?/g,\"$1 天\").replace(/(\\d+)\\s+hours?/g,\"$1 小时\").replace(/(\\d+)\\s+minutes?/g,\"$1 分钟\").replace(/,\\s+/g,\"、\").replace(/、\\s*将在/g,\"，将在\").replace(/\\.$/,\"后全部恢复。\"):\"\"",
+      "val": "refreshText:a.description?zhCnModelQuotaText(a.description):\"\"",
       "description": "模型配额刷新文案"
     },
     {
@@ -10952,6 +10987,11 @@
       "val": "content:\"重试\""
     },
     {
+      "key": "\"Retry\"",
+      "val": "\"重试\"",
+      "description": "2.12错误卡片重试按钮"
+    },
+    {
       "key": "content:\"Stop Execution\"",
       "val": "content:\"停止执行\""
     },
@@ -12952,8 +12992,28 @@
     },
     {
       "key": "function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return",
-      "val": "function zhCnModelGroupText(a){if(typeof a!==\"string\")return a;return a.replace(/^Models within this group:\\s*/,\"此分组中的模型：\").replace(/,\\s*/g,\"、\")}function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return",
+      "val": "function zhCnModelQuotaText(a){if(typeof a!==\"string\")return a;return a.replace(/^You have hit your 5-hour (?:quota|limit)\\s*[-–—·]\\s*so the weekly (?:quota|limit) does not currently apply\\.\\s*Your 5-hour (?:quota|limit) will refresh in (.+?)(?:\\.)?$/,\"您已达到 5 小时配额上限，因此当前不适用每周配额。您的 5 小时配额将在 $1 后重置。\").replace(/^You have hit your 5-hour (?:quota|limit)\\s*[-–—·]\\s*it will refresh in (.+?)(?:\\.)?$/,\"您已达到 5 小时配额上限，将在 $1 后重置。\").replace(/You have hit your 5-hour (?:quota|limit)/g,\"您已达到 5 小时配额上限\").replace(/so the weekly (?:quota|limit) does not currently apply/g,\"因此当前不适用每周配额\").replace(/Your 5-hour (?:quota|limit) will refresh in/g,\"您的 5 小时配额将在\").replace(/it will refresh in/g,\"将在\").replace(/You have used some of your weekly (?:quota|limit)/g,\"您已使用部分每周配额\").replace(/You have used some of your 5-hour (?:quota|limit)/g,\"您已使用部分 5 小时配额\").replace(/it will fully refresh in/g,\"将在\").replace(/Resets in/g,\"将于\").replace(/(\\d+)\\s+days?/g,\"$1 天\").replace(/(\\d+)\\s+hours?/g,\"$1 小时\").replace(/(\\d+)\\s+minutes?/g,\"$1 分钟\").replace(/,\\s+/g,\"、\").replace(/、\\s*将在/g,\"，将在\").replace(/\\.$/,\"后全部恢复。\").replace(/\\./g,\"。\").replace(/\\s+后/g,\"后\")}function zhCnModelGroupText(a){if(typeof a!==\"string\")return a;return zhCnModelQuotaText(a.replace(/^Models within this group:\\s*/,\"此分组中的模型：\").replace(/,\\s*/g,\"、\"))}function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return",
       "description": "2.12模型分组提示动态翻译"
+    },
+    {
+      "key": "var SI=(a,b,c,e)=>{var f=RI(a,b,c,e);return",
+      "val": "function zhCnQuotaErrorText(a){if(typeof a!==\"string\")return a;return a.replace(/^Error\\b/,\"错误\").replace(\"Individual quota reached\",\"个人配额已达上限\").replace(\"Please upgrade your subscription to increase your limits\",\"请升级您的订阅方案以提高使用上限\").replace(\"Resets in\",\"将在\").replace(/(将在\\s+[^.。]+)(?:\\.|。)?$/,\"$1后重置。\").replace(/\\./g,\"。\").replace(/。\\s+/g,\"。\")}var SI=(a,b,c,e)=>{var f=RI(a,b,c,e);return",
+      "description": "2.12個人額度錯誤動態翻譯"
+    },
+    {
+      "key": "userErrorMessage:a?.userErrorMessage",
+      "val": "userErrorMessage:zhCnQuotaErrorText(a?.userErrorMessage)",
+      "description": "2.12額度錯誤訊息翻譯"
+    },
+    {
+      "key": "g+=` Your plan's baseline quota will refresh on ${h}.`",
+      "val": "g+=` 您的方案基准配额将在 ${h} 重置。`",
+      "description": "2.12方案基準額度重設訊息"
+    },
+    {
+      "key": "e||\"See plans\"",
+      "val": "e||\"查看方案\"",
+      "description": "2.12方案連結文字"
     },
     {
       "key": "z.createElement(ty,{id:c},a.description)",
@@ -13608,6 +13668,11 @@
       "key": "+b[2]+\" 已完成\";return ({",
       "val": "+b[2]+\" 已完成\";var e=a.match(/^(.+) finished$/);if(e)return e[1]+\" 已完成\";return ({",
       "description": "2.12工具活动完成状态"
+    },
+    {
+      "key": "`${t} ${t===1?\"file\":\"files\"} changed`",
+      "val": "`${t} 个文件已更改`",
+      "description": "2.12 Git 动态文件数量"
     }
   ],
   "descriptions": [

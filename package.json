@@ -2,7 +2,7 @@
   "name": "anti-locale-toolkit",
   "version": "0.1.0",
   "private": true,
-  "description": "One-click multilingual localization toolkit for Antigravity Desktop",
+  "description": "One-click multilingual Chinese patching toolkit for Antigravity Desktop",
   "main": "scripts/patcher.js",
   "scripts": {
     "start": "node scripts/patcher.js --interactive",

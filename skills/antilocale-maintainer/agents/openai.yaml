@@ -1,3 +1,3 @@
 interface:
-  display_name: "Antilocale Maintainer"
-  short_description: "Maintain Antigravity localization safely"
+  display_name: "Antigravity 漢化維護"
+  short_description: "Maintain Antigravity Chinese patches safely"

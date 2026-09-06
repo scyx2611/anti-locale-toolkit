@@ -1,6 +1,6 @@
-# AntiLocale Toolkit 翻譯變更台帳
+# AntiLocale Toolkit 漢化工具翻譯變更台帳
 
-這份台帳是 AntiLocale Toolkit 的可重用翻譯索引。它記錄「乾淨 Antigravity bundle 的來源 anchor」與「語言包實際輸出」之間的關係，讓 Antigravity 更新後可以先重用既有定位，再處理真正改版的來源。
+這份台帳是 AntiLocale Toolkit 漢化工具的可重用翻譯索引。它記錄「乾淨 Antigravity bundle 的來源 anchor」與「語言包實際輸出」之間的關係，讓 Antigravity 更新後可以先重用既有定位，再處理真正改版的來源。
 
 ## 維護規則
 
@@ -48,10 +48,11 @@
 | MODEL-002 | `var J1=({title:a,titleSuffix:b,count:c,badgeCount:e,actions:f,children:g` | 動態 `Skills Used` 標題；保留英文 runtime lookup key | `使用的技能` | `使用的技能` |
 | SETTINGS-001 | `title:"General"` 與 `sectionTitle:"General"` | 設定分區查找值必須使用同一目標語言，否則開關整區消失 | 同值翻譯 | 同值翻譯 |
 | QUOTA-001 | quota label／bucket renderer 與 `Weekly Limit Remaining`／`Five Hour Limit Remaining` | 後端 `displayName` 動態 lookup；保留英文查找 key | `每週剩餘額度`／`5 小時剩餘額度` | `每周剩余额度`／`5 小时剩余额度` |
+| GIT-001 | `` `${t} ${t===1?"file":"files"} changed` `` | Git 變更檔案數量；保留 `${t}`，不可寫死截圖中的數字 | `` `${t} 個檔案已變更` `` | `` `${t} 个文件已更改` `` |
 
-## 本輪未提交紀錄
+## 已提交紀錄（2026-09-06）
 
-### 2026-09-06 | Antigravity 2.12.2 | 未提交
+### 2026-09-06 | Antigravity 2.12.2 | `d3d412f`
 
 - 範圍：補齊活動狀態與自動繼續狀態，並修正取消任務狀態。
 - 來源 anchor：
@@ -63,6 +64,131 @@
 - zh-CN：`思考中`、`已继续处理`、`已自动继续处理`、`已取消`。
 - 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`。
 - 驗證：`npm run check`；`node scripts/patcher.js --lang zh-TW`；`node scripts/patcher.js --lang zh-CN`；兩種輸出均通過前端／Electron 語法檢查與 `app.asar.patched` 打包，產出 bundle 確認包含 `"Canceled":"已取消"` 與 `"Cancelled":"已取消"`。
+- 部署與畫面驗收：未部署；桌面實際畫面仍為 `NOT VERIFIED`。
+
+## 本輪未提交紀錄
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊截圖中 `executeBrowserJavascript` 卡片直接顯示的 `Timed <seconds> seconds` 標題。
+- 原因：該 renderer 使用 `b.title` 直接傳給 `tV`；它不是 `dW`／systemMessage／累積活動的標題入口。
+- 類型：動態；保留秒數，沿用活動標題 formatter。
+- zh-TW：`Timed N seconds` → `已計時 N 秒`。
+- zh-CN：`Timed N seconds` → `已计时 N 秒`。
+- 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
+- 部署與畫面驗收：尚未部署；桌面實際畫面為 `NOT VERIFIED`。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊 Goal 相關的兩個動態顯示：聊天區的 1 active goal／多個進行中目標，以及工作區／工具區的 Goal 標題。
+- 來源 anchor：function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return 活動 formatter；動態標題可能來自 customTitle、titlePrefix 或活動內容，不是單一固定 literal。
+- 類型：動態；保留目標數字 count，以 ^(\\d+) active goals?$ 匹配單複數；Goal 由同一個 activity formatter map 處理。
+- zh-TW：count 個進行中的目標、目標。
+- zh-CN：count 个进行中的目标、目标。
+- 修改檔案：locales/zh-TW.json、locales/zh-CN.json、scripts/validate_locales.js、本台帳。
+- 驗證：npm run check、node scripts/patcher.js --preflight、node scripts/patcher.js --lang zh-TW、node scripts/patcher.js --lang zh-CN 均通過；兩種輸出均通過前端／Electron 語法檢查與 app.asar.patched 打包，並保留 Goal runtime key 的 Unicode escape。
+- 部署與畫面驗收：未部署；桌面實際畫面仍為 NOT VERIFIED。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：將入口收斂為三個 BAT：繁中、簡中與還原；移除互動主選單及多餘的 Build／Apply／AutoDeploy／Status／Preflight 包裝檔。
+- 來源 anchor：語言入口固定轉交 `--auto --lang zh-TW`／`--auto --lang zh-CN`；還原入口固定轉交 `--restore`。
+- 類型：固定啟動入口；語言代碼固定寫入檔名與轉交參數，不改寫動態任務、命令、路徑或數字。
+- zh-TW：`AntiLocaleToolkit-zh_TW.bat`。
+- zh-CN：`AntiLocaleToolkit-zh_CN.bat`。
+- 共用功能：`AntiLocaleToolkit-Restore.bat`。
+- 修改檔案：三個根目錄 `.bat` 入口、`README.md`、`scripts/patcher.js`、`skills/antilocale-maintainer/SKILL.md`、`skills/antilocale-maintainer/references/version-update-runbook.md`、本台帳。
+- zh-CN 入口提示：Node.js／首次安裝／安裝失敗訊息輸出為簡體中文；批次檔保持 ASCII 指令並以 UTF-8 code page 輸出，避免 Windows code page 950 直接解析 UTF-8 中文時誤執行命令。
+- 驗證：三個入口以 `--help` 做不部署 smoke test；固定參數與 zh-CN 簡中提示檢查通過；語言入口保留 Node／asar 前置檢查與自動安裝；`npm run check`、`git diff --check` 與 `node scripts/patcher.js --preflight` 通過。未執行任何套用或還原入口。
+- 部署與畫面驗收：未部署；桌面實際畫面與三個入口的完整安裝流程仍為 `NOT VERIFIED`。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：修正 `zh-CN` 入口執行時仍顯示繁體中文的共用 CLI 輸出。
+- 來源 anchor：`scripts/patcher.js` 的 `console.log`／`console.warn`／`console.error`，涵蓋 preflight、備份、建構、套用、還原與錯誤流程。
+- 類型：固定 CLI 訊息與動態路徑／版本／數字分離；zh-CN 只轉換工具自身提示，保留路徑、版本、命令與動態內容。
+- zh-TW：維持既有繁中 CLI 輸出。
+- zh-CN：`前置检查`、`项目依赖组件`、`安装目录`、`应用程序版本`、`文件权限`、`运行状态`、`应用` 等輸出改為簡中對應詞。
+- 修改檔案：`scripts/patcher.js`、本台帳。
+- 驗證：`node scripts/patcher.js --preflight --lang zh-CN` 輸出無目標繁中 CLI 標記；`npm run check` 通過。
+- 部署與畫面驗收：未部署；CLI 輸出已驗證，桌面實際畫面仍為 `NOT VERIFIED`。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊 "Timed <seconds> seconds" 在工具活動自訂標題與進度訊息路徑的動態翻譯。
+- 來源 anchor："function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return"；自訂標題的 e 分支與 progressMessage:c 的 text-xs 顯示節點。
+- 類型：動態；保留 <seconds> 數字，可接受整數或小數；穩定文字輸出為「已計時／已计时」與「秒」。
+- zh-TW："Timed N seconds" → "已計時 N 秒"。
+- zh-CN："Timed N seconds" → "已计时 N 秒"。
+- 修改檔案：locales/zh-TW.json、locales/zh-CN.json、scripts/validate_locales.js、本台帳。
+- 驗證：node scripts/patcher.js --preflight 通過；npm run check 通過（zh-TW 3,080、zh-CN 3,231 個 unique exact_properties，簡中覆蓋全部繁中詞條）；node scripts/patcher.js --lang zh-TW（2,815 個前端替換）與 --lang zh-CN（2,945 個前端替換）均通過前端／Electron 語法檢查並產出 app.asar.patched；輸出 bundle 的 Timed 15 seconds 與 Timed 2.5 seconds 動態測試均通過。
+- 部署與畫面驗收：未部署；桌面實際畫面仍為 NOT VERIFIED。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊可供其他使用者使用的前置檢查／自動部署流程，並補翻 Git 動態摘要 `17 files changed`。
+- 來源 anchor：`` `${t} ${t===1?"file":"files"} changed` ``；來源來自乾淨 `web_bundle/main.js` 的 Git 變更檔案標題 renderer。
+- 類型：動態；保留 `${t}` 數字與檔案數量語意，不把 `17` 寫死。
+- zh-TW：`` `${t} 個檔案已變更` ``。
+- zh-CN：`` `${t} 个文件已更改` ``。
+- 自動化：`--preflight` 唯讀檢查 Node.js、`asar`、安裝目錄、版本、權限、來源 bundle、備份與程序；`--auto` 只有在缺少專案 `asar` 時自動安裝相依元件，通過後才套用，並保留版本不符警告與 `NOT VERIFIED` 邊界。
+- 來源候選：加入每位使用者的安裝路徑偵測與 `resources\\web_bundle.backup`，仍保留 `--app-dir`／`--source-web-bundle` 覆寫。
+- 修改檔案：`scripts/patcher.js`、`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、`AntiLocaleToolkit.bat`、`AntiLocaleToolkit-Auto.bat`、`README.md`、`skills/antilocale-maintainer/SKILL.md`、`skills/antilocale-maintainer/references/version-update-runbook.md`、本台帳。
+- 驗證：`npm run check` 通過（zh-TW 3,078、zh-CN 3,229 個 unique exact_properties，簡中覆蓋全部繁中 key）；`node --check`、Skill 快速驗證與 `git diff --check` 通過；`--preflight` 及 `AntiLocaleToolkit.bat --preflight` 都找到本機 Antigravity 2.12.2、來源與兩份備份；zh-TW／zh-CN 不部署建構均通過前端／Electron 語法檢查與 `app.asar.patched` 打包，輸出分別命中「個檔案已變更／个文件已更改」。
+- 部署與畫面驗收：未部署；動態 Git 標題與自動部署的實際桌面流程仍為 `NOT VERIFIED`。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊個人額度錯誤、方案基準額度重設、5 小時額度動態說明與 Tooltip。
+- 來源 anchor：`var SI=...`／`userErrorMessage:a?.userErrorMessage`；`g+=...baseline quota...`；`e||"See plans"`；`function Dxb...` 與 `refreshText:a.description||""`。
+- 類型：動態；保留重設倒數、重設日期、分鐘／小時數字及模型群組內容，不寫死畫面中的倒數。
+- zh-TW：`個人額度已達上限。請升級您的訂閱方案以提高使用上限。將於 <倒數> 後重設。`；`您的方案基準額度將於 <日期> 重設。`；5 小時額度提示使用「您已達到 5 小時額度上限」與「每週額度」。
+- zh-CN：`个人配额已达上限。请升级您的订阅方案以提高使用上限。将在 <倒数> 后重置。`；`您的方案基准配额将在 <日期> 重置。`；5 小时配额提示使用「您已达到 5 小时配额上限」与「每周配额」。
+- 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
+- 驗證：`npm run check` 與 `git diff --check` 通過；`node scripts/patcher.js --preflight` 通過並偵測 Antigravity 2.12.2；zh-TW（2,819 個前端替換）與 zh-CN（2,949 個前端替換）不部署建構均通過前端／Electron 語法檢查並產出 `app.asar.patched`；額度錯誤、Tooltip、5 小時額度卡片與動態日期／方案文字樣本測試通過。
+- 部署與畫面驗收：未部署；桌面實際畫面仍為 `NOT VERIFIED`。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊聊天框上方的 `1 active goal` 動態摘要，以及未經 `tV` 工具卡片路徑的 `Timed <seconds> seconds` 活動標題。
+- 來源 anchor：`var qGb=()=>...` 的 `return m.join(", ")`；`function eUb(a){...}` 的 `a.titlePrefix?`${a.titlePrefix} ${b}`:b`。
+- 原因：`qGb` 會直接組合 accumulated section 的數量與標題，原有 `Goal`／`active goal` 規則不會經過 `tV`；`eUb` 在沒有 `titlePrefix` 時也會直接返回英文標題。
+- 類型：動態；保留目標數字與秒數，不寫死單一畫面。
+- zh-TW：`<count> active goal(s)` → `<count> 個進行中的目標`；活動標題交由 `zhTwActivityTitle` 處理。
+- zh-CN：`<count> active goal(s)` → `<count> 个进行中的目标`；活動標題交由 `zhCnActivityTitle` 處理。
+- 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
+- 部署與畫面驗收：使用者已套用前一版 bundle；本次摘要入口修正尚未重新部署，需重新建構／套用後驗證桌面畫面。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊一般工具活動卡片直接由 `dW` 組出的 `Timed <seconds> seconds` 標題。
+- 原因：該卡片的 `renderInfo.title`／純文字 `titleParts` 會在一般工具 renderer 先由 `dW` 產生；它可能繞過前面已補的 systemMessage、累積項目與 `tV` 進度路徑。
+- 類型：動態；保留秒數，沿用活動標題 formatter；混合標題的純文字片段也套用同一規則。
+- zh-TW：`Timed N seconds` → `已計時 N 秒`。
+- zh-CN：`Timed N seconds` → `已计时 N 秒`。
+- 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
+- 部署與畫面驗收：尚未部署；桌面實際畫面為 `NOT VERIFIED`。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊 `Timed <seconds> seconds` 的 systemMessage 路徑，以及右側累積區段中的 `Goal` 標題。
+- 來源 anchor：`b,a):a;if(c)switch(c)`（`Unb` 無 `titlePrefix` 分支）；`K=K.label||(L?`${M}: ${L}`:M);`（執行面板累積項目）；`title:p.title||p.key,count`（側欄累積區段）。
+- 原因：`Unb` 將字串包進 React 元件後，`tV` 不會再處理；側欄 `J1` 直接使用後端區段標題，未經活動標題 formatter。
+- 類型：動態；保留秒數、區段數量與後端提供的項目內容。
+- zh-TW：`Timed N seconds` → `已計時 N 秒`；`Goal` → `目標`。
+- zh-CN：`Timed N seconds` → `已计时 N 秒`；`Goal` → `目标`。
+- 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
+- 部署與畫面驗收：目前安裝版本已包含前一輪 `qGb`／`eUb` 修正；本輪 `Unb`／`uLb` 修正尚未重新部署，需重新套用後驗證畫面。
+
+### 2026-09-06 | Antigravity 2.12.2 | 未提交
+
+- 範圍：補齊錯誤卡片、重試 Tooltip 與瀏覽器錯誤狀態中的 `Retry`。
+- 來源 anchor：乾淨 `web_bundle/main.js` 的 `"Retry"`；涵蓋 `primaryAction:v("Retry")`、`content:"Retry"` 與 Browser 錯誤按鈕。
+- 類型：固定文字；不改動重試動作、錯誤訊息或動態錯誤內容。
+- zh-TW：`重試`。
+- zh-CN：`重试`。
+- 修改檔案：`locales/zh-TW.json`、`locales/zh-CN.json`、`scripts/validate_locales.js`、本台帳。
+- 驗證：`npm run check`、`git diff --check` 與 `node scripts/patcher.js --preflight` 通過；zh-TW（2,821 個前端替換）與 zh-CN（2,951 個前端替換）不部署建構均通過前端／Electron 語法檢查並產出 `app.asar.patched`；乾淨來源命中 3 個 `Retry`，兩種輸出皆確認沒有剩餘的帶引號 `Retry`，並命中「重試／重试」按鈕與 Tooltip。
 - 部署與畫面驗收：未部署；桌面實際畫面仍為 `NOT VERIFIED`。
 
 ## 已提交歷史索引

@@ -12,9 +12,10 @@ const readline = require('readline');
 const CLI_ARGS = process.argv.slice(2);
 const PROJECT_DIR = path.resolve(__dirname, '..');
 const LOCALES_DIR = path.join(PROJECT_DIR, 'locales');
-const PROJECT_NAME = 'AntiLocale Toolkit';
+const PROJECT_NAME = 'AntiLocale Toolkit 漢化工具';
 const SUPPORTED_APP_VERSIONS = Object.freeze(['2.12.0', '2.12.2']);
 const SUPPORTED_APP_VERSION = SUPPORTED_APP_VERSIONS[SUPPORTED_APP_VERSIONS.length - 1];
+const MIN_NODE_MAJOR = 20;
 
 function formatSupportedVersions() {
   return SUPPORTED_APP_VERSIONS.join('、');
@@ -36,10 +37,195 @@ function normalizeLanguage(lang = 'zh-TW') {
   return raw;
 }
 
+const SIMPLIFIED_CLI_PHRASES = Object.freeze([
+  ['AntiLocale Toolkit 漢化工具', 'AntiLocale Toolkit 汉化工具'],
+  ['需要 Node.js ', '需要 Node.js '],
+  ['目前偵測到', '当前检测到'],
+  ['偵測到', '检测到'],
+  ['支援的應用程式版本', '支持的应用程序版本'],
+  ['專案相依元件', '项目依赖组件'],
+  ['專案', '项目'],
+  ['相依', '依赖'],
+  ['元件', '组件'],
+  ['安裝目錄', '安装目录'],
+  ['檔案權限', '文件权限'],
+  ['應用程式', '应用程序'],
+  ['支援清單', '支持列表'],
+  ['客戶端', '客户端'],
+  ['互動選單', '交互菜单'],
+  ['互動', '交互'],
+  ['選單', '菜单'],
+  ['資訊', '信息'],
+  ['執行狀態', '运行状态'],
+  ['目前正在執行', '当前正在运行'],
+  ['套用時', '应用时'],
+  ['視原狀態重新開啟', '按原状态重新打开'],
+  ['套用', '应用'],
+  ['開啟', '打开'],
+  ['目錄', '目录'],
+  ['資料', '资料'],
+  ['建構與套用流程', '构建与应用流程'],
+  ['此版本尚未完整驗證', '此版本尚未完整验证'],
+  ['明確標記為非目標版本測試', '明确标记为非目标版本测试'],
+  ['目前只能找到已安裝的', '目前只能找到已安装的'],
+  ['若它已經漢化，切換語言可能保留先前文字', '若它已经汉化，切换语言可能保留先前文字'],
+  ['找不到專案相依元件，正在自動安裝 asar 建構元件', '找不到项目依赖组件，正在自动安装 asar 构建组件'],
+  ['建構', '构建'],
+  ['正在嘗試關閉 Antigravity 進程以解除檔案鎖定', '正在尝试关闭 Antigravity 进程以解除文件锁定'],
+  ['前置檢查通過，可以執行自動部署', '前置检查通过，可以执行自动部署'],
+  ['前置檢查未通過', '前置检查未通过'],
+  ['請在部署後做桌面畫面驗收', '请在部署后做桌面画面验收'],
+  ['已自動重新開啟 Antigravity', '已自动重新打开 Antigravity'],
+  ['補丁已完成，但自動重新開啟失敗', '补丁已完成，但自动重新打开失败'],
+  ['請手動開啟 Antigravity', '请手动打开 Antigravity'],
+  ['Antigravity 客戶端漢化狀態檢查', 'Antigravity 客户端汉化状态检查'],
+  ['web_bundle 漢化包存在', 'web_bundle 汉化包存在'],
+  ['web_bundle 備份存在', 'web_bundle 备份存在'],
+  ['web_bundle.disabled (已停用包)', 'web_bundle.disabled (已停用包)'],
+  ['目前 app.asar 版本', '当前 app.asar 版本'],
+  ['備份 app.asar 版本', '备份 app.asar 版本'],
+  ['正在執行還原程序', '正在执行还原程序'],
+  ['找不到備份檔案 app.asar.backup，無法自動還原', '找不到备份文件 app.asar.backup，无法自动还原'],
+  ['成功還原官方原版 app.asar', '成功还原官方原版 app.asar'],
+  ['已停用 web_bundle 漢化包目錄（重命名為 web_bundle.disabled）', '已停用 web_bundle 汉化包目录（重命名为 web_bundle.disabled）'],
+  ['已完整還原至官方原版英文狀態', '已完整还原至官方原版英文状态'],
+  ['還原失敗', '还原失败'],
+  ['若為檔案鎖定，請手動確認工作管理員中已無 Antigravity 進程', '若为文件锁定，请手动确认任务管理器中已无 Antigravity 进程'],
+  ['正在構建前端漢化資源包', '正在构建前端汉化资源包'],
+  ['正在讀取前端主程式', '正在读取前端主程序'],
+  ['成功替換詞條數', '成功替换词条数'],
+  ['正在校驗前端腳本語法', '正在校验前端脚本语法'],
+  ['前端腳本語法校驗', '前端脚本语法校验'],
+  ['正在建立原版 archive 所需的 .unpacked 資料，以便保留乾淨的原生來源', '正在建立原版 archive 所需的 .unpacked 资料，以便保留干净的原生来源'],
+  ['正在準備修改原生 Electron 主程式', '正在准备修改原生 Electron 主程序'],
+  ['已準備使用原版 app.asar 與對應的 .unpacked 資料', '已准备使用原版 app.asar 与对应的 .unpacked 资料'],
+  ['找不到備份 archive 對應的 .unpacked 目錄，改用目前 app.asar 建構補丁', '找不到备份 archive 对应的 .unpacked 目录，改用当前 app.asar 构建补丁'],
+  ['正在從', '正在从'],
+  ['解包原生程式', '解包原生程序'],
+  ['成功在 languageServer.js 注入 --web_bundle_path 支援', '成功在 languageServer.js 注入 --web_bundle_path 支持'],
+  ['成功漢化 loadingOverlay.js 載入文字', '成功汉化 loadingOverlay.js 载入文字'],
+  ['已更新原生選單語言包', '已更新原生菜单语言包'],
+  ['成功在 menu.js 注入全量選單漢化處理', '成功在 menu.js 注入全量菜单汉化处理'],
+  ['成功漢化 updater.js 更新提示彈窗', '成功汉化 updater.js 更新提示弹窗'],
+  ['找不到托盤代理計數原始片段，未修改計數文字', '找不到托盘代理计数原始片段，未修改计数文字'],
+  ['成功漢化 tray.js 托盤狀態文字', '成功汉化 tray.js 托盘状态文字'],
+  ['成功漢化 main.js 中的原生系統匣選單項目', '成功汉化 main.js 中的原生系统托盘菜单项目'],
+  ['正在校驗修改後的 Electron 代碼語法', '正在校验修改后的 Electron 代码语法'],
+  ['Electron 主進程代碼語法校驗', 'Electron 主进程代码语法校验'],
+  ['正在打包新 asar 檔案至', '正在打包新 asar 文件至'],
+  ['正在備份原版 app.asar 至', '正在备份原版 app.asar 至'],
+  ['偵測到原版備份已存在，跳過備份', '检测到原版备份已存在，跳过备份'],
+  ['偵測到 web_bundle 原始備份，跳過備份', '检测到 web_bundle 原始备份，跳过备份'],
+  ['正在建立 web_bundle 原始備份至', '正在建立 web_bundle 原始备份至'],
+  ['=== 開始套用漢化補丁 [語言:', '=== 开始应用汉化补丁 [语言:'],
+  ['正在替換 app.asar', '正在替换 app.asar'],
+  ['app.asar 目前仍被鎖定', 'app.asar 当前仍被锁定'],
+  ['請手動至工作管理員中完全關閉 Antigravity 客戶端後再重試', '请手动在任务管理器中完全关闭 Antigravity 客户端后重试'],
+  ['正在部署前端漢化包至', '正在部署前端汉化包至'],
+  ['前端漢化包部署完成', '前端汉化包部署完成'],
+  ['Antigravity 客戶端漢化成功套用', 'Antigravity 客户端汉化成功应用'],
+  ['原本已開啟，已自動重新啟動 Antigravity', '原本已开启，已自动重新启动 Antigravity'],
+  ['原本已開啟，請手動重新開啟 Antigravity', '原本已开启，请手动重新打开 Antigravity'],
+  ['原本未開啟，維持關閉狀態', '原本未开启，保持关闭状态'],
+  ['執行失敗', '执行失败'],
+  ['請確認 Antigravity 版本、來源 web_bundle 與檔案權限後再試', '请确认 Antigravity 版本、来源 web_bundle 与文件权限后再试'],
+  ['選用參數', '可选参数'],
+  ['只檢查環境', '只检查环境'],
+  ['缺少專案相依元件時自動安裝', '缺少项目依赖组件时自动安装'],
+  ['通過後套用翻譯', '通过后应用翻译'],
+  ['版本不符時會先顯示警告並繼續', '版本不符时会先显示警告并继续'],
+  ['可用 --allow-version-mismatch 明確標記為非目標版本測試', '可用 --allow-version-mismatch 明确标记为非目标版本测试'],
+  ['自動部署已停止：請先處理前置檢查失敗項目', '自动部署已停止：请先处理前置检查失败项目'],
+  ['=== 開始執行 Antigravity 客戶端漢化構建 [語言:', '=== 开始执行 Antigravity 客户端汉化构建 [语言:'],
+  ['構建完成！若要套用到客戶端，請加上 --apply 參數，或使用 -i 進入互動選單。', '构建完成！若要应用到客户端，请加上 --apply 参数，或使用 -i 进入交互菜单。'],
+]);
+
+const SIMPLIFIED_CLI_CHARACTERS = Object.freeze({
+  '漢': '汉', '體': '体', '與': '与', '偵': '侦', '測': '测', '檔': '档', '權': '权', '應': '应',
+  '語': '语', '開': '开', '啟': '启', '關': '关', '閉': '闭', '並': '并', '視': '视', '執': '执',
+  '狀': '状', '態': '态', '備': '备', '來': '来', '網': '网', '頁': '页', '讀': '读', '構': '构',
+  '驗': '验', '腳': '脚', '寫': '写', '詞': '词', '條': '条', '選': '选', '單': '单', '彈': '弹',
+  '盤': '盘', '系': '系', '統': '统', '項': '项', '個': '个', '無': '无', '錯': '错', '誤': '误',
+  '還': '还', '變': '变', '過': '过', '進': '进', '後': '后', '會': '会', '顯': '显', '實': '实',
+  '繼': '继', '續': '续', '將': '将', '標': '标', '記': '记', '為': '为', '於': '于', '確': '确',
+  '參': '参', '數': '数', '環': '环', '時': '时', '動': '动', '裝': '装', '試': '试', '內': '内',
+  '組': '组', '請': '请', '處': '处', '敗': '败', '連': '连', '轉': '转', '換': '换', '補': '补',
+  '準': '准', '對': '对', '資': '资', '乾': '干', '淨': '净', '區': '区', '專': '专', '業': '业',
+  '相': '相', '依': '依', '元': '元', '件': '件', '載': '载', '碼': '码', '彙': '汇', '檢': '检',
+  '訊': '讯', '錄': '录',
+  '查': '查', '級': '级', '庫': '库', '發': '发', '佈': '布', '啟': '启', '獲': '获', '取': '取',
+});
+
+function simplifyCliText(value) {
+  let text = String(value);
+  for (const [source, target] of [...SIMPLIFIED_CLI_PHRASES].sort((left, right) => right[0].length - left[0].length)) {
+    text = text.replaceAll(source, target);
+  }
+  return text.replace(/[漢體與偵測檔權應語開啟關閉並視執狀態備來網頁讀構驗腳寫詞條選單彈盤統項個無錯誤還變過進後會顯實繼續將標記為於確參數環動裝試內組請處敗連轉換補準對資乾淨區專業載碼彙檢級庫發佈獲]/g, (character) => SIMPLIFIED_CLI_CHARACTERS[character] || character);
+}
+
+function configureCliOutput(lang) {
+  if (lang !== 'zh-CN') return;
+  for (const method of ['log', 'warn', 'error']) {
+    const original = console[method].bind(console);
+    console[method] = (...args) => original(...args.map((arg) => typeof arg === 'string' ? simplifyCliText(arg) : arg));
+  }
+}
+
+function getNodeVersionInfo() {
+  const version = process.versions.node;
+  const major = Number.parseInt(version.split('.')[0], 10);
+  return {
+    version,
+    major,
+    supported: Number.isInteger(major) && major >= MIN_NODE_MAJOR,
+  };
+}
+
+function assertNodeVersion() {
+  const info = getNodeVersionInfo();
+  if (!info.supported) {
+    throw new Error(`需要 Node.js ${MIN_NODE_MAJOR} 或更新版本，目前偵測到 ${info.version}。`);
+  }
+  return info;
+}
+
 const localAppData = process.env.LOCALAPPDATA || path.join(process.env.USERPROFILE || '', 'AppData', 'Local');
-const APP_DIR = path.resolve(
-  getOption('--app-dir') || process.env.ANTIGRAVITY_APP_DIR || path.join(localAppData, 'Programs', 'Antigravity')
-);
+
+function getAppDirCandidates() {
+  const programFiles = process.env.ProgramW6432 || process.env.ProgramFiles || '';
+  const programFilesX86 = process.env['ProgramFiles(x86)'] || '';
+  const candidates = [
+    getOption('--app-dir'),
+    process.env.ANTIGRAVITY_APP_DIR,
+    path.join(localAppData, 'Programs', 'Antigravity'),
+    path.join(localAppData, 'Antigravity'),
+    programFiles ? path.join(programFiles, 'Antigravity') : '',
+    programFilesX86 ? path.join(programFilesX86, 'Antigravity') : '',
+  ].filter(Boolean);
+  const seen = new Set();
+  return candidates
+    .map((candidate) => path.resolve(candidate))
+    .filter((candidate) => {
+      if (seen.has(candidate)) return false;
+      seen.add(candidate);
+      return true;
+    });
+}
+
+function hasAntigravityInstall(candidate) {
+  return fs.existsSync(path.join(candidate, 'resources', 'app.asar')) ||
+    fs.existsSync(path.join(candidate, 'Antigravity.exe'));
+}
+
+function resolveAppDir() {
+  const explicit = getOption('--app-dir') || process.env.ANTIGRAVITY_APP_DIR;
+  if (explicit) return path.resolve(explicit);
+  const candidates = getAppDirCandidates();
+  return candidates.find(hasAntigravityInstall) || candidates[0];
+}
+
+const APP_DIR = resolveAppDir();
 const RESOURCES_DIR = path.join(APP_DIR, 'resources');
 const ASAR_PATH = path.join(RESOURCES_DIR, 'app.asar');
 const BACKUP_ASAR_PATH = path.join(RESOURCES_DIR, 'app.asar.backup');
@@ -148,20 +334,33 @@ function isWebBundleDirectory(candidate) {
   return Boolean(candidate && fs.existsSync(path.join(candidate, 'main.js')));
 }
 
-function resolveSourceWebBundle() {
+function getSourceWebBundleCandidates() {
   const explicit = getOption('--source-web-bundle') || process.env.ANTIGRAVITY_WEB_BUNDLE;
   const userProfile = process.env.USERPROFILE || '';
   const candidates = [
     explicit,
-    path.join(userProfile, '.gemini', 'antigravity', 'web_bundle'),
+    userProfile ? path.join(userProfile, '.gemini', 'antigravity', 'web_bundle') : '',
     path.join(RESOURCES_DIR, 'web_bundle.source'),
+    WEB_BUNDLE_BACKUP_DIR,
     WEB_BUNDLE_DIR,
   ].filter(Boolean);
+  const seen = new Set();
+  return candidates
+    .map((candidate) => path.resolve(candidate))
+    .filter((candidate) => {
+      if (seen.has(candidate)) return false;
+      seen.add(candidate);
+      return true;
+    });
+}
+
+function resolveSourceWebBundle() {
+  const candidates = getSourceWebBundleCandidates();
   const resolved = candidates.find(isWebBundleDirectory);
   if (!resolved) {
     throw new Error(
       '找不到來源 web_bundle。請提供 --source-web-bundle <資料夾>，或將乾淨的 web_bundle 放到 ' +
-        '%USERPROFILE%\\.gemini\\antigravity\\web_bundle。'
+        '%USERPROFILE%\\.gemini\\antigravity\\web_bundle，或保留安裝目錄中的 web_bundle.backup。'
     );
   }
   if (path.resolve(resolved) === path.resolve(WEB_BUNDLE_DIR)) {
@@ -170,10 +369,44 @@ function resolveSourceWebBundle() {
   return resolved;
 }
 
+function getAsarCliPath() {
+  return path.join(PROJECT_DIR, 'node_modules', 'asar', 'bin', 'asar.js');
+}
+
+function hasProjectDependencies() {
+  return fs.existsSync(getAsarCliPath());
+}
+
+function ensureProjectDependencies(installIfMissing = false) {
+  if (hasProjectDependencies()) {
+    return { available: true, installed: false };
+  }
+  if (!installIfMissing) {
+    return { available: false, installed: false };
+  }
+
+  const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+  console.log('找不到專案相依元件，正在自動安裝 asar 建構元件...');
+  try {
+    execFileSync(npmCommand, ['install', '--no-audit', '--no-fund'], {
+      cwd: PROJECT_DIR,
+      stdio: 'inherit',
+      windowsHide: true,
+    });
+  } catch (err) {
+    return {
+      available: false,
+      installed: false,
+      error: err && err.message ? err.message : String(err),
+    };
+  }
+  return { available: hasProjectDependencies(), installed: true };
+}
+
 function runAsar(args) {
-  const asarCli = path.join(PROJECT_DIR, 'node_modules', 'asar', 'bin', 'asar.js');
+  const asarCli = getAsarCliPath();
   if (!fs.existsSync(asarCli)) {
-    throw new Error('找不到 asar 建構元件，請先執行 AntiLocaleToolkit.bat 或 npm install。');
+    throw new Error('找不到 asar 建構元件，請先執行任一語言入口或 npm install。');
   }
   execFileSync(process.execPath, [asarCli, ...args], { stdio: 'inherit', windowsHide: true });
 }
@@ -227,6 +460,132 @@ function isAntigravityRunning() {
   }
 }
 
+function runPreflight({ installDependencies = false } = {}) {
+  const checks = [];
+  const errors = [];
+  const warnings = [];
+  const statusLabels = {
+    pass: '通過',
+    warn: '警告',
+    fail: '失敗',
+    info: '資訊',
+  };
+  const record = (status, label, detail) => {
+    checks.push({ status, label, detail });
+    if (status === 'fail') errors.push(`${label}: ${detail}`);
+    if (status === 'warn') warnings.push(`${label}: ${detail}`);
+  };
+
+  const node = getNodeVersionInfo();
+  record(
+    node.supported ? 'pass' : 'fail',
+    'Node.js',
+    `${node.version}（需要 ${MIN_NODE_MAJOR} 或更新版本）`
+  );
+
+  const dependencies = node.supported
+    ? ensureProjectDependencies(installDependencies)
+    : { available: hasProjectDependencies(), installed: false };
+  if (dependencies.available) {
+    record('pass', '專案相依元件', dependencies.installed ? '已自動安裝並可用' : 'asar 建構元件可用');
+  } else {
+    const detail = dependencies.error
+      ? `自動安裝失敗：${dependencies.error}`
+      : installDependencies
+        ? '自動安裝後仍找不到 asar 建構元件'
+        : '找不到 asar 建構元件；使用 --auto 時會嘗試自動安裝';
+    record('fail', '專案相依元件', detail);
+  }
+
+  const appDirExists = fs.existsSync(APP_DIR);
+  record(appDirExists ? 'pass' : 'fail', 'Antigravity 安裝目錄', APP_DIR);
+  const resourcesExists = fs.existsSync(RESOURCES_DIR);
+  record(resourcesExists ? 'pass' : 'fail', 'resources 目錄', RESOURCES_DIR);
+
+  const archiveExists = fs.existsSync(ASAR_PATH);
+  record(archiveExists ? 'pass' : 'fail', 'app.asar', archiveExists ? ASAR_PATH : `找不到：${ASAR_PATH}`);
+  if (archiveExists && dependencies.available) {
+    const detectedVersion = getArchiveVersion(ASAR_PATH);
+    if (!detectedVersion) {
+      record('fail', '應用程式版本', '無法從 app.asar 讀取 package.json 版本');
+    } else if (SUPPORTED_APP_VERSIONS.includes(detectedVersion)) {
+      record('pass', '應用程式版本', `${detectedVersion}（支援清單：${formatSupportedVersions()}）`);
+    } else {
+      record(
+        'warn',
+        '應用程式版本',
+        `${detectedVersion} 不在目前支援清單（${formatSupportedVersions()}）；工具會繼續，但相容性為 NOT VERIFIED`
+      );
+    }
+  }
+
+  if (resourcesExists) {
+    try {
+      fs.accessSync(RESOURCES_DIR, fs.constants.R_OK | fs.constants.W_OK);
+      record('pass', '檔案權限', 'resources 可讀取且可寫入');
+    } catch (err) {
+      record('fail', '檔案權限', `無法讀寫 resources：${err.message}`);
+    }
+  }
+
+  const sourceCandidates = getSourceWebBundleCandidates();
+  const sourceWebBundle = sourceCandidates.find(isWebBundleDirectory);
+  if (!sourceWebBundle) {
+    record(
+      'fail',
+      '來源 web_bundle',
+      '找不到可讀取的 main.js；請提供 --source-web-bundle 或準備乾淨 web_bundle'
+    );
+  } else if (path.resolve(sourceWebBundle) === path.resolve(WEB_BUNDLE_DIR)) {
+    record('warn', '來源 web_bundle', `${sourceWebBundle} 是目前安裝包，可能已經套用過翻譯`);
+  } else if (path.resolve(sourceWebBundle) === path.resolve(WEB_BUNDLE_BACKUP_DIR)) {
+    record('pass', '來源 web_bundle', `${sourceWebBundle}（使用原始備份）`);
+  } else {
+    record('pass', '來源 web_bundle', sourceWebBundle);
+  }
+
+  const antigravityRunning = isAntigravityRunning();
+  record(
+    antigravityRunning ? 'info' : 'pass',
+    'Antigravity 執行狀態',
+    antigravityRunning ? '目前正在執行；套用時會先關閉並視原狀態重新開啟' : '目前未執行；套用後維持關閉'
+  );
+  record(
+    fs.existsSync(BACKUP_ASAR_PATH) ? 'pass' : 'warn',
+    'app.asar.backup',
+    fs.existsSync(BACKUP_ASAR_PATH) ? '原版備份已存在' : '尚未建立，第一次套用時會建立'
+  );
+  record(
+    fs.existsSync(WEB_BUNDLE_BACKUP_DIR) ? 'pass' : 'warn',
+    'web_bundle.backup',
+    fs.existsSync(WEB_BUNDLE_BACKUP_DIR) ? '原始備份已存在' : '尚未建立，第一次套用時會建立'
+  );
+
+  console.log('\n====================================================');
+  console.log(`       ${PROJECT_NAME} 前置檢查`);
+  console.log('====================================================');
+  for (const check of checks) {
+    console.log(`[${statusLabels[check.status]}] ${check.label}: ${check.detail}`);
+  }
+  if (errors.length > 0) {
+    console.error(`前置檢查未通過：${errors.length} 項。`);
+  } else {
+    console.log('前置檢查通過，可以執行自動部署。');
+  }
+  if (warnings.length > 0) {
+    console.warn(`另有 ${warnings.length} 項警告，請在部署後做桌面畫面驗收。`);
+  }
+  console.log('====================================================\n');
+  return {
+    ok: errors.length === 0,
+    checks,
+    errors,
+    warnings,
+    appDir: APP_DIR,
+    sourceWebBundle,
+  };
+}
+
 function startAntigravity() {
   const executablePath = path.join(APP_DIR, 'Antigravity.exe');
   if (!fs.existsSync(executablePath)) {
@@ -256,7 +615,7 @@ function reopenIfPreviouslyRunning(wasRunning) {
 // 狀態檢查
 function checkStatus() {
   console.log('\n====================================================');
-  console.log('       Antigravity 客戶端漢化狀態檢查');
+  console.log(`       ${PROJECT_NAME} 狀態檢查`);
   console.log('====================================================');
   console.log(`支援的應用程式版本：${formatSupportedVersions()}`);
   console.log(`安裝目錄: ${APP_DIR}`);
@@ -806,12 +1165,8 @@ function runInteractive() {
 function main() {
   const args = CLI_ARGS;
 
-  if (args.includes('--interactive') || args.includes('-i')) {
-    runInteractive();
-    return;
-  }
-
   const lang = normalizeLanguage(getOption('--lang', 'zh-TW'));
+  configureCliOutput(lang);
 
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`${PROJECT_NAME}`);
@@ -823,14 +1178,42 @@ function main() {
     console.log('  node scripts/patcher.js --apply --lang zh-CN');
     console.log('  node scripts/patcher.js --restore');
     console.log('  node scripts/patcher.js --status');
+    console.log('  node scripts/patcher.js --preflight');
+    console.log('  node scripts/patcher.js --auto --lang zh-TW');
     console.log('');
     console.log('選用參數：--app-dir、--source-web-bundle、--source-extracted-app');
+    console.log('--preflight 只檢查環境；--auto 會在缺少專案相依元件時自動安裝，通過後套用翻譯。');
     console.log('版本不符時會先顯示警告並繼續；可用 --allow-version-mismatch 明確標記為非目標版本測試');
+    return;
+  }
+
+  if (args.includes('--preflight')) {
+    const result = runPreflight({ installDependencies: false });
+    if (!result.ok) process.exitCode = 1;
     return;
   }
 
   if (args.includes('--status')) {
     checkStatus();
+    return;
+  }
+
+  if (args.includes('--auto')) {
+    const preflight = runPreflight({ installDependencies: true });
+    if (!preflight.ok) {
+      console.error('自動部署已停止：請先處理前置檢查失敗項目。');
+      process.exitCode = 1;
+      return;
+    }
+    const applied = applyPatch(lang, true);
+    if (applied === false) process.exitCode = 1;
+    return;
+  }
+
+  assertNodeVersion();
+
+  if (args.includes('--interactive') || args.includes('-i')) {
+    runInteractive();
     return;
   }
 
@@ -853,6 +1236,11 @@ function main() {
 module.exports = {
   SUPPORTED_APP_VERSIONS,
   SUPPORTED_APP_VERSION,
+  MIN_NODE_MAJOR,
+  getNodeVersionInfo,
+  getAppDirCandidates,
+  getSourceWebBundleCandidates,
+  runPreflight,
   getVersionCompatibility,
   assertSupportedVersion,
 };

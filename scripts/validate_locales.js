@@ -119,6 +119,7 @@ for (const [key, twValue, cnValue] of [
   ['"Sends on next turn"', '"下一回合傳送"', '"下一轮发送"'],
   ['"Copy"', '"複製"', '"复制"'],
   ['"Copied"', '"已複製"', '"已复制"'],
+  ['"Retry"', '"重試"', '"重试"'],
   ['"Select category to search..."', '"選擇要搜尋的類別..."', '"选择要搜索的类别..."'],
   ['"No results found"', '"找不到結果"', '"未找到结果"'],
   ['"Copy Command"', '"複製指令"', '"复制命令"'],
@@ -196,12 +197,48 @@ const tokenLabelRendererKey = 'z.createElement("span",{className:"text-secondary
 assertEntryContains('zh-TW', zhTw, tokenLabelRendererKey, ['"Mcp Tools":"MCP 工具"']);
 assertEntryContains('zh-CN', zhCn, tokenLabelRendererKey, ['"Mcp Tools":"MCP 工具"']);
 const modelGroupTextFormatterKey = 'function Dxb({label:a,remainingFraction:b,refreshText:c,disabled:e}){return';
-assertEntryWithKeyPrefixContains('zh-TW', zhTw, modelGroupTextFormatterKey, ['function zhTwModelGroupText(a)', '此分組中的模型：']);
-assertEntryWithKeyPrefixContains('zh-CN', zhCn, modelGroupTextFormatterKey, ['function zhCnModelGroupText(a)', '此分组中的模型：']);
+assertEntryWithKeyPrefixContains('zh-TW', zhTw, modelGroupTextFormatterKey, [
+  'function zhTwModelQuotaText(a)',
+  'You have hit your 5-hour',
+  '您已達到 5 小時額度上限',
+  'function zhTwModelGroupText(a)',
+  '此分組中的模型：',
+]);
+assertEntryWithKeyPrefixContains('zh-CN', zhCn, modelGroupTextFormatterKey, [
+  'function zhCnModelQuotaText(a)',
+  'You have hit your 5-hour',
+  '您已达到 5 小时配额上限',
+  'function zhCnModelGroupText(a)',
+  '此分组中的模型：',
+]);
+const modelQuotaDescriptionKey = 'refreshText:a.description||""';
+assertEntryContains('zh-TW', zhTw, modelQuotaDescriptionKey, [
+  'refreshText:a.description?zhTwModelQuotaText(a.description):""',
+]);
+assertEntryContains('zh-CN', zhCn, modelQuotaDescriptionKey, [
+  'refreshText:a.description?zhCnModelQuotaText(a.description):""',
+]);
 for (const key of ['z.createElement(ty,{id:c},a.description)', 'z.createElement("span",{className:"text-secondary-foreground"},a.description)']) {
   assertEntryContains('zh-TW', zhTw, key, ['zhTwModelGroupText(a.description)']);
   assertEntryContains('zh-CN', zhCn, key, ['zhCnModelGroupText(a.description)']);
 }
+const quotaErrorRendererKey = 'var SI=(a,b,c,e)=>{var f=RI(a,b,c,e);return';
+assertEntryWithKeyPrefixContains('zh-TW', zhTw, quotaErrorRendererKey, [
+  'function zhTwQuotaErrorText(a)',
+  'Individual quota reached',
+  '個人額度已達上限',
+]);
+assertEntryWithKeyPrefixContains('zh-CN', zhCn, quotaErrorRendererKey, [
+  'function zhCnQuotaErrorText(a)',
+  'Individual quota reached',
+  '个人配额已达上限',
+]);
+assertEntryContains('zh-TW', zhTw, 'userErrorMessage:a?.userErrorMessage', [
+  'userErrorMessage:zhTwQuotaErrorText(a?.userErrorMessage)',
+]);
+assertEntryContains('zh-CN', zhCn, 'userErrorMessage:a?.userErrorMessage', [
+  'userErrorMessage:zhCnQuotaErrorText(a?.userErrorMessage)',
+]);
 const customizationsPageTitleKey = 'z.createElement(N0,{title:"Customizations",description:z.createElement("span",null,"Configure default behaviors, skills, and MCP servers."';
 assertEntryContains('zh-TW', zhTw, customizationsPageTitleKey, ['title:"個人化"']);
 assertEntryContains('zh-CN', zhCn, customizationsPageTitleKey, ['title:"个性化"']);
@@ -211,6 +248,15 @@ assertEntryContains('zh-TW', zhTw, 'title:"Browser Settings"', ['title:"瀏覽�
 assertEntryContains('zh-CN', zhCn, 'title:"Browser Settings"', ['title:"浏览器"']);
 const codeTick = String.fromCharCode(96);
 const dollar = '$';
+const baselineQuotaKey = 'g+=' + codeTick + ' Your plan\'s baseline quota will refresh on ' + dollar + '{h}.' + codeTick;
+assertEntryContains('zh-TW', zhTw, baselineQuotaKey, [
+  '您的方案基準額度將於 ' + dollar + '{h} 重設。',
+]);
+assertEntryContains('zh-CN', zhCn, baselineQuotaKey, [
+  '您的方案基准配额将在 ' + dollar + '{h} 重置。',
+]);
+assertEntryContains('zh-TW', zhTw, 'e||"See plans"', ['e||"查看方案"']);
+assertEntryContains('zh-CN', zhCn, 'e||"See plans"', ['e||"查看方案"']);
 const chatSendTooltipKey = 'return' + codeTick + 'Send message ' + dollar + '{Q}' + codeTick;
 assertEntryContains('zh-TW', zhTw, chatSendTooltipKey, [
   'return' + codeTick + '傳送訊息 ' + dollar + '{Q}' + codeTick,
@@ -219,6 +265,7 @@ assertEntryContains('zh-CN', zhCn, chatSendTooltipKey, [
   'return' + codeTick + '发送消息 ' + dollar + '{Q}' + codeTick,
 ]);
 const activityRendererKey = 'function tV({prefix:a,content:b,progressMessage:c,customTitle:e}){if(e)return';
+const goalRuntimeKey = '"' + String.fromCharCode(92) + 'u0047oal"';
 const activityCanceledKey = '"Run Task":';
 assertEntryContains('zh-TW', zhTw, activityCanceledKey, ['"Canceled":"已取消"', '"Cancelled":"已取消"']);
 assertEntryContains('zh-CN', zhCn, activityCanceledKey, ['"Canceled":"已取消"', '"Cancelled":"已取消"']);
@@ -233,9 +280,12 @@ assertEntryWithKeyPrefixContains('zh-TW', zhTw, activityRendererKey, [
   'return"搜尋中 "+b[1]',
   'a.match(/^Searched (.+)$/)',
   'return"已搜尋 "+c[1]',
+  'a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/)',
+  'return"已計時 "+d[1]+" 秒"',
   'a.match(/^(Run|Download) (.+) finished$/)',
   'b[1]===\"Run\"?\"執行\":\"下載\"',
   'replace(/(\\d+) tasks? running/g,"$1 個任務執行中")',
+  'replace(/(\\d+) active goals?/g,"$1 個進行中的目標")',
   '\"Run Task\":\"執行任務\"',
   '\"Running Task\":\"執行任務中\"',
   '\"Ran Task\":\"已執行任務\"',
@@ -251,23 +301,74 @@ assertEntryWithKeyPrefixContains('zh-CN', zhCn, activityRendererKey, [
   'return"搜索中 "+b[1]',
   'a.match(/^Searched (.+)$/)',
   'return"已搜索 "+c[1]',
+  'a.match(/^Timed (\\d+(?:\\.\\d+)?) seconds?$/)',
+  'return"已计时 "+d[1]+" 秒"',
   'a.match(/^(Run|Download) (.+) finished$/)',
   'b[1]===\"Run\"?\"运行\":\"下载\"',
   'replace(/(\\d+) tasks? running/g,"$1 个任务运行中")',
+  'replace(/(\\d+) active goals?/g,"$1 个进行中的目标")',
   '\"Run Task\":\"运行任务\"',
   '\"Running Task\":\"正在运行任务\"',
   '\"Ran Task\":\"已运行任务\"',
 ]);
+assertEntryWithKeyPrefixContains('zh-TW', zhTw, activityRendererKey, [
+  'a.match(/^(\\d+) active goals?$/)',
+  'return f[1]+\" 個進行中的目標\";',
+  goalRuntimeKey + ':\"目標\"',
+]);
+assertEntryWithKeyPrefixContains('zh-CN', zhCn, activityRendererKey, [
+  'a.match(/^(\\d+) active goals?$/)',
+  'return f[1]+\" 个进行中的目标\";',
+  goalRuntimeKey + ':\"目标\"',
+]);
+const activityCustomTitleKey = 'z.createElement(\"div\",{className:\"flex flex-row items-center gap-1 overflow-hidden whitespace-nowrap\"},e);e=typeof b===\"string\";';
+assertEntryContains('zh-TW', zhTw, activityCustomTitleKey, [
+  'zhTwActivityTitle(e)',
+]);
+assertEntryContains('zh-CN', zhCn, activityCustomTitleKey, [
+  'zhCnActivityTitle(e)',
+]);
+const activityProgressMessageKey = 'z.createElement(\"span\",{className:\"truncate text-muted-foreground text-xs\"},c)))';
+assertEntryContains('zh-TW', zhTw, activityProgressMessageKey, [
+  'zhTwActivityText(c)',
+]);
+assertEntryContains('zh-CN', zhCn, activityProgressMessageKey, [
+  'zhCnActivityText(c)',
+]);
 const genericTaskTitlePrefixKey = 'y=u?.titlePrefix||void 0;';
 assertEntryContains('zh-TW', zhTw, genericTaskTitlePrefixKey, ['y=zhTwActivityTitle(y);']);
 assertEntryContains('zh-CN', zhCn, genericTaskTitlePrefixKey, ['y=zhCnActivityTitle(y);']);
+const directActivityTitleKey = 'function dW(a){var b=a?.titleParts??[];return b.length===0?a?.title||void 0:';
+assertEntryWithKeyPrefixContains('zh-TW', zhTw, directActivityTitleKey, [
+  'b.length===0?zhTwActivityTitle(a?.title||void 0)',
+  'zhTwActivityTitle(b.map(c=>c.part.value).join(" ")||void 0)',
+]);
+assertEntryWithKeyPrefixContains('zh-CN', zhCn, directActivityTitleKey, [
+  'b.length===0?zhCnActivityTitle(a?.title||void 0)',
+  'zhCnActivityTitle(b.map(c=>c.part.value).join(" ")||void 0)',
+]);
+const mixedActivityTitleKey = 'case "text":return z.createElement("span",{className:"truncate"},a.part.value);';
+assertEntryContains('zh-TW', zhTw, mixedActivityTitleKey, ['zhTwActivityTitle(a.part.value)']);
+assertEntryContains('zh-CN', zhCn, mixedActivityTitleKey, ['zhCnActivityTitle(a.part.value)']);
+const browserJavascriptTitleKey = 'z.createElement(tV,{content:b.title})';
+assertEntryContains('zh-TW', zhTw, browserJavascriptTitleKey, ['content:zhTwActivityTitle(b.title)']);
+assertEntryContains('zh-CN', zhCn, browserJavascriptTitleKey, ['content:zhCnActivityTitle(b.title)']);
 const activitySummaryTitleKey = 'a=dW(b);if(a!==void 0)return(b=b?.titlePrefix)?typeof a===' + '\"string\"?';
 assertEntryContains('zh-TW', zhTw, activitySummaryTitleKey, ['b=zhTwActivityTitle(b)', 'a=zhTwActivityTitle(a)']);
 assertEntryContains('zh-CN', zhCn, activitySummaryTitleKey, ['b=zhCnActivityTitle(b)', 'a=zhCnActivityTitle(a)']);
 const assembledActivityTitleKey = 'a.titlePrefix?' + codeTick + '${a.titlePrefix} ${b}' + codeTick + ':b';
-assertEntryContains('zh-TW', zhTw, assembledActivityTitleKey, ['a.titlePrefix?zhTwActivityTitle(' + codeTick + '${a.titlePrefix} ${b}' + codeTick + '):b']);
-assertEntryContains('zh-CN', zhCn, assembledActivityTitleKey, ['a.titlePrefix?zhCnActivityTitle(' + codeTick + '${a.titlePrefix} ${b}' + codeTick + '):b']);
+assertEntryContains('zh-TW', zhTw, assembledActivityTitleKey, ['zhTwActivityTitle(a.titlePrefix?' + codeTick + '${a.titlePrefix} ${b}' + codeTick + ':b)']);
+assertEntryContains('zh-CN', zhCn, assembledActivityTitleKey, ['zhCnActivityTitle(a.titlePrefix?' + codeTick + '${a.titlePrefix} ${b}' + codeTick + ':b)']);
 const runningTaskSummaryKey = 'return m.join(\", \")},[h,k,f,g])};';
+const systemActivityTitleKey = '},b,a):a;if(c)';
+assertEntryContains('zh-TW', zhTw, systemActivityTitleKey, ['},b,a)):zhTwActivityTitle(a);if(c)']);
+assertEntryContains('zh-CN', zhCn, systemActivityTitleKey, ['},b,a)):zhCnActivityTitle(a);if(c)']);
+const accumulatedItemTitleKey = 'K=K.label||(L?' + codeTick + '${M}: ${L}' + codeTick + ':M);';
+assertEntryContains('zh-TW', zhTw, accumulatedItemTitleKey, ['K=zhTwActivityTitle(K.label||(L?' + codeTick + '${M}: ${L}' + codeTick + ':M));']);
+assertEntryContains('zh-CN', zhCn, accumulatedItemTitleKey, ['K=zhCnActivityTitle(K.label||(L?' + codeTick + '${M}: ${L}' + codeTick + ':M));']);
+const accumulatedSectionTitleKey = 'title:p.title||p.key,count';
+assertEntryContains('zh-TW', zhTw, accumulatedSectionTitleKey, ['title:zhTwActivityTitle(p.title||p.key),count']);
+assertEntryContains('zh-CN', zhCn, accumulatedSectionTitleKey, ['title:zhCnActivityTitle(p.title||p.key),count']);
 assertEntryContains('zh-TW', zhTw, runningTaskSummaryKey, ['return zhTwRunningSummary(m.join(\", \"))']);
 assertEntryContains('zh-CN', zhCn, runningTaskSummaryKey, ['return zhCnRunningSummary(m.join(\", \"))']);
 const branchSubtitleKey = 'subtitle:l?' + codeTick + 'All changes since ' + dollar + '{l}' + codeTick;
@@ -275,6 +376,9 @@ assertEntryContains('zh-TW', zhTw, branchSubtitleKey, ['subtitle:l?' + codeTick 
 assertEntryContains('zh-CN', zhCn, branchSubtitleKey, ['subtitle:l?' + codeTick + '自 ' + dollar + '{l} 以来的所有更改' + codeTick]);
 assertEntryContains('zh-TW', zhTw, '"All changes since the branch point"', ['"自分支起點以來的所有變更"']);
 assertEntryContains('zh-CN', zhCn, '"All changes since the branch point"', ['"自分支起点以来的所有更改"']);
+const changedFilesSummaryKey = codeTick + '${t} ${t===1?"file":"files"} changed' + codeTick;
+assertEntryContains('zh-TW', zhTw, changedFilesSummaryKey, [codeTick + '${t} 個檔案已變更' + codeTick]);
+assertEntryContains('zh-CN', zhCn, changedFilesSummaryKey, [codeTick + '${t} 个文件已更改' + codeTick]);
 const commitTooltipKey = 'tooltip:(a?.stagedChanges?.length??0)>0?"Commit staged changes":"Stage and commit all changes"';
 assertEntryContains('zh-TW', zhTw, commitTooltipKey, ['tooltip:(a?.stagedChanges?.length??0)>0?"提交已暫存的變更":"暫存並提交所有變更"']);
 assertEntryContains('zh-CN', zhCn, commitTooltipKey, ['tooltip:(a?.stagedChanges?.length??0)>0?"提交已暂存的更改":"暂存并提交所有更改"']);
@@ -328,4 +432,4 @@ if (staleBuildArtifacts.length > 0) {
   throw new Error(`zh-CN 有疑似轉換器殘留內容的詞條：${staleBuildArtifacts.slice(0, 10).join(', ')}`);
 }
 
-console.log(`AntiLocale Toolkit 語言包檢查通過：zh-TW ${twKeys.size} 個 unique exact_properties；zh-CN ${cnKeys.size} 個，已覆蓋全部繁中詞條`);
+console.log(`AntiLocale Toolkit 漢化工具語言包檢查通過：zh-TW ${twKeys.size} 個 unique exact_properties；zh-CN ${cnKeys.size} 個，已覆蓋全部繁中詞條`);
